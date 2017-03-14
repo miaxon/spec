@@ -14,6 +14,7 @@ namespace spform
 
         public Form1()
         {
+
             InitializeComponent();
         }
 

@@ -110,5 +110,6 @@ namespace libspec
         {
             return m_kodes[num_kod];
         }
+ 
     }
 }
