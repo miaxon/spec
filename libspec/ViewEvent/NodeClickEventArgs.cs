@@ -8,10 +8,10 @@ using libspec.Objects;
 
 namespace libspec.ViewEvent
 {
-    public class RaskrEventArgs : System.EventArgs
+    public class NodeClickEventArgs : System.EventArgs
     {
-        public readonly PozObject Object;
-        public RaskrEventArgs(PozObject o)
+        public readonly BaseObject Object;       
+        public NodeClickEventArgs(BaseObject o)
         {
             Object = o;
         }

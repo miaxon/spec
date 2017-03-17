@@ -15,7 +15,7 @@ namespace libspec.Contrlos
     public partial class SpecPozVew : UserControl
     {
         #region events
-        public event EventHandler<RaskrEventArgs> RaskrEvent;
+        public event EventHandler<ExpandEventArgs> RaskrEvent;
         public event EventHandler<SearchEventArgs> SearchEvent;
         #endregion
         public SpecPozVew()
@@ -37,7 +37,7 @@ namespace libspec.Contrlos
             {
                 SpecDataGridViewRow row = dgView.Rows[e.RowIndex] as SpecDataGridViewRow;
                 if (row.Object.num_kod < 9 && RaskrEvent != null)
-                    RaskrEvent(this, new RaskrEventArgs(row.Object));
+                    RaskrEvent(this, new ExpandEventArgs(row.Object));
             }
         }
 

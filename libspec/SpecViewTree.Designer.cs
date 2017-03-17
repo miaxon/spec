@@ -33,6 +33,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SpecViewTree));
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.stlblNumChilds = new System.Windows.Forms.ToolStripStatusLabel();
@@ -46,12 +47,16 @@
             this.kfr = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.knr = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.description = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tbtnAddProject = new System.Windows.Forms.ToolStripButton();
+            this.toolStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.treeView)).BeginInit();
             this.SuspendLayout();
             // 
             // toolStrip
             // 
+            this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tbtnAddProject});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.Size = new System.Drawing.Size(1380, 25);
@@ -90,6 +95,7 @@
             this.knr,
             this.description});
             this.treeView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.treeView.ImageList = null;
             this.treeView.Location = new System.Drawing.Point(0, 25);
             this.treeView.Name = "treeView";
@@ -173,6 +179,17 @@
             this.description.Name = "description";
             this.description.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
+            // tbtnAddProject
+            // 
+            this.tbtnAddProject.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbtnAddProject.Image = ((System.Drawing.Image)(resources.GetObject("tbtnAddProject.Image")));
+            this.tbtnAddProject.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbtnAddProject.Name = "tbtnAddProject";
+            this.tbtnAddProject.Size = new System.Drawing.Size(23, 22);
+            this.tbtnAddProject.Text = "toolStripButton1";
+            this.tbtnAddProject.ToolTipText = "добавить проект";
+            this.tbtnAddProject.Click += new System.EventHandler(this.tbtnAddProject_Click);
+            // 
             // SpecViewTree
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -182,6 +199,8 @@
             this.Controls.Add(this.toolStrip);
             this.Name = "SpecViewTree";
             this.Size = new System.Drawing.Size(1380, 617);
+            this.toolStrip.ResumeLayout(false);
+            this.toolStrip.PerformLayout();
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.treeView)).EndInit();
@@ -205,5 +224,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn kfr;
         private System.Windows.Forms.DataGridViewTextBoxColumn knr;
         private System.Windows.Forms.DataGridViewTextBoxColumn description;
+        private System.Windows.Forms.ToolStripButton tbtnAddProject;
     }
 }

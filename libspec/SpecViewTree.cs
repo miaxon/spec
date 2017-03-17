@@ -15,8 +15,9 @@ namespace libspec
     public partial class SpecViewTree : UserControl
     {
         #region events
-        public event EventHandler<TreeNodeClickEventArgs> NodeClickEvent;
-        public event EventHandler<RaskrEventArgs> RaskrEvent;
+        public event EventHandler<NodeClickEventArgs> NodeClickEvent;
+        public event EventHandler<ExpandEventArgs> ExpandEvent;
+        public event EventHandler<ButtonActionEventArgs> ButtonActionEvent;
         #endregion
         private TreeGridNode m_nodeToFill;
         public SpecViewTree()
@@ -32,9 +33,9 @@ namespace libspec
             if (m_nodeToFill != null && m_nodeToFill.Nodes.Count == 0 && NodeClickEvent != null)
             {
                 if (m_nodeToFill.Tag is BaseObject)
-                    NodeClickEvent(this, new TreeNodeClickEventArgs(m_nodeToFill.Tag as BaseObject));
+                    NodeClickEvent(this, new NodeClickEventArgs(m_nodeToFill.Tag as BaseObject));
                 if (m_nodeToFill.Tag is PozObject)
-                    RaskrEvent(this, new RaskrEventArgs(m_nodeToFill.Tag as PozObject));
+                    ExpandEvent(this, new ExpandEventArgs(m_nodeToFill.Tag as PozObject));
             }
         }
 
@@ -108,6 +109,12 @@ namespace libspec
         {
             if (treeView.CurrentNode != null)
                 stlblNumChilds.Text = "элементов: " + treeView.CurrentNode.Nodes.Count;
+        }
+
+        private void tbtnAddProject_Click(object sender, EventArgs e)
+        {
+            if (ButtonActionEvent != null)
+                ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.AddProject));
         }
     }
 }

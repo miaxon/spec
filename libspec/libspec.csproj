@@ -85,12 +85,6 @@
     </Compile>
     <Compile Include="SpecDataAdapter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SpecView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="SpecView.Designer.cs">
-      <DependentUpon>SpecView.cs</DependentUpon>
-    </Compile>
     <Compile Include="SpecMain.cs" />
     <Compile Include="SpecModel.cs" />
     <Compile Include="SpecViewTree.cs">
@@ -99,7 +93,9 @@
     <Compile Include="SpecViewTree.Designer.cs">
       <DependentUpon>SpecViewTree.cs</DependentUpon>
     </Compile>
-    <Compile Include="ViewEvent\RaskrEventArgs.cs" />
+    <Compile Include="ViewEvent\ButtonAction.cs" />
+    <Compile Include="ViewEvent\ButtonActionEventArgs.cs" />
+    <Compile Include="ViewEvent\ExpandEventArgs.cs" />
     <Compile Include="ViewEvent\SearchEventArgs.cs" />
     <Compile Include="ViewItem\BaseNode.cs" />
     <Compile Include="ViewItem\DocNode.cs" />
@@ -110,7 +106,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Utils.cs" />
-    <Compile Include="ViewEvent\TreeNodeClickEventArgs.cs" />
+    <Compile Include="ViewEvent\NodeClickEventArgs.cs" />
     <Compile Include="ViewItem\SpecDataGridViewRow.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -126,9 +122,6 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SpecView.resx">
-      <DependentUpon>SpecView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SpecViewTree.resx">
       <DependentUpon>SpecViewTree.cs</DependentUpon>

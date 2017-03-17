@@ -11,34 +11,29 @@ namespace libspec
     public class SpecModel
     {
         private SpecDataAdapter m_da;
-        private SpecView m_view;
-        private SpecViewTree m_view_tree;
+        private SpecViewTree m_view;
         
-        public SpecModel(SpecView view, SpecDataAdapter da)
+        public SpecModel(SpecViewTree view, SpecDataAdapter da)
         {
             m_da = da;
             m_view = view;
             m_view.FillTree(m_da.GetProjectList());
             AddListeners();
         }
-        public SpecModel(SpecViewTree view, SpecDataAdapter da)
-        {
-            m_da = da;
-            m_view_tree = view;
-            m_view_tree.FillTree(m_da.GetProjectList());
-            AddTreeListeners();
-        }
+        
         private void AddListeners()
         {
-            m_view.NodeClickEvent +=new EventHandler<ViewEvent.TreeNodeClickEventArgs>(m_view_NodeClick);
-            m_view.RaskrEvent += new EventHandler<ViewEvent.RaskrEventArgs>(m_view_RaskrEvent);
-            m_view.SearchEvent += new EventHandler<ViewEvent.SearchEventArgs>(m_view_SearchEvent);
+            m_view.NodeClickEvent += new EventHandler<ViewEvent.NodeClickEventArgs>(m_view_NodeClick);
+            m_view.ExpandEvent += new EventHandler<ViewEvent.ExpandEventArgs>(m_view_ExpandEvent);
+            m_view.ButtonActionEvent += new EventHandler<ViewEvent.ButtonActionEventArgs>(m_view_ButtonActionEvent);
+            
         }
-        private void AddTreeListeners()
+
+        private void m_view_ButtonActionEvent(object sender, ViewEvent.ButtonActionEventArgs e)
         {
-            m_view_tree.NodeClickEvent += new EventHandler<ViewEvent.TreeNodeClickEventArgs>(m_view_NodeClick);
-            m_view_tree.RaskrEvent += new EventHandler<ViewEvent.RaskrEventArgs>(m_view_RaskrEvent);
+            m_da.AddProject();
         }
+
         void m_view_SearchEvent(object sender, ViewEvent.SearchEventArgs e)
         {
             string table = Utils.GetTable(e.num_kod);
@@ -50,29 +45,29 @@ namespace libspec
             //m_view_tree.FillPozView(list);
         }
 
-        void m_view_RaskrEvent(object sender, ViewEvent.RaskrEventArgs e)
+        void m_view_ExpandEvent(object sender, ViewEvent.ExpandEventArgs e)
         {
             UInt32 refid = e.Object.refid == 0 ? e.Object.id : e.Object.refid;
             List<PozObject> list = m_da.GetPozList(Utils.GetChildTable(e.Object.num_kod), refid);
-            m_view_tree.FillPoz(list);
+            m_view.FillPoz(list);
 
         }
 
-        private void m_view_NodeClick(object sender, ViewEvent.TreeNodeClickEventArgs e)
+        private void m_view_NodeClick(object sender, ViewEvent.NodeClickEventArgs e)
         {
             if (e.Object is ProjectObject)
             {
-                m_view_tree.FillProject(m_da.GetGroupList(e.Object.id));
+                m_view.FillProject(m_da.GetGroupList(e.Object.id));
                 return;
             }
             if (e.Object is GroupObject)
             {
-                m_view_tree.FillGroup(m_da.GetDocList(e.Object.id));
+                m_view.FillGroup(m_da.GetDocList(e.Object.id));
                 return;
             }
             if (e.Object is DocObject)
             {
-                m_view_tree.FillPoz(m_da.GetPozList("lid_old", e.Object.refid));
+                m_view.FillPoz(m_da.GetPozList("lid_old", e.Object.refid));
                 return;
             }
         }

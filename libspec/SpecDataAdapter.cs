@@ -295,6 +295,23 @@ namespace libspec
             }
             return list;
         }
-        
+        public void AddProject()
+        {
+            string query = string.Format("insert into _pid (obozn, naimen, descr) values ('новый проект', 'не задано', '{0}')", DateTime.Now.ToShortDateString() );
+            MySqlCommand cmd = new MySqlCommand(query, m_conn);
+            try
+            {
+                int r = cmd.ExecuteNonQuery();
+            }
+            catch (MySqlException ex)
+            {
+                if (ex.Number == 1062)
+                    MessageBox.Show("Failed to add project: project name exist!");
+                else
+                    MessageBox.Show("Failed to add project: " + ex.Message);
+            }
+            
+
+        }
     }
 }
