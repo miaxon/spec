@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Forms;
 using libspec.Objects;
 using libspec.ViewItem;
+using libspec.Dialogs;
 
 namespace libspec
 {
@@ -30,8 +31,24 @@ namespace libspec
         }
 
         private void m_view_ButtonActionEvent(object sender, ViewEvent.ButtonActionEventArgs e)
-        {
-            m_da.AddProject();
+        {            
+            AddObjectDialog dlg = new AddObjectDialog(e.Action);
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                BaseObject o = dlg.Object;
+                switch(e.Action)
+                {
+                    case ViewEvent.ButtonAction.AddProject:
+                        o = m_da.AddProject(o);                        
+                        break;
+                    case ViewEvent.ButtonAction.AddGroup:
+                        break;
+                    case ViewEvent.ButtonAction.AddDoc:
+                        break;
+                }
+                if (o!= null && o.id > 0)
+                    m_view.AddObject(o);
+            }
         }
 
         void m_view_SearchEvent(object sender, ViewEvent.SearchEventArgs e)

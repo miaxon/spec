@@ -2,6 +2,8 @@
 {
     public enum ButtonAction
     {
-        AddProject
+        AddProject,
+        AddGroup,
+        AddDoc
     }
 }

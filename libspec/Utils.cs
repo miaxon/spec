@@ -15,9 +15,16 @@ namespace libspec
         private static Dictionary<int, string> m_child_tables;
         private static Dictionary<int, string> m_pozImages;
         private static Dictionary<int, string> m_kodes;
+        private static Dictionary<int, string> m_actions;
         private static ImageList m_imageList;
         public static void InitMaps()
         {
+
+            m_actions = new Dictionary<int, string>();
+            m_actions.Add(0, "Добавить проект");
+            m_actions.Add(1, "Добавить группу");
+            m_actions.Add(2, "Добавить документ");
+
             m_kodes = new Dictionary<int, string>();
             m_kodes.Add(0, "Лицевые чертежи");
             m_kodes.Add(1, "Покупные 1");
@@ -126,6 +133,11 @@ namespace libspec
         {
             return m_kodes[num_kod];
         }
- 
+
+        public static string ActionString(ViewEvent.ButtonAction action)
+        {
+            return m_actions[(int)action];
+        }
+
     }
 }

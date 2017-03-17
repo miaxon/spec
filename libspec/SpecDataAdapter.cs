@@ -295,9 +295,9 @@ namespace libspec
             }
             return list;
         }
-        public void AddProject()
+        public BaseObject AddProject(BaseObject o)
         {
-            string query = string.Format("insert into _pid (obozn, naimen, descr) values ('новый проект', 'не задано', '{0}')", DateTime.Now.ToShortDateString() );
+            string query = string.Format("insert into _pid (obozn, naimen, descr) values ('{0}', '{1}', '{2}')", o.obozn, o.naimen, o.descr );
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             try
             {
@@ -310,8 +310,29 @@ namespace libspec
                 else
                     MessageBox.Show("Failed to add project: " + ex.Message);
             }
-            
-
+            MySqlDataReader reader = null;
+            ProjectObject ret = null;
+            query = string.Format("select id, obozn, naimen, descr, closed from _pid where obozn='{0}'", o.obozn, o.naimen, o.descr);
+            cmd = new MySqlCommand(query, m_conn);
+            try
+            {
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    object[] values = new object[reader.FieldCount];
+                    reader.GetValues(values);
+                    ret = new ProjectObject(values);
+                }
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Failed to populate gost reference list: " + ex.Message);
+            }
+            finally
+            {
+                if (reader != null) reader.Close();
+            }
+            return ret;
         }
     }
 }

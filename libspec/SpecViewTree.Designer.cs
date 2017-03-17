@@ -28,13 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SpecViewTree));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SpecViewTree));
             this.toolStrip = new System.Windows.Forms.ToolStrip();
+            this.tbtnAddProject = new System.Windows.Forms.ToolStripButton();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.stlblNumChilds = new System.Windows.Forms.ToolStripStatusLabel();
             this.treeView = new AdvancedDataGridView.TreeGridView();
@@ -47,7 +48,7 @@
             this.kfr = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.knr = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.description = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tbtnAddProject = new System.Windows.Forms.ToolStripButton();
+            this.tbtnAddGroup = new System.Windows.Forms.ToolStripButton();
             this.toolStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.treeView)).BeginInit();
@@ -56,12 +57,24 @@
             // toolStrip
             // 
             this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tbtnAddProject});
+            this.tbtnAddProject,
+            this.tbtnAddGroup});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.Size = new System.Drawing.Size(1380, 25);
             this.toolStrip.TabIndex = 0;
             this.toolStrip.Text = "toolStrip1";
+            // 
+            // tbtnAddProject
+            // 
+            this.tbtnAddProject.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbtnAddProject.Image = ((System.Drawing.Image)(resources.GetObject("tbtnAddProject.Image")));
+            this.tbtnAddProject.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbtnAddProject.Name = "tbtnAddProject";
+            this.tbtnAddProject.Size = new System.Drawing.Size(23, 22);
+            this.tbtnAddProject.Text = "toolStripButton1";
+            this.tbtnAddProject.ToolTipText = "добавить проект";
+            this.tbtnAddProject.Click += new System.EventHandler(this.tbtnAddProject_Click);
             // 
             // statusStrip
             // 
@@ -179,16 +192,16 @@
             this.description.Name = "description";
             this.description.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
-            // tbtnAddProject
+            // tbtnAddGroup
             // 
-            this.tbtnAddProject.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbtnAddProject.Image = ((System.Drawing.Image)(resources.GetObject("tbtnAddProject.Image")));
-            this.tbtnAddProject.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tbtnAddProject.Name = "tbtnAddProject";
-            this.tbtnAddProject.Size = new System.Drawing.Size(23, 22);
-            this.tbtnAddProject.Text = "toolStripButton1";
-            this.tbtnAddProject.ToolTipText = "добавить проект";
-            this.tbtnAddProject.Click += new System.EventHandler(this.tbtnAddProject_Click);
+            this.tbtnAddGroup.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbtnAddGroup.Image = ((System.Drawing.Image)(resources.GetObject("tbtnAddGroup.Image")));
+            this.tbtnAddGroup.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbtnAddGroup.Name = "tbtnAddGroup";
+            this.tbtnAddGroup.Size = new System.Drawing.Size(23, 22);
+            this.tbtnAddGroup.Text = "toolStripButton1";
+            this.tbtnAddGroup.ToolTipText = "добавить группу";
+            this.tbtnAddGroup.Click += new System.EventHandler(this.tbtnAddGroup_Click);
             // 
             // SpecViewTree
             // 
@@ -225,5 +238,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn knr;
         private System.Windows.Forms.DataGridViewTextBoxColumn description;
         private System.Windows.Forms.ToolStripButton tbtnAddProject;
+        private System.Windows.Forms.ToolStripButton tbtnAddGroup;
     }
 }
