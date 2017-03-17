@@ -10,14 +10,15 @@ namespace libspec
     public class SpecMain
     {
         private SpecDataAdapter m_da;
-        private SpecView se;
+        //private SpecView se;
+        private SpecViewTree se;
         private SpecModel m_tree_model;
         public SpecMain(Control site)
         {
             if (site == null)
                 return;
             Utils.InitMaps();
-            se = new SpecView();
+            se = new SpecViewTree();
             se.Dock = DockStyle.Fill;
             site.Controls.Add(se);
             //

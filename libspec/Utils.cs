@@ -104,6 +104,22 @@ namespace libspec
             }
             return string.Empty;
         }
+        public static Image GetNodeImage(BaseObject o)
+        {
+            if (o is ProjectObject)
+            {
+                return (o.status == Closed.N) ? m_imageList.Images["project"] : m_imageList.Images["project_minus"];
+            }
+            if (o is GroupObject)
+            {
+                return (o.status == Closed.N) ? m_imageList.Images["group"] : m_imageList.Images["group_minus"];
+            }
+            if (o is DocObject)
+            {
+                return (o.status == Closed.N) ? m_imageList.Images["doc"] : m_imageList.Images["doc_minus"];
+            }
+            return null;
+        }
         public static ImageList ImageList { get { return m_imageList; } }
 
         public static string NumKodString(int num_kod)
