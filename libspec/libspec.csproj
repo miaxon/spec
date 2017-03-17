@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,9 +32,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MySql.Data, Version=6.4.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>D:\Monolit.NET\refs\MySql.Data.dll</HintPath>
+    <Reference Include="ExpandableGridView">
+      <HintPath>D:\MONOLIT.NET\refs\ExpandableGridView.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data">
+      <HintPath>D:\MONOLIT.NET\refs\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -90,6 +93,12 @@
     </Compile>
     <Compile Include="SpecMain.cs" />
     <Compile Include="SpecModel.cs" />
+    <Compile Include="SpecViewTree.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SpecViewTree.Designer.cs">
+      <DependentUpon>SpecViewTree.cs</DependentUpon>
+    </Compile>
     <Compile Include="ViewEvent\RaskrEventArgs.cs" />
     <Compile Include="ViewEvent\SearchEventArgs.cs" />
     <Compile Include="ViewItem\BaseNode.cs" />
@@ -120,6 +129,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SpecView.resx">
       <DependentUpon>SpecView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SpecViewTree.resx">
+      <DependentUpon>SpecViewTree.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

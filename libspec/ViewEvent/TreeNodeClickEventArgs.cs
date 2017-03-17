@@ -15,5 +15,9 @@ namespace libspec.ViewEvent
         {
             Object = (targetNode as BaseNode).Object;
         }
+        public TreeNodeClickEventArgs(BaseObject o)
+        {
+            Object = o;
+        }
     }
 }
