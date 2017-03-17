@@ -39,11 +39,13 @@ namespace libspec
                 switch(e.Action)
                 {
                     case ViewEvent.ButtonAction.AddProject:
-                        o = m_da.AddProject(o);                        
+                        o = m_da.AddObject("_pid", o);                        
                         break;
                     case ViewEvent.ButtonAction.AddGroup:
+                        o = m_da.AddObject("_gid", o, e.Target.id);
                         break;
                     case ViewEvent.ButtonAction.AddDoc:
+                        o = m_da.AddObject("_did", o, e.Target.id);
                         break;
                 }
                 if (o!= null && o.id > 0)

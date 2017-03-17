@@ -16,9 +16,9 @@ namespace libspec
         private MySqlConnection m_conn;
         public SpecDataAdapter()
         {
-            Connect();            
+            Connect();
         }
-        
+
         public void Connect()
         {
             try
@@ -58,7 +58,7 @@ namespace libspec
             }
             finally
             {
-                
+
             }
         }
         public void DeleteProject(ProjectObject o)
@@ -75,7 +75,7 @@ namespace libspec
             }
             finally
             {
-                
+
             }
         }
         public void UpdateProject(ProjectObject o)
@@ -85,14 +85,14 @@ namespace libspec
             try
             {
                 int r = cmd.ExecuteNonQuery();
-                            }
+            }
             catch (MySqlException ex)
             {
                 MessageBox.Show("Failed to populate projects list: " + ex.Message);
             }
             finally
             {
-               
+
             }
         }
         public List<ProjectObject> GetProjectList()
@@ -231,7 +231,7 @@ namespace libspec
                     object[] values = new object[reader.FieldCount];
                     reader.GetValues(values);
                     //Type t = values[1].GetType();
-                    o.FillReference(values);                    
+                    o.FillReference(values);
                 }
             }
             catch (MySqlException ex)
@@ -242,7 +242,7 @@ namespace libspec
             {
                 if (reader != null) reader.Close();
             }
-           
+
         }
 
         private void FillGostForCode9(PozObject o)
@@ -255,7 +255,7 @@ namespace libspec
                 reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    o.gost = (string)reader.GetString(0); 
+                    o.gost = (string)reader.GetString(0);
                 }
             }
             catch (MySqlException ex)
@@ -295,9 +295,10 @@ namespace libspec
             }
             return list;
         }
-        public BaseObject AddProject(BaseObject o)
+
+        public BaseObject AddObject(string table, BaseObject o, UInt32 parent = 0)
         {
-            string query = string.Format("insert into _pid (obozn, naimen, descr) values ('{0}', '{1}', '{2}')", o.obozn, o.naimen, o.descr );
+            string query = string.Format("insert into {0} (obozn, naimen, descr, parent) values ('{1}', '{2}', '{3}', {4})", table, o.obozn, o.naimen, o.descr, parent);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             try
             {
@@ -306,13 +307,13 @@ namespace libspec
             catch (MySqlException ex)
             {
                 if (ex.Number == 1062)
-                    MessageBox.Show("Failed to add project: project name exist!");
+                    MessageBox.Show("Failed to add object: name exists!");
                 else
                     MessageBox.Show("Failed to add project: " + ex.Message);
             }
             MySqlDataReader reader = null;
-            ProjectObject ret = null;
-            query = string.Format("select id, obozn, naimen, descr, closed from _pid where obozn='{0}'", o.obozn, o.naimen, o.descr);
+            BaseObject ret = null;
+            query = string.Format("select id, obozn, naimen, descr, closed from {0} where obozn='{1}'", table, o.obozn);
             cmd = new MySqlCommand(query, m_conn);
             try
             {
@@ -321,7 +322,7 @@ namespace libspec
                 {
                     object[] values = new object[reader.FieldCount];
                     reader.GetValues(values);
-                    ret = new ProjectObject(values);
+                    ret = new BaseObject(values);
                 }
             }
             catch (MySqlException ex)

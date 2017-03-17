@@ -118,7 +118,7 @@ namespace libspec
         {
             m_nodeToFill = treeView.CurrentNode;
             if (m_nodeToFill != null && ButtonActionEvent != null)
-                ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.AddGroup, treeView.CurrentNode.Tag));
+                ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.AddGroup, treeView.CurrentNode.Tag as BaseObject));
         }
     }
 }
