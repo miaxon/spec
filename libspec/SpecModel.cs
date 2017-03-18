@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using libspec.Objects;
 using libspec.ViewItem;
 using libspec.Dialogs;
-
+using libspec.Data;
 namespace libspec
 {
     public class SpecModel
@@ -39,13 +39,13 @@ namespace libspec
                 switch(e.Action)
                 {
                     case ViewEvent.ButtonAction.AddProject:
-                        o = m_da.AddObject("_pid", o);                        
+                        o = m_da.AddProject(o as ProjectObject);                        
                         break;
                     case ViewEvent.ButtonAction.AddGroup:
-                        o = m_da.AddObject("_gid", o, e.Target.id);
+                        //o = m_da.AddObject("_gid", o, e.Target.id);
                         break;
                     case ViewEvent.ButtonAction.AddDoc:
-                        o = m_da.AddObject("_did", o, e.Target.id);
+                        //o = m_da.AddObject("_did", o, e.Target.id);
                         break;
                 }
                 if (o!= null && o.id > 0)

@@ -61,21 +61,42 @@ namespace libspec
         {
             treeView.Nodes.Clear();
             foreach (ProjectObject o in list)
-                AddObject(o);            
+            {
+                TreeGridNode node = treeView.Nodes.Add(o.obozn);
+                node.Image = Utils.GetNodeImage(o);
+                node.Cells[1].Value = o.naimen;
+                node.Cells[8].Value = o.descr;
+                node.Tag = o;
+            }
             stlblNumChilds.Text = "элементов: " + list.Count;
         }
         internal void FillProject(List<GroupObject> list)
         {
             m_nodeToFill.Nodes.Clear();
             foreach (GroupObject o in list)
-                AddObject(o);
+            {
+                TreeGridNode node = m_nodeToFill.Nodes.Add(o.obozn);
+                node.Image = Utils.GetNodeImage(o);
+                node.Cells[1].Value = o.naimen;
+                node.Cells[8].Value = o.descr;
+                node.Tag = o;
+            }
+            m_nodeToFill.Expand();
             stlblNumChilds.Text = "элементов: " + list.Count;
         }
         internal void FillGroup(List<DocObject> list)
         {
             m_nodeToFill.Nodes.Clear();
             foreach (DocObject o in list)
-                AddObject(o);            
+            {
+                TreeGridNode node = m_nodeToFill.Nodes.Add(o.obozn);
+                node.Image = Utils.GetNodeImage(o);
+                node.Cells[1].Value = o.naimen;
+                node.Cells[2].Value = (o as DocObject).num_kol;
+                node.Cells[8].Value = o.descr;
+                node.Tag = o;
+            }
+            m_nodeToFill.Expand();
             stlblNumChilds.Text = "элементов: " + list.Count;
         }
         
