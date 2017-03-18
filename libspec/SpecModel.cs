@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows.Forms;
 using libspec.Objects;
 using libspec.ViewItem;
-
+using libspec.Data;
 namespace libspec
 {
     public class SpecModel
