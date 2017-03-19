@@ -128,14 +128,14 @@ namespace libspec
                 stlblNumChilds.Text = "элементов: " + treeView.CurrentNode.Nodes.Count;
         }
 
-        private void tbtnAddProject_Click(object sender, EventArgs e)
+        private void tbtnSelectProject_Click(object sender, EventArgs e)
         {
             m_nodeToFill = null;
             if (ButtonActionEvent != null)
                 ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.AddProject));
         }
 
-        private void tbtnAddGroup_Click(object sender, EventArgs e)
+        private void tbtnAddObject_Click(object sender, EventArgs e)
         {
             m_nodeToFill = treeView.CurrentNode;
             if (m_nodeToFill != null && ButtonActionEvent != null)

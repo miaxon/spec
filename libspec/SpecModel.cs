@@ -42,7 +42,7 @@ namespace libspec
                         o = m_da.AddProject(o as ProjectObject);                        
                         break;
                     case ViewEvent.ButtonAction.AddGroup:
-                        //o = m_da.AddObject("_gid", o, e.Target.id);
+                        o = m_da.AddGroup(o as GroupObject, e.Target.id);
                         break;
                     case ViewEvent.ButtonAction.AddDoc:
                         //o = m_da.AddObject("_did", o, e.Target.id);
