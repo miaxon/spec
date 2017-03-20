@@ -137,7 +137,8 @@ namespace libspec.Data
         {
             MySqlDataReader reader = null;
             string table = Utils.GetTable(o.num_kod);
-            string query = string.Format("select obozn, naimen, descr, kei, marka, gost from {0} where id = {1}", table, o.refid);
+            UInt32 refid = o.refid == 0 ? o.id : o.refid;
+            string query = string.Format("select obozn, naimen, descr, kei, marka, gost from {0} where id = {1}", table, refid);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             try
             {

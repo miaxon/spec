@@ -307,7 +307,7 @@ namespace libspec
                 return;
             if (m_nodeToFill.Level == 3)
             {
-                SearchPozDialog dlg = new SearchPozDialog();
+                SearchPozDialog dlg = new SearchPozDialog(m_nodeToFill);
                 dlg.SearchEvent += new EventHandler<SearchEventArgs>(dlg_SearchEvent);
                 dlg.ExpandEvent += new EventHandler<ExpandEventArgs>(dlg_ExpandEvent);
                 dlg.ShowDialog();

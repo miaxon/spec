@@ -51,6 +51,23 @@ namespace libspec.Objects
             marka = (string)values[4];
             gost = (string)values[5];
         }
+        public PozObject Clone(UInt32 refid)
+        {
+            PozObject o = new PozObject();
+            o.m_refid = refid;
+            o.num_kol = num_kol;
+            o.num_kod = num_kod;
+            o.m_id = 0;
+            o.num_kfr = num_kfr;
+            o.num_knr = num_knr;
+            o.obozn = obozn;
+            o.naimen = naimen;
+            o.descr = descr;
+            o.kei = kei;
+            o.marka = marka;
+            o.gost = gost;
+            return o;
+        }
         public PozObject() { }
     }
 }

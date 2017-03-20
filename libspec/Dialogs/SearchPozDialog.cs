@@ -20,11 +20,19 @@ namespace libspec.Dialogs
         #endregion
         private int m_num_kod;
         private TreeGridNode m_nodeToFill;
-        public SearchPozDialog()
+        private TreeGridNode m_nodeDoc;
+        private ToolStripButton m_btnChecked;
+        public SearchPozDialog(TreeGridNode nodeDoc)
         {
             InitializeComponent();
+            tbtn_lid.Checked = true;
+            m_btnChecked = tbtn_lid;
+            m_num_kod = Convert.ToInt32(tbtn_lid.Tag);
+            Text = "Поиск позиций: " + Utils.NumKodString(m_num_kod);
+            m_nodeDoc = nodeDoc;
+            ttxtGost.Enabled = tbtnSearchGost.Enabled = false;
         }
-        
+
 
         public void FillPoz(List<Objects.PozObject> list)
         {
@@ -77,6 +85,11 @@ namespace libspec.Dialogs
 
         private void tbtnSearchObozn_Click(object sender, EventArgs e)
         {
+            SearchObozn();
+        }
+
+        private void SearchObozn()
+        {
             string str = ttxtObozn.Text;
             if (str.Length > 5)
             {
@@ -85,13 +98,88 @@ namespace libspec.Dialogs
                 SearchEvent(this, new SearchEventArgs("obozn", str, m_num_kod));
             }
         }
+        private void SearchGost()
+        {
+            string str = ttxtGost.Text;
+            if (str.Length > 5)
+            {
 
+                m_nodeToFill = null;
+                SearchEvent(this, new SearchEventArgs("gost", str, m_num_kod));
+            }
+        }
         private void tbtn_num_kod_Click(object sender, EventArgs e)
         {
-            m_num_kod = Convert.ToInt32((sender as ToolStripButton).Tag);
+            ToolStripButton btn = sender as ToolStripButton;
+            if (btn.CheckState == CheckState.Checked)
+                return;
+            Clear();
+            btn.Checked = true;
+            m_btnChecked.Checked = false;
+            m_btnChecked = btn;
+            m_num_kod = Convert.ToInt32(btn.Tag);
             Text = "Поиск позиций: " + Utils.NumKodString(m_num_kod);
+            ttxtGost.Enabled = tbtnSearchGost.Enabled = btn.Equals(tbtn_mid);
+
         }
 
-        
+        private void treeView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Modifiers == Keys.Control && e.KeyCode == Keys.Space)
+            {
+                AddPoz();
+            }
+            if (e.Modifiers == Keys.Control && e.KeyCode == Keys.Z)
+            {
+                Clear();
+            }
+        }
+        private void Clear()
+        {
+            treeView.Nodes.Clear();
+            ttxtGost.Text = "";
+            ttxtObozn.Text = "";
+        }
+        private void AddPoz()
+        {
+            m_nodeToFill = treeView.CurrentNode;
+            if (m_nodeToFill != null && m_nodeDoc != null)
+            {
+                PozObject poz = m_nodeToFill.Tag as PozObject;
+                if (poz.num_kod != m_num_kod)
+                    return;
+                DocObject doc = m_nodeDoc.Tag as DocObject;
+                PozObject o = poz.Clone(doc.id);
+                TreeGridNode node = m_nodeDoc.Nodes.Add(o.obozn);
+                UpdateNode(node, o);
+            }
+        }
+
+        private void tbtnIsert_Click(object sender, EventArgs e)
+        {
+            AddPoz();
+        }
+
+        private void tbtnClear_Click(object sender, EventArgs e)
+        {
+            Clear();
+        }
+
+        private void ttxtObozn_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                SearchObozn();
+        }
+
+        private void ttxtGost_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                SearchGost();
+        }
+
+        private void tbtnSearchGost_Click(object sender, EventArgs e)
+        {
+            SearchGost();
+        }
     }
 }

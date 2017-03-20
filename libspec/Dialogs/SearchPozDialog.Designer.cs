@@ -92,7 +92,7 @@
             this.tbtnIsert});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
-            this.toolStrip.Size = new System.Drawing.Size(1253, 25);
+            this.toolStrip.Size = new System.Drawing.Size(1131, 25);
             this.toolStrip.TabIndex = 1;
             this.toolStrip.Text = "toolStrip1";
             // 
@@ -195,6 +195,7 @@
             // 
             this.ttxtObozn.Name = "ttxtObozn";
             this.ttxtObozn.Size = new System.Drawing.Size(100, 25);
+            this.ttxtObozn.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ttxtObozn_KeyDown);
             // 
             // tbtnSearchObozn
             // 
@@ -222,6 +223,7 @@
             // 
             this.ttxtGost.Name = "ttxtGost";
             this.ttxtGost.Size = new System.Drawing.Size(100, 25);
+            this.ttxtGost.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ttxtGost_KeyDown);
             // 
             // tbtnSearchGost
             // 
@@ -232,6 +234,7 @@
             this.tbtnSearchGost.Size = new System.Drawing.Size(23, 22);
             this.tbtnSearchGost.Text = "toolStripButton2";
             this.tbtnSearchGost.ToolTipText = "искать";
+            this.tbtnSearchGost.Click += new System.EventHandler(this.tbtnSearchGost_Click);
             // 
             // toolStripSeparator2
             // 
@@ -247,6 +250,7 @@
             this.tbtnClear.Size = new System.Drawing.Size(23, 22);
             this.tbtnClear.Text = "toolStripButton1";
             this.tbtnClear.ToolTipText = "очистить";
+            this.tbtnClear.Click += new System.EventHandler(this.tbtnClear_Click);
             // 
             // toolStripSeparator3
             // 
@@ -255,12 +259,14 @@
             // 
             // tbtnIsert
             // 
+            this.tbtnIsert.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.tbtnIsert.Image = global::libspec.Properties.Resources.accept;
             this.tbtnIsert.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tbtnIsert.Name = "tbtnIsert";
-            this.tbtnIsert.Size = new System.Drawing.Size(132, 22);
+            this.tbtnIsert.Size = new System.Drawing.Size(23, 22);
             this.tbtnIsert.Text = "Добавить позицию";
             this.tbtnIsert.ToolTipText = "добавить в текущий документ";
+            this.tbtnIsert.Click += new System.EventHandler(this.tbtnIsert_Click);
             // 
             // treeView
             // 
@@ -284,8 +290,9 @@
             this.treeView.Name = "treeView";
             this.treeView.RowHeadersVisible = false;
             this.treeView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.treeView.Size = new System.Drawing.Size(1253, 601);
+            this.treeView.Size = new System.Drawing.Size(1131, 486);
             this.treeView.TabIndex = 2;
+            this.treeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView_KeyDown);
             this.treeView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.treeView_MouseDoubleClick);
             // 
             // obozn
@@ -363,9 +370,9 @@
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 604);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 489);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1253, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1131, 22);
             this.statusStrip1.TabIndex = 3;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -373,11 +380,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1253, 626);
+            this.ClientSize = new System.Drawing.Size(1131, 511);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.treeView);
             this.Controls.Add(this.toolStrip);
             this.Name = "SearchPozDialog";
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "SearchPozDialog";
             this.toolStrip.ResumeLayout(false);
             this.toolStrip.PerformLayout();
