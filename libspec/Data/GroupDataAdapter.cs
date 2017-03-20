@@ -28,18 +28,55 @@ namespace libspec.Data
             }
             return GroupByObozn(o.obozn, parent);
         }
-        public void DeleteGroup(GroupObject o)
+        public bool SetStatusGroup(ref GroupObject o, Closed status)
         {
-            string query = string.Format("delete from _pid where id = {0}", o.id);
+            string query = null;
+            MySqlCommand cmd = null;
+            int r = 0;
+            query = string.Format("update _gid set closed='{0}' where id = {1}", status, o.id);
+            cmd = new MySqlCommand(query, m_conn);
+            try
+            {
+                r = cmd.ExecuteNonQuery();
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Failed to delete doc (2): " + ex.Message);
+                return false;
+            }
+            if (r > 0)
+                o.status = status;
+            return r > 0;
+        }
+        public bool DeleteGroup(GroupObject o)
+        {
+            int r = 0;
+            string query = string.Format("select count(*) from _did where parent = {0}", o.id);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             try
             {
-                int r = cmd.ExecuteNonQuery();
+                r = cmd.ExecuteNonQuery();
+                if (r > 0)
+                    return false;
             }
             catch (MySqlException ex)
             {
                 MessageBox.Show("Failed to populate projects list: " + ex.Message);
+                return false;
             }
+
+            query = string.Format("delete from _gid where id = {0}", o.id);
+            cmd = new MySqlCommand(query, m_conn);
+            try
+            {
+                r = cmd.ExecuteNonQuery();
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Failed to populate projects list: " + ex.Message);
+                return false;
+            }
+            return r > 0;
         }
         public void UpdateGroup(GroupObject o)
         {

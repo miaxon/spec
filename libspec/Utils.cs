@@ -6,9 +6,11 @@ using System.Windows.Forms;
 using libspec.Properties;
 using libspec.Objects;
 using System.Drawing;
+using Microsoft.Win32;
 
 namespace libspec
 {
+    
     public static class Utils
     {
         private static Dictionary<int, string> m_tables;
@@ -72,12 +74,23 @@ namespace libspec
             m_imageList.Images.Add("project_minus", Resources.project_minus);
             m_imageList.Images.Add("group_minus", Resources.group_minus);
             m_imageList.Images.Add("doc_minus", Resources.doc_minus);
+            m_imageList.Images.Add("project_plus", Resources.project_plus);
+            m_imageList.Images.Add("group_plus", Resources.group_plus);
+            m_imageList.Images.Add("doc_plus", Resources.doc_plus);
             m_imageList.Images.Add("lid", Resources.lid);
             m_imageList.Images.Add("mid3", Resources.mid3);
             m_imageList.Images.Add("oid", Resources.oid);
             m_imageList.Images.Add("bid", Resources.bid);
             m_imageList.Images.Add("cid", Resources.cid);
             m_imageList.Images.Add("pok", Resources.pok);
+            m_imageList.Images.Add("book", Resources.book);
+            m_imageList.Images.Add("add", Resources.add);            
+            m_imageList.Images.Add("update", Resources.update);
+            m_imageList.Images.Add("cross", Resources.cross);
+            m_imageList.Images.Add("accept", Resources.accept);
+            m_imageList.Images.Add("find", Resources.find);
+            m_imageList.Images.Add("clear", Resources.clear);
+
         }
         public static string GetTable(int num_kod)
         {
@@ -139,5 +152,34 @@ namespace libspec
             return m_actions[(int)action];
         }
 
+        public static void SaveProjectList(List<ProjectObject> list)
+        {
+            RegistryKey currentUserKey = Registry.CurrentUser;
+            RegistryKey specKey = currentUserKey.CreateSubKey("Spec");
+            foreach (string obozn in specKey.GetSubKeyNames())
+                specKey.DeleteSubKey(obozn);
+            foreach (ProjectObject o in list)
+            {
+                RegistryKey key = specKey.CreateSubKey(o.obozn);
+                key.SetValue("id", o.id);
+                key.SetValue("naimen", o.naimen);
+                key.SetValue("descr", o.descr);
+                key.SetValue("status", o.status);
+            }
+        }
+        public static List<ProjectObject> LoadProjectList()
+        {
+            List<ProjectObject> list = new List<ProjectObject>();
+            RegistryKey currentUserKey = Registry.CurrentUser;
+            RegistryKey specKey = currentUserKey.CreateSubKey("Spec");
+            foreach (string obozn in specKey.GetSubKeyNames())
+            {
+                RegistryKey key = specKey.CreateSubKey(obozn);
+                object[] values = new object[] { Convert.ToUInt32(key.GetValue("id")), obozn, key.GetValue("naimen"), key.GetValue("descr"), key.GetValue("status") };
+                ProjectObject o = new ProjectObject(values);
+                list.Add(o);
+            }
+            return list;
+        }
     }
 }

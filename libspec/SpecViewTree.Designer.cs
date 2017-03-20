@@ -28,15 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SpecViewTree));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.tbtnSelectProject = new System.Windows.Forms.ToolStripButton();
-            this.tbtnAddObject = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.tbtnAddProject = new System.Windows.Forms.ToolStripButton();
+            this.tbtnAddGroup = new System.Windows.Forms.ToolStripButton();
+            this.tbtnAddDoc = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.tbtnOpen = new System.Windows.Forms.ToolStripButton();
+            this.tbtnClose = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.tbtnDelObject = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.tbntUpdate = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.stlblNumChilds = new System.Windows.Forms.ToolStripStatusLabel();
             this.treeView = new AdvancedDataGridView.TreeGridView();
@@ -49,6 +59,7 @@
             this.kfr = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.knr = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.description = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tbtnAddPoz = new System.Windows.Forms.ToolStripButton();
             this.toolStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.treeView)).BeginInit();
@@ -58,7 +69,19 @@
             // 
             this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tbtnSelectProject,
-            this.tbtnAddObject});
+            this.toolStripSeparator3,
+            this.tbtnAddProject,
+            this.tbtnAddGroup,
+            this.tbtnAddDoc,
+            this.toolStripSeparator4,
+            this.tbtnOpen,
+            this.tbtnClose,
+            this.toolStripSeparator1,
+            this.tbtnDelObject,
+            this.toolStripSeparator2,
+            this.tbntUpdate,
+            this.toolStripSeparator5,
+            this.tbtnAddPoz});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.Size = new System.Drawing.Size(1380, 25);
@@ -68,24 +91,115 @@
             // tbtnSelectProject
             // 
             this.tbtnSelectProject.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbtnSelectProject.Image = ((System.Drawing.Image)(resources.GetObject("tbtnSelectProject.Image")));
+            this.tbtnSelectProject.Image = global::libspec.Properties.Resources.book;
             this.tbtnSelectProject.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tbtnSelectProject.Name = "tbtnSelectProject";
             this.tbtnSelectProject.Size = new System.Drawing.Size(23, 22);
             this.tbtnSelectProject.Text = "toolStripButton1";
-            this.tbtnSelectProject.ToolTipText = "добавить проект";
+            this.tbtnSelectProject.ToolTipText = "выбрать проект";
             this.tbtnSelectProject.Click += new System.EventHandler(this.tbtnSelectProject_Click);
             // 
-            // tbtnAddObject
+            // toolStripSeparator3
             // 
-            this.tbtnAddObject.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbtnAddObject.Image = ((System.Drawing.Image)(resources.GetObject("tbtnAddObject.Image")));
-            this.tbtnAddObject.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tbtnAddObject.Name = "tbtnAddObject";
-            this.tbtnAddObject.Size = new System.Drawing.Size(23, 22);
-            this.tbtnAddObject.Text = "toolStripButton1";
-            this.tbtnAddObject.ToolTipText = "добавить группу";
-            this.tbtnAddObject.Click += new System.EventHandler(this.tbtnAddObject_Click);
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            // 
+            // tbtnAddProject
+            // 
+            this.tbtnAddProject.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbtnAddProject.Image = global::libspec.Properties.Resources.project_plus;
+            this.tbtnAddProject.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbtnAddProject.Name = "tbtnAddProject";
+            this.tbtnAddProject.Size = new System.Drawing.Size(23, 22);
+            this.tbtnAddProject.Text = "toolStripButton1";
+            this.tbtnAddProject.ToolTipText = "добавить проект";
+            this.tbtnAddProject.Click += new System.EventHandler(this.tbtnAddProject_Click);
+            // 
+            // tbtnAddGroup
+            // 
+            this.tbtnAddGroup.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbtnAddGroup.Image = global::libspec.Properties.Resources.group_plus;
+            this.tbtnAddGroup.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbtnAddGroup.Name = "tbtnAddGroup";
+            this.tbtnAddGroup.Size = new System.Drawing.Size(23, 22);
+            this.tbtnAddGroup.Text = "toolStripButton1";
+            this.tbtnAddGroup.ToolTipText = "добавить группу";
+            this.tbtnAddGroup.Click += new System.EventHandler(this.tbtnAddGroup_Click);
+            // 
+            // tbtnAddDoc
+            // 
+            this.tbtnAddDoc.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbtnAddDoc.Image = global::libspec.Properties.Resources.doc_plus;
+            this.tbtnAddDoc.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbtnAddDoc.Name = "tbtnAddDoc";
+            this.tbtnAddDoc.Size = new System.Drawing.Size(23, 22);
+            this.tbtnAddDoc.Text = "toolStripButton2";
+            this.tbtnAddDoc.ToolTipText = "добавить документ";
+            this.tbtnAddDoc.Click += new System.EventHandler(this.tbtnAddDoc_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
+            // 
+            // tbtnOpen
+            // 
+            this.tbtnOpen.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbtnOpen.Image = global::libspec.Properties.Resources.add;
+            this.tbtnOpen.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbtnOpen.Name = "tbtnOpen";
+            this.tbtnOpen.Size = new System.Drawing.Size(23, 22);
+            this.tbtnOpen.Text = "toolStripButton1";
+            this.tbtnOpen.ToolTipText = "включить в расчет";
+            this.tbtnOpen.Click += new System.EventHandler(this.tbtnOpen_Click);
+            // 
+            // tbtnClose
+            // 
+            this.tbtnClose.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbtnClose.Image = global::libspec.Properties.Resources.delete;
+            this.tbtnClose.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbtnClose.Name = "tbtnClose";
+            this.tbtnClose.Size = new System.Drawing.Size(23, 22);
+            this.tbtnClose.Text = "toolStripButton1";
+            this.tbtnClose.ToolTipText = "исключить из расчета";
+            this.tbtnClose.Click += new System.EventHandler(this.tbtnClose_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // tbtnDelObject
+            // 
+            this.tbtnDelObject.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbtnDelObject.Image = global::libspec.Properties.Resources.cross;
+            this.tbtnDelObject.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbtnDelObject.Name = "tbtnDelObject";
+            this.tbtnDelObject.Size = new System.Drawing.Size(23, 22);
+            this.tbtnDelObject.Text = "toolStripButton1";
+            this.tbtnDelObject.ToolTipText = "удалить";
+            this.tbtnDelObject.Click += new System.EventHandler(this.tbtnDelObject_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // tbntUpdate
+            // 
+            this.tbntUpdate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbntUpdate.Image = global::libspec.Properties.Resources.update;
+            this.tbntUpdate.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbntUpdate.Name = "tbntUpdate";
+            this.tbntUpdate.Size = new System.Drawing.Size(23, 22);
+            this.tbntUpdate.Text = "toolStripButton1";
+            this.tbntUpdate.ToolTipText = "обновить содержимое";
+            this.tbntUpdate.Click += new System.EventHandler(this.tbntUpdate_Click);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
             // 
             // statusStrip
             // 
@@ -129,6 +243,7 @@
             this.treeView.TabIndex = 2;
             this.treeView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tgView_CellDoubleClick);
             this.treeView.SelectionChanged += new System.EventHandler(this.treeView_SelectionChanged);
+            this.treeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView_KeyDown);
             // 
             // obozn
             // 
@@ -148,8 +263,8 @@
             // 
             // kol
             // 
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.kol.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.kol.DefaultCellStyle = dataGridViewCellStyle1;
             this.kol.HeaderText = "КОЛ";
             this.kol.Name = "kol";
             this.kol.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
@@ -169,8 +284,8 @@
             // 
             // kei
             // 
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.kei.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.kei.DefaultCellStyle = dataGridViewCellStyle2;
             this.kei.HeaderText = "КЕИ";
             this.kei.Name = "kei";
             this.kei.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
@@ -178,8 +293,8 @@
             // 
             // kfr
             // 
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.kfr.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.kfr.DefaultCellStyle = dataGridViewCellStyle3;
             this.kfr.HeaderText = "КФ";
             this.kfr.Name = "kfr";
             this.kfr.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
@@ -187,8 +302,8 @@
             // 
             // knr
             // 
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.knr.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.knr.DefaultCellStyle = dataGridViewCellStyle4;
             this.knr.HeaderText = "НР";
             this.knr.Name = "knr";
             this.knr.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
@@ -197,11 +312,21 @@
             // description
             // 
             this.description.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle10.ForeColor = System.Drawing.Color.Gray;
-            this.description.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.Gray;
+            this.description.DefaultCellStyle = dataGridViewCellStyle5;
             this.description.HeaderText = "ИНФОРМАЦИЯ";
             this.description.Name = "description";
             this.description.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // tbtnAddPoz
+            // 
+            this.tbtnAddPoz.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbtnAddPoz.Image = global::libspec.Properties.Resources.text_list_bullets;
+            this.tbtnAddPoz.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbtnAddPoz.Name = "tbtnAddPoz";
+            this.tbtnAddPoz.Size = new System.Drawing.Size(23, 22);
+            this.tbtnAddPoz.Text = "toolStripButton1";
+            this.tbtnAddPoz.Click += new System.EventHandler(this.tbtnAddPoz_Click);
             // 
             // SpecViewTree
             // 
@@ -238,6 +363,18 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn knr;
         private System.Windows.Forms.DataGridViewTextBoxColumn description;
         private System.Windows.Forms.ToolStripButton tbtnSelectProject;
-        private System.Windows.Forms.ToolStripButton tbtnAddObject;
+        private System.Windows.Forms.ToolStripButton tbtnAddProject;
+        private System.Windows.Forms.ToolStripButton tbtnAddGroup;
+        private System.Windows.Forms.ToolStripButton tbtnAddDoc;
+        private System.Windows.Forms.ToolStripButton tbtnDelObject;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripButton tbtnClose;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripButton tbtnOpen;
+        private System.Windows.Forms.ToolStripButton tbntUpdate;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripButton tbtnAddPoz;
     }
 }

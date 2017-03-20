@@ -4,6 +4,11 @@
     {
         AddProject,
         AddGroup,
-        AddDoc
+        AddDoc,
+        SelectProject,
+        KeyDelete,
+        KeyClose,
+        KeyOpen,
+        KeyUpdate
     }
 }

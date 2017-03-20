@@ -3,14 +3,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using AdvancedDataGridView;
 
 namespace libspec.ViewEvent
 {
     public class ButtonActionEventArgs : EventArgs
     {
         public readonly ButtonAction Action;
-        public readonly BaseObject Target;
-        public ButtonActionEventArgs(ButtonAction action, BaseObject target = null)
+        public readonly TreeGridNode Target;
+        public ButtonActionEventArgs(ButtonAction action, TreeGridNode target = null)
         {
             Action = action;
             Target = target;
