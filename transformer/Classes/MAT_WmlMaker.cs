@@ -25,7 +25,7 @@ namespace transformer
         //private string row;
         //private string sum;
 
-        private string wmlspath = @"C:\Monolit\dms\maintenance\net\wml\";
+        private string wmlspath = Directory.GetCurrentDirectory() + @"\Config\wml\";
 
         public MAT_WmlMaker(int id, string unit, string path, string xml)
         {
@@ -264,8 +264,14 @@ namespace transformer
             mid1.Dispose();
             mid2.Dispose();
             mid3.Dispose();
-            open(wml, dlg.getcheck_listview());
-
+            try
+            {
+                open(wml, dlg.getcheck_listview());
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
         private string format(double n)
         {

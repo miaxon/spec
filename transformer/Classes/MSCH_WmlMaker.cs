@@ -20,7 +20,7 @@ namespace transformer
         private string sum;
         private string row;
         private int ns;
-        private string wmlspath = @"C:\Monolit\dms\maintenance\net\wml\";
+        private string wmlspath = Directory.GetCurrentDirectory() + @"\Config\wml\";
         private string group;
         public MSCH_WmlMaker(int id, string unit, string path, string xml)
         {

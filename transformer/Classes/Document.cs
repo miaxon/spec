@@ -503,7 +503,7 @@ namespace transformer
             }
             string obozn = ds.GetString("obozn");
             if (ds != null) ds.Close();
-            int poz = get_POZ(refid, "cid_", kol, baseTOansi(obozn));
+            int poz = get_POZ(refid, "cid_", kol, obozn);
             
             
             //writer.WriteAttributeString("positions", Convert.ToString(poz));

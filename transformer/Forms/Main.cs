@@ -25,8 +25,7 @@ namespace transformer
         MySqlConnection conn;
         string path;
         string file;
-        //private string basePath = "\\\\server\\dms\\spec\\"
-        private string basePath = "C:\\Monolit\\dms\\spec\\";
+        private string basePath = @"C:\Monolit\spec\";
         public Dlg()
         {
             InitializeComponent();

@@ -11,6 +11,8 @@ using libspec.ViewEvent;
 using libspec.Objects;
 using libspec.Dialogs;
 using System.IO;
+using System.Diagnostics;
+
 namespace libspec
 {
     public enum CPAction
@@ -490,7 +492,23 @@ namespace libspec
             if (!File.Exists(p))
             {
                 MessageBox.Show("Не найден файл программы расчета.");
+                return;
             }
+            m_nodeCurrent = treeView.CurrentNode;
+            if (m_nodeCurrent == null)
+                return;
+            if (m_nodeCurrent.Level > 3) // расчет для документов, групп и проектов
+                return;
+            string cmdLine = "";
+            BaseObject o = m_nodeCurrent.Tag as BaseObject;
+            if (o is DocObject)
+                cmdLine = "document " + o.id;
+            if (o is GroupObject)
+                cmdLine = "group " + o.id;
+            if (o is ProjectObject)
+                cmdLine = "project " + o.id;
+
+            Process.Start(p, cmdLine);
         }
 
 

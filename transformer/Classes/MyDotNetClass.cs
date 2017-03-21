@@ -78,8 +78,8 @@ namespace transformer
         protected const string hgid_Node = "hdr";
         protected const string hpid_Node = "hdr";
 
-        private string xslt_mat = @"C:\Monolit\dms\net\xslt\mat.xslt";
-        private string xslt_doc = @"C:\Monolit\dms\net\xslt\doc.xslt";
+        private string xslt_mat = @"C:\Monolit\xslt\mat.xslt";
+        private string xslt_doc = @"C:\Monolit\xslt\doc.xslt";
 
         private int id;
         private string unit;
@@ -260,6 +260,8 @@ namespace transformer
         }
         public MyDotNetClass(Dlg dlg, int id, string unit, string path, string xml) {
             MyDotNetClass.dlg = dlg;
+            //MyDotNetClass.dbg = new DbgForm();
+           // dbg.Show();
             //t = new Thread(new ThreadStart(this.init));
             this.id = id;
             this.unit = unit;
@@ -320,7 +322,8 @@ namespace transformer
             get_KEI();
             string src = path + "src.xml";
            
-            writer = new XmlTextWriter(src, null);
+            writer = new XmlTextWriter(src, Encoding.UTF8);
+            writer.Formatting = Formatting.Indented;
             writer.WriteStartDocument();
 
             writer.WriteStartElement("root");
@@ -345,7 +348,9 @@ namespace transformer
             if (dlg.getcheck_mat())
             {
                 XmlTextReader r = new XmlTextReader(src);
-                XmlTextWriter w = new XmlTextWriter(path + xml + "_mat.xml", null);
+                XmlTextWriter w = new XmlTextWriter(path + xml + "_mat.xml", Encoding.UTF8);
+                w.Formatting = Formatting.Indented;
+                w.WriteProcessingInstruction("xml", "version='1.0' encoding='UTF-8'");
                 string PI = "type='text/xsl' href='" + xslt_mat + "'";
                 w.WriteProcessingInstruction("xml-stylesheet", PI);
                 w.WriteNode(r, true);
@@ -356,7 +361,9 @@ namespace transformer
             if (dlg.getcheck_doc())
             {
                 XmlTextReader r = new XmlTextReader(src);
-                XmlTextWriter w = new XmlTextWriter(path + xml + "_doc.xml", null);
+                XmlTextWriter w = new XmlTextWriter(path + xml + "_doc.xml", Encoding.UTF8);
+                w.Formatting = Formatting.Indented;
+                w.WriteProcessingInstruction("xml", "version='1.0' encoding='UTF-8'");
                 string PI = "type='text/xsl' href='" + xslt_doc + "'";
                 w.WriteProcessingInstruction("xml-stylesheet", PI);
                 w.WriteNode(r, true);
