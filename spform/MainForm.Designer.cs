@@ -1,13 +1,13 @@
-﻿namespace libspec.Contrlos
+﻿namespace spform
 {
-    partial class ListViewFlickerFree
+    partial class MainForm
     {
         /// <summary>
         /// Требуется переменная конструктора.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary> 
+        /// <summary>
         /// Освободить все используемые ресурсы.
         /// </summary>
         /// <param name="disposing">истинно, если управляемый ресурс должен быть удален; иначе ложно.</param>
@@ -20,7 +20,7 @@
             base.Dispose(disposing);
         }
 
-        #region Код, автоматически созданный конструктором компонентов
+        #region Код, автоматически созданный конструктором форм Windows
 
         /// <summary>
         /// Обязательный метод для поддержки конструктора - не изменяйте
@@ -28,9 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            this.SuspendLayout();
+            // 
+            // Form1
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(1276, 695);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Name = "Form1";
+            this.Text = "Спецификации: заполнение";
+            this.Load += new System.EventHandler(this.Form1_Load);
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+
     }
 }
+

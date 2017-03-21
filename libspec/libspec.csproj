@@ -30,6 +30,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ExpandableGridView">
@@ -49,30 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Contrlos\ListViewFlickerFree.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Contrlos\ListViewFlickerFree.Designer.cs">
-      <DependentUpon>ListViewFlickerFree.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Contrlos\SpecPozVew.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Contrlos\SpecPozVew.Designer.cs">
-      <DependentUpon>SpecPozVew.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Contrlos\SpecTabPage.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Contrlos\SpecTabPage.Designer.cs">
-      <DependentUpon>SpecTabPage.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Contrlos\TabControlEx.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Contrlos\TabControlEx.Designer.cs">
-      <DependentUpon>TabControlEx.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Data\PozDataAdapter.cs" />
     <Compile Include="Data\DocDataAdapter.cs" />
     <Compile Include="Data\FillingDataAdapter.cs" />
     <Compile Include="Data\GroupDataAdapter.cs" />
@@ -116,32 +94,18 @@
     <Compile Include="SpecViewTree.Designer.cs">
       <DependentUpon>SpecViewTree.cs</DependentUpon>
     </Compile>
+    <Compile Include="ViewEvent\AddDocEventArgs.cs" />
+    <Compile Include="ViewEvent\AddPozEventArgs.cs" />
     <Compile Include="ViewEvent\ButtonAction.cs" />
     <Compile Include="ViewEvent\ButtonActionEventArgs.cs" />
     <Compile Include="ViewEvent\ExpandEventArgs.cs" />
+    <Compile Include="ViewEvent\MoveDocEventArgs.cs" />
+    <Compile Include="ViewEvent\MovePozEventArgs.cs" />
     <Compile Include="ViewEvent\SearchEventArgs.cs" />
-    <Compile Include="ViewItem\BaseNode.cs" />
-    <Compile Include="ViewItem\DocNode.cs" />
-    <Compile Include="ViewItem\GroupNode.cs" />
-    <Compile Include="ViewItem\PozViewItem.cs" />
-    <Compile Include="ViewItem\ProjectNode.cs" />
-    <Compile Include="Contrlos\TreeViewFlickerFree.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Utils.cs" />
     <Compile Include="ViewEvent\NodeClickEventArgs.cs" />
-    <Compile Include="ViewItem\SpecDataGridViewRow.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Contrlos\SpecPozVew.resx">
-      <DependentUpon>SpecPozVew.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Contrlos\SpecTabPage.resx">
-      <DependentUpon>SpecTabPage.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Contrlos\TabControlEx.resx">
-      <DependentUpon>TabControlEx.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\AddObjectDialog.resx">
       <DependentUpon>AddObjectDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -239,6 +203,22 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\text_list_bullets.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\page_white_get.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\page_white_go.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\page_white_put.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Config\config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Resources\calculator.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

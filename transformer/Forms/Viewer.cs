@@ -3,24 +3,21 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
+//using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using libspec;
-namespace spform
+
+namespace transformer
 {
-    public partial class Form1 : Form
+    public partial class Viewer : Form
     {
-
-        public Form1()
+        public Viewer(string path)
         {
-
             InitializeComponent();
+            web.Navigate(path);
+            this.Text = path;
+            this.Show();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            SpecMain se = new SpecMain(this);
-        }
     }
 }

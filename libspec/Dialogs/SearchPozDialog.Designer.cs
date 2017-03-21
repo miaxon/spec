@@ -63,9 +63,12 @@
             this.kfr = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.knr = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.description = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.stlblEdit = new System.Windows.Forms.ToolStripStatusLabel();
+            this.stlblNum = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.treeView)).BeginInit();
+            this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip
@@ -193,6 +196,7 @@
             // 
             // ttxtObozn
             // 
+            this.ttxtObozn.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ttxtObozn.Name = "ttxtObozn";
             this.ttxtObozn.Size = new System.Drawing.Size(100, 25);
             this.ttxtObozn.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ttxtObozn_KeyDown);
@@ -221,6 +225,7 @@
             // 
             // ttxtGost
             // 
+            this.ttxtGost.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ttxtGost.Name = "ttxtGost";
             this.ttxtGost.Size = new System.Drawing.Size(100, 25);
             this.ttxtGost.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ttxtGost_KeyDown);
@@ -290,7 +295,7 @@
             this.treeView.Name = "treeView";
             this.treeView.RowHeadersVisible = false;
             this.treeView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.treeView.Size = new System.Drawing.Size(1131, 486);
+            this.treeView.Size = new System.Drawing.Size(1131, 464);
             this.treeView.TabIndex = 2;
             this.treeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView_KeyDown);
             this.treeView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.treeView_MouseDoubleClick);
@@ -368,21 +373,39 @@
             this.description.Name = "description";
             this.description.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
-            // statusStrip1
+            // statusStrip
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 489);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1131, 22);
-            this.statusStrip1.TabIndex = 3;
-            this.statusStrip1.Text = "statusStrip1";
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.stlblEdit,
+            this.stlblNum});
+            this.statusStrip.Location = new System.Drawing.Point(0, 489);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.statusStrip.Size = new System.Drawing.Size(1131, 22);
+            this.statusStrip.TabIndex = 3;
+            this.statusStrip.Text = "statusStrip";
+            // 
+            // stlblEdit
+            // 
+            this.stlblEdit.Name = "stlblEdit";
+            this.stlblEdit.Size = new System.Drawing.Size(1060, 17);
+            this.stlblEdit.Spring = true;
+            this.stlblEdit.Text = "stlblEdit";
+            this.stlblEdit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // stlblNum
+            // 
+            this.stlblNum.Name = "stlblNum";
+            this.stlblNum.Size = new System.Drawing.Size(56, 17);
+            this.stlblNum.Text = "stlblNum";
             // 
             // SearchPozDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1131, 511);
-            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.treeView);
+            this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.toolStrip);
             this.Name = "SearchPozDialog";
             this.ShowInTaskbar = false;
@@ -391,6 +414,8 @@
             this.toolStrip.ResumeLayout(false);
             this.toolStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.treeView)).EndInit();
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -420,7 +445,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn kfr;
         private System.Windows.Forms.DataGridViewTextBoxColumn knr;
         private System.Windows.Forms.DataGridViewTextBoxColumn description;
-        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripButton tbtn_lid;
         private System.Windows.Forms.ToolStripButton tbtn_bid1;
         private System.Windows.Forms.ToolStripButton tbtn_bid2;
@@ -429,6 +454,8 @@
         private System.Windows.Forms.ToolStripButton tbtn_cid;
         private System.Windows.Forms.ToolStripButton tbtn_mid;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripStatusLabel stlblEdit;
+        private System.Windows.Forms.ToolStripStatusLabel stlblNum;
 
     }
 }

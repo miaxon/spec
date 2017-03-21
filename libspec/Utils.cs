@@ -7,10 +7,13 @@ using libspec.Properties;
 using libspec.Objects;
 using System.Drawing;
 using Microsoft.Win32;
+using System.IO;
+using System.Security.Principal;
+using System.Xml;
 
 namespace libspec
 {
-    
+
     public static class Utils
     {
         private static Dictionary<int, string> m_tables;
@@ -19,6 +22,7 @@ namespace libspec
         private static Dictionary<int, string> m_kodes;
         private static Dictionary<int, string> m_actions;
         private static ImageList m_imageList;
+        public static string Server;
         public static void InitMaps()
         {
 
@@ -84,7 +88,7 @@ namespace libspec
             m_imageList.Images.Add("cid", Resources.cid);
             m_imageList.Images.Add("pok", Resources.pok);
             m_imageList.Images.Add("book", Resources.book);
-            m_imageList.Images.Add("add", Resources.add);            
+            m_imageList.Images.Add("add", Resources.add);
             m_imageList.Images.Add("update", Resources.update);
             m_imageList.Images.Add("cross", Resources.cross);
             m_imageList.Images.Add("accept", Resources.accept);
@@ -180,6 +184,53 @@ namespace libspec
                 list.Add(o);
             }
             return list;
+        }
+
+        public static string GetRandomString()
+        {
+            string path = Path.GetRandomFileName();
+            path = path.Replace(".", ""); // Remove period.
+            return path.ToUpper(); ;
+        }
+
+        public static string GetUserName()
+        {
+            WindowsIdentity idetnity = WindowsIdentity.GetCurrent();
+            return idetnity.Name.Split('\\')[1];
+
+        }
+
+        public static bool CheckAccess()
+        {
+            string user = GetUserName();
+            string p = Directory.GetCurrentDirectory() + @"\Config\config.xml";
+            if (!File.Exists(p))
+            {
+                MessageBox.Show("Не найден файл конфигураци.");
+                return false;
+            }
+            XmlTextReader reader = new XmlTextReader(p);
+            bool ret = false;
+            string admis = "";
+            while (reader.Read())
+            {
+                if (reader.NodeType == XmlNodeType.Element && reader.Name == "server")
+                {
+                    if (!reader.MoveToAttribute("address"))
+
+                        MessageBox.Show("Файл конфигурации не содержит address.");
+                    else
+                        Server = reader.Value;
+                    if (!reader.MoveToAttribute("admins"))
+                        MessageBox.Show("Файл конфигурации не содержит admins.");
+                    else
+                        admis = reader.Value;
+
+                }
+            }
+            reader.Close();
+            ret = !string.IsNullOrEmpty(Server) && !string.IsNullOrEmpty(admis) && admis.Contains(user);
+            return ret;
         }
     }
 }

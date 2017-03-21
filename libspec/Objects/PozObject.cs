@@ -51,13 +51,13 @@ namespace libspec.Objects
             marka = (string)values[4];
             gost = (string)values[5];
         }
-        public PozObject Clone(UInt32 refid)
+        public PozObject Clone()
         {
             PozObject o = new PozObject();
-            o.m_refid = refid;
+            o.m_refid = m_refid;
             o.num_kol = num_kol;
             o.num_kod = num_kod;
-            o.m_id = 0;
+            o.m_id = m_id;
             o.num_kfr = num_kfr;
             o.num_knr = num_knr;
             o.obozn = obozn;

@@ -11,9 +11,10 @@ namespace libspec.Data
 {
     public partial class SpecDataAdapter
     {
-        public DocObject AddDoc(DocObject o, UInt32 parent)
+        public DocObject AddDoc(DocObject o, UInt32 parent, bool copy = false)
         {
-            string query = string.Format("insert into lid (obozn, descr) values('{0}', '{1}')", o.obozn, o.descr);
+            string obozn = copy ? o.obozn + " (" + Utils.GetRandomString() +  ")" : o.obozn;
+            string query = string.Format("insert into lid (obozn, descr) values('{0}', '{1}')", obozn, o.descr);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             try
             {
@@ -27,7 +28,7 @@ namespace libspec.Data
                     MessageBox.Show("Failed to add project: " + ex.Message);
                 return null;
             }
-            UInt32 uid = DocIdByObozn(o.obozn);
+            UInt32 uid = DocIdByObozn(obozn);
             if (uid == 0)
                 return null;
             query = string.Format("insert into _did (parent, uid) values({0}, {1})", parent, uid);
@@ -41,7 +42,13 @@ namespace libspec.Data
                 MessageBox.Show("Failed to add project: " + ex.Message);
                 return null;
             }
-            return DocByObozn(o.obozn);
+            DocObject doc = DocByObozn(obozn);
+            List<PozObject> list = GetPozList("lid_old", o.refid);
+            foreach (PozObject poz in list)
+            {
+                AddPoz(doc, poz);
+            }
+            return doc;
         }
 
         public bool SetStatusDoc(ref DocObject o, Closed status)
@@ -107,22 +114,21 @@ namespace libspec.Data
             }
             return ret != 0;
         }
-        public void UpdateDoc(DocObject o)
+        public bool UpdateDoc(DocObject o)
         {
             string query = string.Format("update _pid set obozn = '{0}', naimen = '{1}', descr = '{2}', closed= '{3}' where id = {4}", o.obozn, o.naimen, o.descr, o.status, o.id);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
+            int ret = 0;
             try
             {
-                int r = cmd.ExecuteNonQuery();
+                ret = cmd.ExecuteNonQuery();
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show("Failed to populate projects list: " + ex.Message);
+                MessageBox.Show("Failed to update doc: " + ex.Message);
+                return false;
             }
-            finally
-            {
-
-            }
+            return ret > 0;
         }
         private UInt32 DocIdByObozn(string obozn)
         {
@@ -174,6 +180,24 @@ namespace libspec.Data
                 if (reader != null) reader.Close();
             }
             return ret;
+        }
+
+        public bool MoveDoc(DocObject doc, UInt32 parent)
+        {
+            string query = string.Format("update _did set parent={0} where id={1}", parent, doc.id);
+
+            MySqlCommand cmd = new MySqlCommand(query, m_conn);
+            int ret = 0;
+            try
+            {
+                ret = cmd.ExecuteNonQuery();
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Failed to add poz: " + ex.Message);
+                return false;
+            }
+            return ret > 0;
         }
     }
 

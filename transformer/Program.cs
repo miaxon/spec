@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+//using System.Linq;
 using System.Windows.Forms;
 
-namespace spform
+namespace transformer
 {
     static class Program
     {
@@ -15,7 +15,7 @@ namespace spform
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            Application.Run(new Dlg());
         }
     }
 }

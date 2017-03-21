@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using libspec.Objects;
-using libspec.ViewItem;
 using libspec.Dialogs;
 using libspec.Data;
 namespace libspec
@@ -29,7 +28,30 @@ namespace libspec
             m_view.ExpandEvent += new EventHandler<ViewEvent.ExpandEventArgs>(m_view_ExpandEvent);
             m_view.ButtonActionEvent += new EventHandler<ViewEvent.ButtonActionEventArgs>(m_view_ButtonActionEvent);
             m_view.SearchEvent += new EventHandler<ViewEvent.SearchEventArgs>(m_view_SearchEvent);
+            m_view.AddPozEvent += new EventHandler<ViewEvent.AddPozEventArgs>(m_view_AddPozEvent);
+            m_view.MovePozEvent += new EventHandler<ViewEvent.MovePozEventArgs>(m_view_MovePozEvent);
+            m_view.AddDocEvent += new EventHandler<ViewEvent.AddDocEventArgs>(m_view_AddDocEvent);
+            m_view.MoveDocEvent += new EventHandler<ViewEvent.MoveDocEventArgs>(m_view_MoveDocEvent);
+        }
 
+        void m_view_MoveDocEvent(object sender, ViewEvent.MoveDocEventArgs e)
+        {
+            m_da.MoveDoc(e.doc, e.grp.id);
+        }
+
+        void m_view_AddDocEvent(object sender, ViewEvent.AddDocEventArgs e)
+        {
+            m_da.AddDoc(e.doc, e.grp.id, true);
+        }
+
+        void m_view_MovePozEvent(object sender, ViewEvent.MovePozEventArgs e)
+        {
+            m_da.MovePoz(e.poz, e.doc);
+        }
+
+        void m_view_AddPozEvent(object sender, ViewEvent.AddPozEventArgs e)
+        {
+            m_da.AddPoz(e.doc, e.poz);
         }
 
         private void m_view_ButtonActionEvent(object sender, ViewEvent.ButtonActionEventArgs e)
@@ -77,6 +99,17 @@ namespace libspec
                             if (MessageBox.Show("Удалить документ " +  o.obozn + "?", "Предупреждение", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.OK)
                             {
                                 if (m_da.DeleteDoc(o))
+                                {
+                                    m_view.RemoveNode(e.Target);
+                                }
+                            }
+                        }
+                        if (e.Target.Tag is PozObject)
+                        {
+                            PozObject o = e.Target.Tag as PozObject;
+                            if (MessageBox.Show("Удалить позицию " + o.obozn + "?", "Предупреждение", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.OK)
+                            {
+                                if (m_da.DeletePoz(o))
                                 {
                                     m_view.RemoveNode(e.Target);
                                 }
@@ -205,9 +238,14 @@ namespace libspec
         void m_view_ExpandEvent(object sender, ViewEvent.ExpandEventArgs e)
         {
             UInt32 refid = e.Object.refid == 0 ? e.Object.id : e.Object.refid;
-            List<PozObject> list = m_da.GetPozList(Utils.GetChildTable(e.Object.num_kod), refid);
-            SearchPozDialog search_view = sender as SearchPozDialog;
-            search_view.FillPoz(list);
+            List<PozObject> list = m_da.GetPozList(Utils.GetChildTable(e.Object.num_kod), refid);            
+            if (sender.Equals(m_view))
+                m_view.FillPoz(list);
+            else
+            {
+                SearchPozDialog search_view = sender as SearchPozDialog;
+                search_view.FillPoz(list);
+            }
 
         }
 
