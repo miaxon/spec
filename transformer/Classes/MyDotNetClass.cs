@@ -78,8 +78,11 @@ namespace transformer
         protected const string hgid_Node = "hdr";
         protected const string hpid_Node = "hdr";
 
-        private string xslt_mat = @"C:\Monolit\xslt\mat.xslt";
-        private string xslt_doc = @"C:\Monolit\xslt\doc.xslt";
+        //private string xslt_mat = @"C:\Monolit\xslt\mat.xslt";
+        //private string xslt_doc = @"C:\Monolit\xslt\doc.xslt";
+
+        private string xslt_mat = Directory.GetCurrentDirectory() + @"\Config\xslt\mat.xslt";
+        private string xslt_doc = Directory.GetCurrentDirectory() + @"\Config\xslt\doc.xslt";
 
         private int id;
         private string unit;
