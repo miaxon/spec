@@ -11,10 +11,35 @@ namespace libspec.View.Data
 {
     public partial class SpecDataAdapter
     {
-        public DocObject AddDoc(DocObject o, UInt32 parent, bool copy = false)
+        public bool DocExists(string obozn)
         {
-            string obozn = copy ? o.obozn + " (" + Utils.GetRandomString() +  ")" : o.obozn;
-            string query = string.Format("insert into lid (obozn, descr) values('{0}', '{1}')", obozn, o.descr);
+            string query = string.Format("select * from lid where obozn='{0}'", obozn);
+            MySqlCommand cmd = new MySqlCommand(query, m_conn);
+            MySqlDataReader reader = null;
+            int ret = 0;
+            try
+            {
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    ret++;
+                }
+
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Failed to add project: " + ex.Message);
+                return false;
+            }
+            finally
+            {
+                if (reader != null) reader.Close();
+            }
+            return ret > 0;
+        }
+        public DocObject AddDoc(DocObject o, UInt32 parent)
+        {
+            string query = string.Format("insert into lid (obozn, descr) values('{0}', '{1}')", o.obozn, o.descr);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             try
             {
@@ -28,7 +53,7 @@ namespace libspec.View.Data
                     MessageBox.Show("Failed to add project: " + ex.Message);
                 return null;
             }
-            UInt32 uid = DocIdByObozn(obozn);
+            UInt32 uid = DocIdByObozn(o.obozn);
             if (uid == 0)
                 return null;
             query = string.Format("insert into _did (parent, uid) values({0}, {1})", parent, uid);
@@ -42,7 +67,7 @@ namespace libspec.View.Data
                 MessageBox.Show("Failed to add project: " + ex.Message);
                 return null;
             }
-            DocObject doc = DocByObozn(obozn);
+            DocObject doc = DocByObozn(o.obozn);
             List<PozObject> list = GetPozList("lid_old", o.refid);
             foreach (PozObject poz in list)
             {
@@ -76,7 +101,7 @@ namespace libspec.View.Data
             int ret = 0;
             string query = null;
             MySqlCommand cmd = null;
-            
+
             query = string.Format("delete from lid_old where parent = {0}", o.refid);
             cmd = new MySqlCommand(query, m_conn);
             try

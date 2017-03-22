@@ -8,12 +8,14 @@ namespace libspec.View.ViewEvent
 {
     public class AddDocEventArgs : System.EventArgs
     {
-        public readonly DocObject doc;
-        public readonly GroupObject grp;
-        public AddDocEventArgs(DocObject d, GroupObject g)
+        public readonly DocObject Doc;
+        public readonly GroupObject Group;
+        public readonly ProjectObject Project;
+        public AddDocEventArgs(DocObject d, GroupObject g, ProjectObject p)
         {
-            doc = d;
-            grp = g;
+            Doc = d;
+            Group = g;
+            Project = p;
         }
     }
 }

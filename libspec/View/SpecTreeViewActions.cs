@@ -83,7 +83,7 @@ namespace libspec.View
             {
                 DocObject doc = m_nodeAction.Tag as DocObject;
                 GroupObject grp = m_nodeCurrent.Tag as GroupObject;
-
+                ProjectObject prj = m_nodeCurrent.Parent.Tag as ProjectObject;
 
                 if (m_action == CPAction.Cut) // перемещение
                 {
@@ -102,7 +102,7 @@ namespace libspec.View
                 {
                     if (AddPozEvent != null)
                     {
-                        AddDocEvent(this, new AddDocEventArgs(doc, grp));
+                        AddDocEvent(this, new AddDocEventArgs(doc, grp, prj));
                         ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyUpdate, m_nodeCurrent));
                     }
                 }

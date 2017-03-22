@@ -8,6 +8,8 @@ using libspec.View.Dialogs;
 using libspec.View.Data;
 using System.Reflection;
 using System.Globalization;
+using libspec.View.ViewEvent;
+
 namespace libspec.View
 {
     public class SpecModel
@@ -157,10 +159,33 @@ namespace libspec.View
         {
             m_da.MoveDoc(e.doc, e.grp.id);
         }
-
+        private BaseObject NewObject(ViewEvent.ButtonAction action, string name = "")
+        {
+            AddObjectDialog dlg = new AddObjectDialog(action, name);
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                return dlg.Object;
+            }
+            return null;
+        }
         private void m_view_AddDocEvent(object sender, ViewEvent.AddDocEventArgs e)
         {
-            m_da.AddDoc(e.doc, e.grp.id, true);
+            string name = string.Format("{0}-{1}-", e.Project.obozn, e.Group.obozn);
+        dlg: DocObject o = NewObject(ViewEvent.ButtonAction.AddDoc, name) as DocObject;
+            if (o == null)
+                return;
+            if (!m_da.DocExists(o.obozn))
+            {
+
+                e.Doc.obozn = o.obozn;
+                e.Doc.naimen = o.naimen;
+                e.Doc.descr = o.descr;
+                m_da.AddDoc(e.Doc, e.Group.id);
+                return;
+            }
+            else
+                goto dlg;
+
         }
 
         private void m_view_MovePozEvent(object sender, ViewEvent.MovePozEventArgs e)
@@ -239,10 +264,10 @@ namespace libspec.View
 
                 case ViewEvent.ButtonAction.AddProject:
                     {
-                        AddObjectDialog dlg = new AddObjectDialog(e.Action);
-                        if (dlg.ShowDialog() == DialogResult.OK)
+                        ProjectObject o = (NewObject(e.Action) as ProjectObject);
+                        if (o != null)
                         {
-                            ProjectObject o = m_da.AddProject(dlg.Object as ProjectObject);
+                            o = m_da.AddProject(o);
                             if (o != null && o.id > 0)
                                 m_view.AddNode(o);
                         }
@@ -251,26 +276,26 @@ namespace libspec.View
                     break;
                 case ViewEvent.ButtonAction.AddGroup:
                     {
-                        AddObjectDialog dlg = new AddObjectDialog(e.Action);
-                        if (dlg.ShowDialog() == DialogResult.OK)
+                        GroupObject o = (NewObject(e.Action) as GroupObject);
+                        if (o != null)
                         {
-                            GroupObject o = m_da.AddGroup(dlg.Object as GroupObject, (e.Target.Tag as ProjectObject).id);
+                            o = m_da.AddGroup(o, (e.Target.Tag as ProjectObject).id);
                             if (o != null && o.id > 0)
                                 m_view.AddNode(o);
-                        }
+                        }                       
 
                     }
                     break;
                 case ViewEvent.ButtonAction.AddDoc:
                     {
                         string name = string.Format("{0}-{1}-", e.Target.Parent.Cells[0].Value, e.Target.Cells[0].Value);
-                        AddObjectDialog dlg = new AddObjectDialog(e.Action, name);
-                        if (dlg.ShowDialog() == DialogResult.OK)
+                        DocObject o = (NewObject(e.Action, name) as DocObject);
+                        if (o != null)
                         {
-                            DocObject o = m_da.AddDoc(dlg.Object as DocObject, (e.Target.Tag as GroupObject).id);
+                            o = m_da.AddDoc(o, (e.Target.Tag as GroupObject).id);
                             if (o != null && o.id > 0)
                                 m_view.AddNode(o);
-                        }
+                        }                        
                     }
                     break;
                 case ViewEvent.ButtonAction.KeyClose:
@@ -281,7 +306,10 @@ namespace libspec.View
                             if (o.status != Closed.Y)
                             {
                                 if (m_da.SetStatusGroup(ref o, Closed.Y))
+                                {
                                     m_view.UpdateNode(o, e.Target);
+                                    UpdateFill(e.Target.Tag);
+                                }
                             }
                         }
                         if (e.Target.Tag is DocObject)
@@ -290,7 +318,10 @@ namespace libspec.View
                             if (o.status != Closed.Y)
                             {
                                 if (m_da.SetStatusDoc(ref o, Closed.Y))
+                                {
                                     m_view.UpdateNode(o, e.Target);
+                                    UpdateFill(e.Target.Tag);
+                                }
                             }
                         }
                     }
@@ -303,7 +334,10 @@ namespace libspec.View
                             if (o.status != Closed.N)
                             {
                                 if (m_da.SetStatusGroup(ref o, Closed.N))
+                                {
                                     m_view.UpdateNode(o, e.Target);
+                                    UpdateFill(e.Target.Tag);
+                                }
                             }
                         }
                         if (e.Target.Tag is DocObject)
@@ -312,36 +346,42 @@ namespace libspec.View
                             if (o.status != Closed.N)
                             {
                                 if (m_da.SetStatusDoc(ref o, Closed.N))
+                                {
                                     m_view.UpdateNode(o, e.Target);
+                                    UpdateFill(e.Target.Tag);
+                                }
                             }
                         }
                     }
                     break;
                 case ViewEvent.ButtonAction.KeyUpdate:
                     {
-                        if (e.Target.Tag is ProjectObject)
-                        {
-                            ProjectObject o = e.Target.Tag as ProjectObject;
-                            List<GroupObject> list = m_da.GetGroupList(o.id);
-                            m_view.FillProject(list);
-                        }
-                        if (e.Target.Tag is GroupObject)
-                        {
-                            GroupObject o = e.Target.Tag as GroupObject;
-                            List<DocObject> list = m_da.GetDocList(o.id);
-                            m_view.FillGroup(list);
-                        }
-                        if (e.Target.Tag is DocObject)
-                        {
-                            DocObject o = e.Target.Tag as DocObject;
-                            List<PozObject> list = m_da.GetPozList("lid_old", o.refid);
-                            m_view.FillPoz(list);
-                        }
+                        UpdateFill(e.Target.Tag);
                     }
                     break;
             }
         }
-
+        private void UpdateFill(object obj)
+        {
+            if (obj is ProjectObject)
+            {
+                ProjectObject o = obj as ProjectObject;
+                List<GroupObject> list = m_da.GetGroupList(o.id);
+                m_view.FillProject(list);
+            }
+            if (obj is GroupObject)
+            {
+                GroupObject o = obj as GroupObject;
+                List<DocObject> list = m_da.GetDocList(o.id);
+                m_view.FillGroup(list);
+            }
+            if (obj is DocObject)
+            {
+                DocObject o = obj as DocObject;
+                List<PozObject> list = m_da.GetPozList("lid_old", o.refid);
+                m_view.FillPoz(list);
+            }
+        }
         private void m_view_SearchEvent(object sender, ViewEvent.SearchEventArgs e)
         {
             string table = Utils.GetTable(e.num_kod);

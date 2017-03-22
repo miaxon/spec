@@ -30,11 +30,7 @@ namespace libspec.View
             {
                 ProjectObject o = obj as ProjectObject;
                 TreeGridNode node = treeView.Nodes.Add(o.obozn);
-                node.Image = Utils.GetNodeImage(o);
-                node.Cells[1].Value = o.naimen;
-                node.Cells[8].Value = o.descr;
-                node.Tag = o;
-
+                UpdateNode(o, node);
             }
             else
             {
@@ -42,20 +38,13 @@ namespace libspec.View
                 {
                     GroupObject o = obj as GroupObject;
                     TreeGridNode node = m_nodeCurrent.Nodes.Add(o.obozn);
-                    node.Image = Utils.GetNodeImage(o);
-                    node.Cells[1].Value = o.naimen;
-                    node.Cells[8].Value = o.descr;
-                    node.Tag = o;
+                    UpdateNode(o, node);
                 }
                 if (obj is DocObject)
                 {
                     DocObject o = obj as DocObject;
                     TreeGridNode node = m_nodeCurrent.Nodes.Add(o.obozn);
-                    node.Image = Utils.GetNodeImage(o);
-                    node.Cells[1].Value = o.naimen;
-                    node.Cells[2].Value = o.num_kol;
-                    node.Cells[8].Value = o.descr;
-                    node.Tag = o;
+                    UpdateNode(o, node);
                 }
             }
         }
@@ -74,6 +63,7 @@ namespace libspec.View
                 node.Cells[1].ReadOnly = false;
                 node.Cells[2].ReadOnly = true;
                 node.Cells[6].ReadOnly = true;
+
             }
             if (obj is GroupObject)
             {
@@ -86,10 +76,7 @@ namespace libspec.View
                 node.Cells[1].ReadOnly = false;
                 node.Cells[2].ReadOnly = true;
                 node.Cells[6].ReadOnly = true;
-                if (o.status == Closed.Y)
-                    node.DefaultCellStyle.ForeColor = Color.Gray;
-                else
-                    node.DefaultCellStyle.ForeColor = Color.Black;                
+                node.DefaultCellStyle.ForeColor = o.status == Closed.Y ? Color.Gray : Color.Black;
             }
             if (obj is DocObject)
             {
@@ -103,10 +90,7 @@ namespace libspec.View
                 node.Cells[1].ReadOnly = false;
                 node.Cells[2].ReadOnly = false;
                 node.Cells[6].ReadOnly = true;
-                if (o.status == Closed.Y)
-                    node.DefaultCellStyle.ForeColor = Color.Gray;
-                else
-                    node.DefaultCellStyle.ForeColor = Color.Black;               
+                node.DefaultCellStyle.ForeColor = o.status == Closed.Y ? Color.Gray : node.Parent.DefaultCellStyle.ForeColor; ;
             }
             if (obj is PozObject)
             {
@@ -136,14 +120,18 @@ namespace libspec.View
                     node.Cells[6].ReadOnly = true;
                 }
                 node.Tag = o;
+                node.DefaultCellStyle.ForeColor = node.Parent.DefaultCellStyle.ForeColor;
+
             }
+
+
         }
         private void SetEditableCells(TreeGridNode node, bool num_kol = true)
         {
             node.Cells[0].ReadOnly = false;
             node.Cells[1].ReadOnly = false;
             node.Cells[2].ReadOnly = num_kol;
-                       
+
         }
     }
 }
