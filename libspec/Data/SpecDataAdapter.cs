@@ -6,8 +6,8 @@ using MySql.Data;
 using MySql.Data.MySqlClient;
 using System.Windows.Forms;
 using System.Data;
-using libspec.Objects;
-namespace libspec.Data
+using libspec.View.Objects;
+namespace libspec.View.Data
 {
     public partial class SpecDataAdapter
     {
@@ -29,6 +29,11 @@ namespace libspec.Data
             catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (m_conn.State == ConnectionState.Open)
+            {
+                Utils.KidList = GetKidList();
             }
         }
         public void Disconnect()
@@ -43,6 +48,50 @@ namespace libspec.Data
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        public bool ExecQuery(string query)
+        {
+            MySqlCommand cmd = new MySqlCommand(query, m_conn);
+            int ret = 0;
+            try
+            {
+                ret = cmd.ExecuteNonQuery();
+            }
+            catch (MySqlException ex)
+            {
+                if (ex.Number == 1062)
+                    MessageBox.Show("Значение уже существет.");
+                else
+                    MessageBox.Show("MySqlError: " + ex.Message);
+                return false;
+            }
+            return ret > 0;
+        }
+        public List<KidObject> GetKidList()
+        {
+            MySqlDataReader reader = null;
+            List<KidObject> list = new List<KidObject>();
+            MySqlCommand cmd = new MySqlCommand("select id, obozn, naimen from kid order by obozn", m_conn);
+            try
+            {
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    object[] values = new object[reader.FieldCount];
 
+                    reader.GetValues(values);
+                    //Type t = values[4].GetType();
+                    list.Add(new KidObject(values));
+                }
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Failed to populate projects list: " + ex.Message);
+            }
+            finally
+            {
+                if (reader != null) reader.Close();
+            }
+            return list;
+        }
     }
 }

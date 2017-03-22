@@ -1,4 +1,4 @@
-﻿using libspec.Objects;
+﻿using libspec.View.Objects;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace libspec.Dialogs
+namespace libspec.View.Dialogs
 {
     public partial class AddObjectDialog : Form
     {

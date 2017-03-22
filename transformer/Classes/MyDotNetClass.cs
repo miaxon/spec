@@ -353,7 +353,6 @@ namespace transformer
                 XmlTextReader r = new XmlTextReader(src);
                 XmlTextWriter w = new XmlTextWriter(path + xml + "_mat.xml", Encoding.UTF8);
                 w.Formatting = Formatting.Indented;
-                w.WriteProcessingInstruction("xml", "version='1.0' encoding='UTF-8'");
                 string PI = "type='text/xsl' href='" + xslt_mat + "'";
                 w.WriteProcessingInstruction("xml-stylesheet", PI);
                 w.WriteNode(r, true);
@@ -366,7 +365,6 @@ namespace transformer
                 XmlTextReader r = new XmlTextReader(src);
                 XmlTextWriter w = new XmlTextWriter(path + xml + "_doc.xml", Encoding.UTF8);
                 w.Formatting = Formatting.Indented;
-                w.WriteProcessingInstruction("xml", "version='1.0' encoding='UTF-8'");
                 string PI = "type='text/xsl' href='" + xslt_doc + "'";
                 w.WriteProcessingInstruction("xml-stylesheet", PI);
                 w.WriteNode(r, true);

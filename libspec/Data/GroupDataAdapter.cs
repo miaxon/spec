@@ -6,8 +6,8 @@ using MySql.Data;
 using MySql.Data.MySqlClient;
 using System.Windows.Forms;
 using System.Data;
-using libspec.Objects;
-namespace libspec.Data
+using libspec.View.Objects;
+namespace libspec.View.Data
 {
     public partial class SpecDataAdapter
     {

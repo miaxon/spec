@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace libspec.Objects
+namespace libspec.View.Objects
 {
+    [Serializable()]
     public class ProjectObject : BaseObject
     {
         public ProjectObject(object[] values) : base(values) { }

@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using System.IO;
 using MySql.Data.MySqlClient;
 using transformer;
-using libspec;
+using libspec.View;
 
 namespace transformer
 {

@@ -1,4 +1,4 @@
-﻿namespace libspec.Dialogs
+﻿namespace libspec.View.Dialogs
 {
     partial class AddObjectDialog
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace libspec.ViewEvent
+namespace libspec.View.ViewEvent
 {
     public class SearchEventArgs : System.EventArgs
     {

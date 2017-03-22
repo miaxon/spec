@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using libspec.Properties;
-using libspec.Objects;
+using libspec.View.Properties;
+using libspec.View.Objects;
 using System.Drawing;
 using Microsoft.Win32;
 using System.IO;
 using System.Security.Principal;
 using System.Xml;
 
-namespace libspec
+namespace libspec.View
 {
 
     public static class Utils
@@ -23,6 +23,7 @@ namespace libspec
         private static Dictionary<int, string> m_actions;
         private static ImageList m_imageList;
         public static string Server;
+        public static List<KidObject> KidList;
         public static void InitMaps()
         {
 
@@ -94,6 +95,7 @@ namespace libspec
             m_imageList.Images.Add("accept", Resources.accept);
             m_imageList.Images.Add("find", Resources.find);
             m_imageList.Images.Add("clear", Resources.clear);
+
 
         }
         public static string GetTable(int num_kod)
@@ -231,6 +233,14 @@ namespace libspec
             reader.Close();
             ret = !string.IsNullOrEmpty(Server) && !string.IsNullOrEmpty(admis) && admis.Contains(user);
             return ret;
+        }
+        public static string GetKidString(string kei)
+        {
+            KidObject k = KidList.Find(o => o.obozn == kei);
+            if (k != null)
+                return k.naimen;
+            else
+                return kei;
         }
     }
 }

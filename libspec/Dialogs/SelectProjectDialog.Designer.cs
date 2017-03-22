@@ -1,4 +1,4 @@
-﻿namespace libspec.Dialogs
+﻿namespace libspec.View.Dialogs
 {
     partial class SelectProjectDialog
     {
@@ -29,13 +29,13 @@
         private void InitializeComponent()
         {
             this.treeView = new AdvancedDataGridView.TreeGridView();
-            this.obozn = new AdvancedDataGridView.TreeGridColumn();
-            this.naimen = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.descr = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOk = new System.Windows.Forms.Button();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.obozn = new AdvancedDataGridView.TreeGridColumn();
+            this.naimen = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.descr = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.treeView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -57,29 +57,6 @@
             this.treeView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.treeView.Size = new System.Drawing.Size(1268, 541);
             this.treeView.TabIndex = 0;
-            // 
-            // obozn
-            // 
-            this.obozn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.obozn.DefaultNodeImage = null;
-            this.obozn.HeaderText = "ОБОЗНАЧЕНИЕ";
-            this.obozn.Name = "obozn";
-            this.obozn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.obozn.Width = 96;
-            // 
-            // naimen
-            // 
-            this.naimen.HeaderText = "НАИМЕНОВАНИЕ";
-            this.naimen.Name = "naimen";
-            this.naimen.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.naimen.Width = 400;
-            // 
-            // descr
-            // 
-            this.descr.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.descr.HeaderText = "ИНФОРМАЦИЯ";
-            this.descr.Name = "descr";
-            this.descr.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // btnCancel
             // 
@@ -118,6 +95,32 @@
             this.label1.TabIndex = 4;
             this.label1.Text = "Поиск:";
             // 
+            // obozn
+            // 
+            this.obozn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.obozn.DefaultNodeImage = null;
+            this.obozn.HeaderText = "ОБОЗНАЧЕНИЕ";
+            this.obozn.Name = "obozn";
+            this.obozn.ReadOnly = true;
+            this.obozn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.obozn.Width = 96;
+            // 
+            // naimen
+            // 
+            this.naimen.HeaderText = "НАИМЕНОВАНИЕ";
+            this.naimen.Name = "naimen";
+            this.naimen.ReadOnly = true;
+            this.naimen.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.naimen.Width = 400;
+            // 
+            // descr
+            // 
+            this.descr.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.descr.HeaderText = "ИНФОРМАЦИЯ";
+            this.descr.Name = "descr";
+            this.descr.ReadOnly = true;
+            this.descr.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
             // SelectProjectDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -144,12 +147,12 @@
         #endregion
 
         private AdvancedDataGridView.TreeGridView treeView;
-        private AdvancedDataGridView.TreeGridColumn obozn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn naimen;
-        private System.Windows.Forms.DataGridViewTextBoxColumn descr;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.TextBox txtSearch;
         private System.Windows.Forms.Label label1;
+        private AdvancedDataGridView.TreeGridColumn obozn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn naimen;
+        private System.Windows.Forms.DataGridViewTextBoxColumn descr;
     }
 }

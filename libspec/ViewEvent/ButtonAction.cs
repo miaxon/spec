@@ -1,4 +1,4 @@
-﻿namespace libspec.ViewEvent
+﻿namespace libspec.View.ViewEvent
 {
     public enum ButtonAction
     {

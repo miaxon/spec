@@ -6,11 +6,11 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using libspec.ViewEvent;
+using libspec.View.ViewEvent;
 using AdvancedDataGridView;
-using libspec.Objects;
+using libspec.View.Objects;
 
-namespace libspec.Dialogs
+namespace libspec.View.Dialogs
 {
     public partial class SearchPozDialog : Form
     {

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using libspec.Objects;
-using libspec.Data;
-namespace libspec
+using libspec.View.Objects;
+using libspec.View.Data;
+namespace libspec.View
 {
     public class SpecMain
     {
@@ -18,14 +18,15 @@ namespace libspec
             if (site == null)
                 return;
             if (Utils.CheckAccess())
-            {
+            {   
+                m_da = new SpecDataAdapter();
                 Utils.InitMaps();
 
                 se = new SpecViewTree();
                 se.Dock = DockStyle.Fill;
                 site.Controls.Add(se);
                 //
-                m_da = new SpecDataAdapter();
+                
                 //
                 m_tree_model = new SpecModel(se, m_da);
             }

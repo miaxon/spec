@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using libspec.Objects;
+using libspec.View.Objects;
 
-namespace libspec.ViewEvent
+namespace libspec.View.ViewEvent
 {
     public class NodeClickEventArgs : System.EventArgs
     {

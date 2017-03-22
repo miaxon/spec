@@ -1,11 +1,11 @@
-﻿using libspec.Objects;
+﻿using libspec.View.Objects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using AdvancedDataGridView;
 
-namespace libspec.ViewEvent
+namespace libspec.View.ViewEvent
 {
     public class ButtonActionEventArgs : EventArgs
     {

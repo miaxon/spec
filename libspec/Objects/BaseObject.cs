@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace libspec.Objects
+namespace libspec.View.Objects
 {
     public enum Closed { N, Y };
     public class BaseObject
