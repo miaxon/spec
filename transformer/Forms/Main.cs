@@ -25,7 +25,8 @@ namespace transformer
         MySqlConnection conn;
         string path;
         string file;
-        private string basePath = @"C:\Monolit\spec\";
+        //private string basePath = @"C:\Monolit\spec\";
+        private string basePath = Directory.GetCurrentDirectory() + @"\data\";
         public Dlg()
         {
             InitializeComponent();
@@ -63,7 +64,15 @@ namespace transformer
         }
         private void Connect()
         {
-
+            try
+            {
+                if (!Directory.Exists(basePath)) Directory.CreateDirectory(basePath);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Не найден путь data в текущем каталоге или отсутствуют права. " + ex.Message);
+                Application.Exit();
+            }
             conn = new MySqlConnection(GetConnectionString());
             conn.Open();
             int parent = 0;
