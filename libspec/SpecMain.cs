@@ -29,6 +29,7 @@ namespace libspec.View
                 
                 //
                 m_tree_model = new SpecModel(se, m_da);
+
             }
             else
             {

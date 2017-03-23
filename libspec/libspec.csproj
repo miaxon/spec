@@ -70,6 +70,9 @@
     <Compile Include="Dialogs\SearchPozDialog.Designer.cs">
       <DependentUpon>SearchPozDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\SearchPozDialogEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Dialogs\SelectProjectDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -80,6 +83,7 @@
     <Compile Include="Objects\DocObject.cs" />
     <Compile Include="Objects\GroupObject.cs" />
     <Compile Include="Objects\KidObject.cs" />
+    <Compile Include="Objects\MidObject.cs" />
     <Compile Include="Objects\PozObject.cs" />
     <Compile Include="Objects\ProjectObject.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -91,18 +95,28 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpecMain.cs" />
     <Compile Include="SpecModel.cs" />
+    <Compile Include="ViewEvent\ExpandMidEventArgs.cs" />
     <Compile Include="ViewEvent\NodeEditEventArgs.cs" />
-    <Compile Include="View\SpecTreeViewActions.cs">
+    <Compile Include="View\SpecViewTableEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\SpecViewTreeActions.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="View\SpecTreeViewButtons.cs">
+    <Compile Include="View\SpecViewTreeButtons.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="View\SpecTreeViewFill.cs">
+    <Compile Include="View\SpecViewTreeFill.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="View\SpecTreeViewNodes.cs">
+    <Compile Include="View\SpecViewTreeNodes.cs">
       <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\SpecViewTable.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\SpecViewTable.Designer.cs">
+      <DependentUpon>SpecViewTable.cs</DependentUpon>
     </Compile>
     <Compile Include="View\SpecViewTree.cs">
       <SubType>UserControl</SubType>
@@ -137,6 +151,9 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\SpecViewTable.resx">
+      <DependentUpon>SpecViewTable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\SpecViewTree.resx">
       <DependentUpon>SpecViewTree.cs</DependentUpon>
@@ -297,6 +314,10 @@
     <Content Include="Config\xslt\mat.xslt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\database.png" />
+    <None Include="Resources\table_row_insert.png" />
+    <None Include="Resources\table_row_delete.png" />
+    <None Include="Resources\table_edit.png" />
     <None Include="Resources\calculator.png" />
   </ItemGroup>
   <ItemGroup />

@@ -35,21 +35,21 @@ namespace libspec.View.Dialogs
                                                 UInt32.Parse("0"),
                                                 txt_obozn.Text,
                                                 txt_naimen.Text,
-                                                DateTime.Now.ToString("Создан: dd-MM-yy HH:mm:ss\r\n  ") + txt_descr.Text,
+                                                DateTime.Now.ToString("Создан: dd-MM-yy HH:mm:ss ") + txt_descr.Text,
                                                 "N" });
                     case ViewEvent.ButtonAction.AddGroup:
                         return new GroupObject(new object[] {
                                                 UInt32.Parse("0"),
                                                 txt_obozn.Text,
                                                 txt_naimen.Text,
-                                                DateTime.Now.ToString("Создан: dd-MM-yy HH:mm:ss  \r\n") +  txt_descr.Text,
+                                                DateTime.Now.ToString("Создан: dd-MM-yy HH:mm:ss ") +  txt_descr.Text,
                                                 "N" });
                     case ViewEvent.ButtonAction.AddDoc:
                         return new DocObject(new object[] {
                                                 UInt32.Parse("0"),
                                                 txt_obozn.Text,
                                                 txt_naimen.Text,
-                                                DateTime.Now.ToString("Создан: dd-MM-yy HH:mm:ss\r\n  ") + txt_descr.Text,
+                                                DateTime.Now.ToString("Создан: dd-MM-yy HH:mm:ss ") + txt_descr.Text,
                                                 "N",
                                                 UInt16.Parse("1"),
                                                 UInt32.Parse("0")});

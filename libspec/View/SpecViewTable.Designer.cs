@@ -1,6 +1,6 @@
-﻿namespace libspec.View.Dialogs
+﻿namespace libspec.View
 {
-    partial class SearchPozDialog
+    partial class SpecViewTable
     {
         /// <summary>
         /// Required designer variable.
@@ -33,7 +33,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SearchPozDialog));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SpecViewTable));
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.tbtn_lid = new System.Windows.Forms.ToolStripButton();
             this.tbtn_bid1 = new System.Windows.Forms.ToolStripButton();
@@ -41,7 +41,10 @@
             this.tbtn_oid = new System.Windows.Forms.ToolStripButton();
             this.tbtn_pok = new System.Windows.Forms.ToolStripButton();
             this.tbtn_cid = new System.Windows.Forms.ToolStripButton();
-            this.tbtn_mid = new System.Windows.Forms.ToolStripButton();
+            this.tbtn_mid0 = new System.Windows.Forms.ToolStripButton();
+            this.tbtn_mid1 = new System.Windows.Forms.ToolStripButton();
+            this.tbtn_mid2 = new System.Windows.Forms.ToolStripButton();
+            this.tbtn_mid3 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.ttxtObozn = new System.Windows.Forms.ToolStripTextBox();
@@ -54,6 +57,7 @@
             this.tbtnClear = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.tbtnIsert = new System.Windows.Forms.ToolStripButton();
+            this.tbtnDelete = new System.Windows.Forms.ToolStripButton();
             this.treeView = new AdvancedDataGridView.TreeGridView();
             this.obozn = new AdvancedDataGridView.TreeGridColumn();
             this.naimen = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -81,7 +85,10 @@
             this.tbtn_oid,
             this.tbtn_pok,
             this.tbtn_cid,
-            this.tbtn_mid,
+            this.tbtn_mid0,
+            this.tbtn_mid1,
+            this.tbtn_mid2,
+            this.tbtn_mid3,
             this.toolStripSeparator4,
             this.toolStripLabel1,
             this.ttxtObozn,
@@ -93,7 +100,8 @@
             this.toolStripSeparator2,
             this.tbtnClear,
             this.toolStripSeparator3,
-            this.tbtnIsert});
+            this.tbtnIsert,
+            this.tbtnDelete});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.Size = new System.Drawing.Size(1131, 25);
@@ -172,17 +180,53 @@
             this.tbtn_cid.ToolTipText = "сложные материалы";
             this.tbtn_cid.Click += new System.EventHandler(this.tbtn_num_kod_Click);
             // 
-            // tbtn_mid
+            // tbtn_mid0
             // 
-            this.tbtn_mid.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbtn_mid.Image = global::libspec.View.Properties.Resources.mid3;
-            this.tbtn_mid.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tbtn_mid.Name = "tbtn_mid";
-            this.tbtn_mid.Size = new System.Drawing.Size(23, 22);
-            this.tbtn_mid.Tag = "9";
-            this.tbtn_mid.Text = "toolStripButton7";
-            this.tbtn_mid.ToolTipText = "материалы";
-            this.tbtn_mid.Click += new System.EventHandler(this.tbtn_num_kod_Click);
+            this.tbtn_mid0.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbtn_mid0.Image = global::libspec.View.Properties.Resources.mid;
+            this.tbtn_mid0.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbtn_mid0.Name = "tbtn_mid0";
+            this.tbtn_mid0.Size = new System.Drawing.Size(23, 22);
+            this.tbtn_mid0.Tag = "94";
+            this.tbtn_mid0.Text = "toolStripButton3";
+            this.tbtn_mid0.ToolTipText = "материалы 0";
+            this.tbtn_mid0.Click += new System.EventHandler(this.tbtn_num_kod_Click);
+            // 
+            // tbtn_mid1
+            // 
+            this.tbtn_mid1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbtn_mid1.Image = global::libspec.View.Properties.Resources.mid;
+            this.tbtn_mid1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbtn_mid1.Name = "tbtn_mid1";
+            this.tbtn_mid1.Size = new System.Drawing.Size(23, 22);
+            this.tbtn_mid1.Tag = "93";
+            this.tbtn_mid1.Text = "toolStripButton2";
+            this.tbtn_mid1.ToolTipText = "материалы 1";
+            this.tbtn_mid1.Click += new System.EventHandler(this.tbtn_num_kod_Click);
+            // 
+            // tbtn_mid2
+            // 
+            this.tbtn_mid2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbtn_mid2.Image = global::libspec.View.Properties.Resources.mid;
+            this.tbtn_mid2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbtn_mid2.Name = "tbtn_mid2";
+            this.tbtn_mid2.Size = new System.Drawing.Size(23, 22);
+            this.tbtn_mid2.Tag = "92";
+            this.tbtn_mid2.Text = "toolStripButton1";
+            this.tbtn_mid2.ToolTipText = "материалы 2";
+            this.tbtn_mid2.Click += new System.EventHandler(this.tbtn_num_kod_Click);
+            // 
+            // tbtn_mid3
+            // 
+            this.tbtn_mid3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbtn_mid3.Image = global::libspec.View.Properties.Resources.mid3;
+            this.tbtn_mid3.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbtn_mid3.Name = "tbtn_mid3";
+            this.tbtn_mid3.Size = new System.Drawing.Size(23, 22);
+            this.tbtn_mid3.Tag = "9";
+            this.tbtn_mid3.Text = "toolStripButton7";
+            this.tbtn_mid3.ToolTipText = "материалы 3";
+            this.tbtn_mid3.Click += new System.EventHandler(this.tbtn_num_kod_Click);
             // 
             // toolStripSeparator4
             // 
@@ -266,13 +310,22 @@
             // tbtnIsert
             // 
             this.tbtnIsert.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbtnIsert.Image = global::libspec.View.Properties.Resources.accept;
+            this.tbtnIsert.Image = global::libspec.View.Properties.Resources.table_row_insert;
             this.tbtnIsert.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tbtnIsert.Name = "tbtnIsert";
             this.tbtnIsert.Size = new System.Drawing.Size(23, 22);
             this.tbtnIsert.Text = "Добавить позицию";
             this.tbtnIsert.ToolTipText = "добавить в текущий документ";
             this.tbtnIsert.Click += new System.EventHandler(this.tbtnIsert_Click);
+            // 
+            // tbtnDelete
+            // 
+            this.tbtnDelete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbtnDelete.Image = global::libspec.View.Properties.Resources.table_row_delete;
+            this.tbtnDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbtnDelete.Name = "tbtnDelete";
+            this.tbtnDelete.Size = new System.Drawing.Size(23, 22);
+            this.tbtnDelete.Text = "toolStripButton1";
             // 
             // treeView
             // 
@@ -405,7 +458,7 @@
             this.stlblNum.Size = new System.Drawing.Size(56, 17);
             this.stlblNum.Text = "stlblNum";
             // 
-            // SearchPozDialog
+            // SpecViewTable
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -414,8 +467,7 @@
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.toolStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "SearchPozDialog";
-            this.ShowInTaskbar = false;
+            this.Name = "SpecViewTable";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "SearchPozDialog";
             this.toolStrip.ResumeLayout(false);
@@ -437,7 +489,6 @@
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
         private System.Windows.Forms.ToolStripTextBox ttxtGost;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripButton tbtnIsert;
         private System.Windows.Forms.ToolStripButton tbtnSearchObozn;
         private System.Windows.Forms.ToolStripButton tbtnSearchGost;
         private System.Windows.Forms.ToolStripButton tbtnClear;
@@ -450,7 +501,7 @@
         private System.Windows.Forms.ToolStripButton tbtn_oid;
         private System.Windows.Forms.ToolStripButton tbtn_pok;
         private System.Windows.Forms.ToolStripButton tbtn_cid;
-        private System.Windows.Forms.ToolStripButton tbtn_mid;
+        private System.Windows.Forms.ToolStripButton tbtn_mid3;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripStatusLabel stlblEdit;
         private System.Windows.Forms.ToolStripStatusLabel stlblNum;
@@ -463,6 +514,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn num_kfr;
         private System.Windows.Forms.DataGridViewTextBoxColumn num_knr;
         private System.Windows.Forms.DataGridViewTextBoxColumn descr;
-
+        private System.Windows.Forms.ToolStripButton tbtn_mid2;
+        private System.Windows.Forms.ToolStripButton tbtn_mid1;
+        private System.Windows.Forms.ToolStripButton tbtn_mid0;
+        private System.Windows.Forms.ToolStripButton tbtnIsert;
+        private System.Windows.Forms.ToolStripButton tbtnDelete;
     }
 }

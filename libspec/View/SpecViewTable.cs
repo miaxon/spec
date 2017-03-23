@@ -10,35 +10,75 @@ using libspec.View.ViewEvent;
 using AdvancedDataGridView;
 using libspec.View.Objects;
 
-namespace libspec.View.Dialogs
+namespace libspec.View
 {
-    public partial class SearchPozDialog : Form
+    public partial class SpecViewTable : Form
     {
         #region events
         public event EventHandler<SearchEventArgs> SearchEvent;
         public event EventHandler<ExpandEventArgs> ExpandEvent;
-        public event EventHandler<AddPozEventArgs> AddPozEvent;
+        public event EventHandler<ExpandMidEventArgs> ExpandMidEvent;
+        //public event EventHandler<AddPozEventArgs> AddPozEvent;
         public event EventHandler<NodeEditEventArgs> NodeEditEvent;
         #endregion
         private int m_num_kod;
         private TreeGridNode m_nodeCurrent;
-        private TreeGridNode m_nodeDoc;
         private ToolStripButton m_btnChecked;
-        public SearchPozDialog(TreeGridNode nodeDoc)
+        public SpecViewTable()
         {
             InitializeComponent();
             tbtn_lid.Checked = true;
             m_btnChecked = tbtn_lid;
             m_num_kod = Convert.ToInt32(tbtn_lid.Tag);
-            Text = "Поиск позиций: " + Utils.NumKodString(m_num_kod);
-            m_nodeDoc = nodeDoc;
+            Text = "Редактирование таблицы: " + Utils.NumKodString(m_num_kod);            
             ttxtGost.Enabled = tbtnSearchGost.Enabled = false;
-            stlblEdit.Text = "Редактируется документ: " + m_nodeDoc.Cells[0].Value.ToString();
+            stlblEdit.Text = "";
             stlblNum.Alignment = ToolStripItemAlignment.Right;
             stlblNum.Text = "";
         }
+        public void FillMid(List<MidObject> list)
+        {
+            if (m_nodeCurrent == null)
+            {
+                treeView.Nodes.Clear();
+                foreach (MidObject o in list)
+                {
+                    TreeGridNode node = treeView.Nodes.Add(o.obozn);
+                    UpdateNode(o, node);
+                }
+                stlblNum.Text = "Найдено элементов: " + list.Count;
+            }
+            else
+            {
+                m_nodeCurrent.Nodes.Clear();
+                foreach (MidObject o in list)
+                {
+                    TreeGridNode node = m_nodeCurrent.Nodes.Add(o.obozn);
+                    UpdateNode(o, node);
+                }
+                stlblNum.Text = "Найдено элементов: " + list.Count;
+            }
+        }
 
-
+        private void UpdateNode(object obj, TreeGridNode node = null)
+        {
+            if (node == null)
+            {
+                node = m_nodeCurrent;
+            }
+            if (obj is MidObject)
+            {
+                MidObject o = obj as MidObject;
+                node.Image = Utils.GetMidImage(o);
+                node.Cells[1].Value = o.naimen;
+                node.Cells[8].Value = o.descr;
+                node.Tag = o;
+                node.Cells[0].ReadOnly = false;
+                node.Cells[1].ReadOnly = false;
+                node.Cells[2].ReadOnly = true;
+                node.Cells[6].ReadOnly = true;
+            }
+        }
         public void FillPoz(List<Objects.PozObject> list)
         {
             if (m_nodeCurrent != null)
@@ -47,7 +87,7 @@ namespace libspec.View.Dialogs
                 foreach (PozObject o in list)
                 {
                     TreeGridNode node = m_nodeCurrent.Nodes.Add(o.obozn);
-                    UpdateNode(o, node);
+                    UpdatePozNode(o, node);
                 }
                 m_nodeCurrent.Expand();
             }
@@ -57,13 +97,13 @@ namespace libspec.View.Dialogs
                 foreach (PozObject o in list)
                 {
                     TreeGridNode node = treeView.Nodes.Add(o.obozn);
-                    UpdateNode(o, node);
+                    UpdatePozNode(o, node);
                 }
                 stlblNum.Text = "Найдено элементов: " + list.Count;
             }
         }
 
-        public void UpdateNode(PozObject o, TreeGridNode node = null)
+        public void UpdatePozNode(PozObject o, TreeGridNode node = null)
         {
             if (node == null)
             {
@@ -83,13 +123,13 @@ namespace libspec.View.Dialogs
         }
 
 
-       
+
 
         private void tbtnSearchObozn_Click(object sender, EventArgs e)
         {
             SearchObozn();
         }
-
+     
         private void SearchObozn()
         {
             string str = ttxtObozn.Text;
@@ -100,7 +140,7 @@ namespace libspec.View.Dialogs
             }
             else
                 stlblNum.Text = "Найдено элементов: <недостаточное количество символов>";
-            
+
         }
         private void SearchGost()
         {
@@ -123,8 +163,14 @@ namespace libspec.View.Dialogs
             m_btnChecked.Checked = false;
             m_btnChecked = btn;
             m_num_kod = Convert.ToInt32(btn.Tag);
-            Text = "Поиск позиций: " + Utils.NumKodString(m_num_kod);
-            ttxtGost.Enabled = tbtnSearchGost.Enabled = btn.Equals(tbtn_mid);
+            Text = "Редактирование таблицы: " + Utils.NumKodString(m_num_kod);
+            ttxtGost.Enabled = tbtnSearchGost.Enabled = btn.Equals(tbtn_mid3) || btn.Equals(tbtn_mid2);
+
+            if (btn.Equals(tbtn_mid0))
+            {
+                m_nodeCurrent = null;
+                SearchEvent(this, new SearchEventArgs("obozn", "", m_num_kod));
+            }
 
         }
 
@@ -149,15 +195,15 @@ namespace libspec.View.Dialogs
         private void AddPoz()
         {
             m_nodeCurrent = treeView.CurrentNode;
-            if (m_nodeCurrent != null && m_nodeDoc != null)
+            if (m_nodeCurrent != null)
             {
-                PozObject poz = m_nodeCurrent.Tag as PozObject;
-                if (poz.num_kod != m_num_kod)
-                    return;
-                DocObject doc = m_nodeDoc.Tag as DocObject;
-                PozObject o = poz.Clone();
-                if (AddPozEvent != null)
-                    AddPozEvent(this, new AddPozEventArgs(o, doc));
+                //PozObject poz = m_nodeCurrent.Tag as PozObject;
+                //if (poz.num_kod != m_num_kod)
+                //    return;
+                //DocObject doc = m_nodeDoc.Tag as DocObject;
+                //PozObject o = poz.Clone();
+                //if (AddPozEvent != null)
+                //    AddPozEvent(this, new AddPozEventArgs(o, doc));
             }
         }
 

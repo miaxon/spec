@@ -122,5 +122,31 @@ namespace libspec.View.Data
             return ret;
 
         }
+        public bool GroupExists(string obozn, UInt32 parent)
+        {
+            string query = string.Format("select * from _gid where obozn='{0}' and parent={1}", obozn, parent);
+            MySqlCommand cmd = new MySqlCommand(query, m_conn);
+            MySqlDataReader reader = null;
+            int ret = 0;
+            try
+            {
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    ret++;
+                }
+
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Failed to add project: " + ex.Message);
+                return false;
+            }
+            finally
+            {
+                if (reader != null) reader.Close();
+            }
+            return ret > 0;
+        }
     }
 }

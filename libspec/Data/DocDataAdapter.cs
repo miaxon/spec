@@ -11,32 +11,7 @@ namespace libspec.View.Data
 {
     public partial class SpecDataAdapter
     {
-        public bool DocExists(string obozn)
-        {
-            string query = string.Format("select * from lid where obozn='{0}'", obozn);
-            MySqlCommand cmd = new MySqlCommand(query, m_conn);
-            MySqlDataReader reader = null;
-            int ret = 0;
-            try
-            {
-                reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    ret++;
-                }
-
-            }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show("Failed to add project: " + ex.Message);
-                return false;
-            }
-            finally
-            {
-                if (reader != null) reader.Close();
-            }
-            return ret > 0;
-        }
+        
         public DocObject AddDoc(DocObject o, UInt32 parent)
         {
             string query = string.Format("insert into lid (obozn, descr) values('{0}', '{1}')", o.obozn, o.descr);
@@ -221,6 +196,32 @@ namespace libspec.View.Data
             {
                 MessageBox.Show("Failed to add poz: " + ex.Message);
                 return false;
+            }
+            return ret > 0;
+        }
+        public bool DocExists(string obozn)
+        {
+            string query = string.Format("select * from lid where obozn='{0}'", obozn);
+            MySqlCommand cmd = new MySqlCommand(query, m_conn);
+            MySqlDataReader reader = null;
+            int ret = 0;
+            try
+            {
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    ret++;
+                }
+
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Failed to add project: " + ex.Message);
+                return false;
+            }
+            finally
+            {
+                if (reader != null) reader.Close();
             }
             return ret > 0;
         }

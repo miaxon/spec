@@ -83,7 +83,32 @@ namespace libspec.View.Data
                 if (reader != null) reader.Close();
             }
             return ret;
+        }
+        public bool ProjectExists(string obozn)
+        {
+            string query = string.Format("select * from _pid where obozn='{0}'", obozn);
+            MySqlCommand cmd = new MySqlCommand(query, m_conn);
+            MySqlDataReader reader = null;
+            int ret = 0;
+            try
+            {
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    ret++;
+                }
 
-        }        
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Failed to add project: " + ex.Message);
+                return false;
+            }
+            finally
+            {
+                if (reader != null) reader.Close();
+            }
+            return ret > 0;
+        }
     }
 }

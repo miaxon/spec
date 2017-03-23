@@ -12,6 +12,7 @@ using libspec.View.Objects;
 using libspec.View.Dialogs;
 using System.IO;
 using System.Diagnostics;
+using libspec.View;
 
 namespace libspec.View
 {
@@ -93,8 +94,47 @@ namespace libspec.View
                 dlg.SearchEvent += new EventHandler<SearchEventArgs>(dlg_SearchEvent);
                 dlg.ExpandEvent += new EventHandler<ExpandEventArgs>(dlg_ExpandEvent);
                 dlg.AddPozEvent += new EventHandler<AddPozEventArgs>(dlg_AddPozEvent);
+                dlg.NodeEditEvent += new EventHandler<NodeEditEventArgs>(dlg_NodeEditEvent);
                 dlg.ShowDialog();
             }
+        }
+
+        private void tbtnEditTab_Click(object sender, EventArgs e)
+        {
+            SpecViewTable form = new SpecViewTable();
+            form.SearchEvent += new EventHandler<SearchEventArgs>(form_SearchEvent);
+            form.ExpandEvent += new EventHandler<ExpandEventArgs>(form_ExpandEvent);
+            form.ExpandMidEvent += new EventHandler<ExpandMidEventArgs>(form_ExpandMidEvent);
+            form.Show();
+        }
+
+        void form_ExpandMidEvent(object sender, ExpandMidEventArgs e)
+        {
+            if (ExpandMidEvent != null)
+            {
+                ExpandMidEvent(sender, e);
+            }
+        }
+
+        void form_ExpandEvent(object sender, ExpandEventArgs e)
+        {
+            if (ExpandEvent != null)
+            {
+                ExpandEvent(sender, e);
+            }
+        }
+
+        void form_SearchEvent(object sender, SearchEventArgs e)
+        {
+            if (SearchEvent != null)
+            {
+                SearchEvent(sender, e);
+            }
+        }
+        void dlg_NodeEditEvent(object sender, NodeEditEventArgs e)
+        {
+            if (NodeEditEvent != null)
+                NodeEditEvent(sender, e);
         }
         private void tbtnCalc_Click(object sender, EventArgs e)
         {

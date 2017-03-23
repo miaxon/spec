@@ -25,11 +25,11 @@ namespace libspec.View
             m_view.FillTree(m_projects);
             AddListeners();
         }
-
         private void AddListeners()
         {
             m_view.NodeClickEvent += new EventHandler<ViewEvent.NodeClickEventArgs>(m_view_NodeClick);
             m_view.ExpandEvent += new EventHandler<ViewEvent.ExpandEventArgs>(m_view_ExpandEvent);
+            m_view.ExpandMidEvent += new EventHandler<ViewEvent.ExpandMidEventArgs>(m_view_ExpandMidEvent);
             m_view.ButtonActionEvent += new EventHandler<ViewEvent.ButtonActionEventArgs>(m_view_ButtonActionEvent);
             m_view.SearchEvent += new EventHandler<ViewEvent.SearchEventArgs>(m_view_SearchEvent);
             m_view.AddPozEvent += new EventHandler<ViewEvent.AddPozEventArgs>(m_view_AddPozEvent);
@@ -38,8 +38,19 @@ namespace libspec.View
             m_view.MoveDocEvent += new EventHandler<ViewEvent.MoveDocEventArgs>(m_view_MoveDocEvent);
             m_view.NodeEditEvent += new EventHandler<ViewEvent.NodeEditEventArgs>(m_view_NodeEditEvent);
         }
-
         void m_view_NodeEditEvent(object sender, ViewEvent.NodeEditEventArgs e)
+        {
+            if (sender is SearchPozDialog)
+            {
+                EditSearchPoz(sender as SearchPozDialog, e);
+            }
+            if (sender is SpecViewTree)
+            {
+                EditView(e);
+            }
+
+        }
+        private void EditView(NodeEditEventArgs e)
         {
             string value = e.Value.ToString();
             bool noError = true;
@@ -154,7 +165,88 @@ namespace libspec.View
                 Utils.SaveProjectList(m_projects);
             }
         }
-
+        private void EditSearchPoz(SearchPozDialog view, NodeEditEventArgs e)
+        {
+            string value = e.Value.ToString();
+            bool noError = true;
+            string query = "";
+            string query_val = "'" + value + "'";
+            PozObject o = e.Object as PozObject;
+            string table = Utils.GetTable(o.num_kod);
+            if (o == null)
+            {
+                return;
+            }
+            switch (e.Field)
+            {
+                case "obozn":
+                    o.obozn = value;
+                    break;
+                case "naimen":
+                    o.naimen = value;
+                    break;
+                case "num_kol":
+                    {
+                        query_val = value;
+                        UInt16 c = 0;
+                        if (noError = UInt16.TryParse(value, NumberStyles.Number, CultureInfo.InvariantCulture, out c))
+                            o.num_kol = c;
+                    }
+                    break;
+                case "gost":
+                    o.gost = value;
+                    break;
+                case "marka":
+                    o.marka = value;
+                    break;
+                case "kei":
+                    {
+                        // if value is kei obozn number string
+                        string kei_naimen = Utils.GetKeiNaimen(value);
+                        if (noError = !(kei_naimen == value))
+                        {
+                            o.kei = value;
+                            break;
+                        }
+                        // if value is kei naimen string
+                        string kei_obozn = Utils.GetKeiObozn(value);
+                        if (noError = !(kei_obozn == value))
+                        {
+                            o.kei = value = kei_obozn;
+                            query_val = "'" + value + "'";
+                        }
+                    }
+                    break;
+                case "num_kfr":
+                    {
+                        query_val = value;
+                        double c = 0;
+                        if (noError = double.TryParse(value, NumberStyles.Number, CultureInfo.InvariantCulture, out c))
+                            o.num_kfr = c;
+                    }
+                    break;
+                case "descr":
+                    o.descr = value;
+                    break;
+            }
+            if (!noError)
+            {
+                view.RollBack();
+                return;
+            }
+            if (MessageBox.Show("Сохранить внесенные изменения?", "Предупреждение", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.Cancel)
+            {
+                view.RollBack();
+                return;
+            }
+            query = string.Format("update {0} set {1}={2} where id={3}", table, e.Field, query_val, o.id);
+            if (!m_da.ExecQuery(query))
+            {
+                view.RollBack();
+                return;
+            }
+            view.UpdateNode(o);
+        }
         private void m_view_MoveDocEvent(object sender, ViewEvent.MoveDocEventArgs e)
         {
             m_da.MoveDoc(e.doc, e.grp.id);
@@ -187,17 +279,14 @@ namespace libspec.View
                 goto dlg;
 
         }
-
         private void m_view_MovePozEvent(object sender, ViewEvent.MovePozEventArgs e)
         {
             m_da.MovePoz(e.poz, e.doc);
         }
-
         private void m_view_AddPozEvent(object sender, ViewEvent.AddPozEventArgs e)
         {
             m_da.AddPoz(e.doc, e.poz);
         }
-
         private void m_view_ButtonActionEvent(object sender, ViewEvent.ButtonActionEventArgs e)
         {
             switch (e.Action)
@@ -264,38 +353,52 @@ namespace libspec.View
 
                 case ViewEvent.ButtonAction.AddProject:
                     {
-                        ProjectObject o = (NewObject(e.Action) as ProjectObject);
-                        if (o != null)
+                    pdlg: ProjectObject o = (NewObject(e.Action) as ProjectObject);
+                        if (o == null)
+                            break;
+                        if (!m_da.ProjectExists(o.obozn))
                         {
                             o = m_da.AddProject(o);
                             if (o != null && o.id > 0)
                                 m_view.AddNode(o);
                         }
+                        else
+                            goto pdlg;
+
 
                     }
                     break;
                 case ViewEvent.ButtonAction.AddGroup:
                     {
-                        GroupObject o = (NewObject(e.Action) as GroupObject);
-                        if (o != null)
+                    gdlg: GroupObject o = (NewObject(e.Action) as GroupObject);
+                        if (o == null)
+                            break;
+                        UInt32 parent = (e.Target.Tag as ProjectObject).id;
+                        if (!m_da.GroupExists(o.obozn, parent))
                         {
-                            o = m_da.AddGroup(o, (e.Target.Tag as ProjectObject).id);
+                            o = m_da.AddGroup(o, parent);
                             if (o != null && o.id > 0)
                                 m_view.AddNode(o);
-                        }                       
+                        }
+                        else
+                            goto gdlg;
 
                     }
                     break;
                 case ViewEvent.ButtonAction.AddDoc:
                     {
                         string name = string.Format("{0}-{1}-", e.Target.Parent.Cells[0].Value, e.Target.Cells[0].Value);
-                        DocObject o = (NewObject(e.Action, name) as DocObject);
-                        if (o != null)
+                    ddlg: DocObject o = (NewObject(e.Action, name) as DocObject);
+                        if (o == null)
+                            return;
+                        if (!m_da.DocExists(o.obozn))
                         {
                             o = m_da.AddDoc(o, (e.Target.Tag as GroupObject).id);
                             if (o != null && o.id > 0)
                                 m_view.AddNode(o);
-                        }                        
+                        }
+                        else
+                            goto ddlg;
                     }
                     break;
                 case ViewEvent.ButtonAction.KeyClose:
@@ -385,29 +488,78 @@ namespace libspec.View
         private void m_view_SearchEvent(object sender, ViewEvent.SearchEventArgs e)
         {
             string table = Utils.GetTable(e.num_kod);
-            if (e.search_field == "gost")
-                table = "mid2";
-            if (e.search_string.Length == 11)
-                table = "mid3";
-            List<PozObject> list = m_da.SearchPoz(table, e.search_field, e.search_string);
-            SearchPozDialog search_view = sender as SearchPozDialog;
-            search_view.FillPoz(list);
+            if (string.IsNullOrEmpty(table))
+                return;
+            if (sender is SearchPozDialog)
+            {                
+                SearchPozDialog view = sender as SearchPozDialog;
+                if (e.search_field == "gost")
+                    table = "mid2";
+                if (e.search_string.Length == 11)
+                    table = "mid3";
+                List<PozObject> list = m_da.SearchPoz(table, e.search_field, e.search_string);                
+                view.FillPoz(list);
+            }
+            if (sender is SpecViewTable)
+            {
+                SpecViewTable view = sender as SpecViewTable;
+                if(table == "mid0")
+                {
+                    List<MidObject> mid0 = m_da.SearchMid(table);
+                    view.FillMid(mid0);
+                    return;
+                }
+                List<PozObject> list = m_da.SearchPoz(table, e.search_field, e.search_string);
+                view.FillPoz(list);
+            }
         }
-
         private void m_view_ExpandEvent(object sender, ViewEvent.ExpandEventArgs e)
         {
             UInt32 refid = e.Object.refid == 0 ? e.Object.id : e.Object.refid;
-            List<PozObject> list = m_da.GetPozList(Utils.GetChildTable(e.Object.num_kod), refid);
-            if (sender.Equals(m_view))
+            string table = Utils.GetChildTable(e.Object.num_kod);
+            if (string.IsNullOrEmpty(table))
+                return;
+            List<PozObject> list = m_da.GetPozList(table, refid);
+            if (sender is SpecViewTree)
                 m_view.FillPoz(list);
-            else
+            if(sender is SearchPozDialog)
             {
-                SearchPozDialog search_view = sender as SearchPozDialog;
-                search_view.FillPoz(list);
+                SearchPozDialog view = sender as SearchPozDialog;
+                view.FillPoz(list);
+            }
+            if (sender is SpecViewTable)
+            {
+                SpecViewTable view = sender as SpecViewTable;
+                view.FillPoz(list);
             }
 
         }
+        private void m_view_ExpandMidEvent(object sender, ViewEvent.ExpandMidEventArgs e)
+        {
+            string table = Utils.GetChildTable(e.num_kod);
+            if (string.IsNullOrEmpty(table))
+                return;
+            
+            //List<PozObject> list = m_da.GetPozList(table, Convert.ToUInt32(e.Object.id));
+            //if (sender is SpecViewTree)
+            //    m_view.FillPoz(list);
+            //if (sender is SearchPozDialog)
+            //{
+            //    SearchPozDialog view = sender as SearchPozDialog;
+            //    view.FillPoz(list);
+            //}
+            if (sender is SpecViewTable)
+            {
+                if (table == "mid1")
+                {
+                    List<MidObject> list = m_da.SearchMid("mid1");
+                    SpecViewTable view = sender as SpecViewTable;
+                    view.FillMid(list);
+                }
+                
+            }
 
+        }
         private void m_view_NodeClick(object sender, ViewEvent.NodeClickEventArgs e)
         {
             if (e.Object is ProjectObject)

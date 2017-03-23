@@ -23,7 +23,7 @@ namespace libspec.View
         private static Dictionary<int, string> m_actions;
         private static ImageList m_imageList;
         public static string Server;
-        public static List<KidObject> KidList;
+        public static List<KeiObject> KidList;
         public static void InitMaps()
         {
 
@@ -39,8 +39,10 @@ namespace libspec.View
             m_kodes.Add(3, "Обезличенные черетежи");
             m_kodes.Add(4, "Поковки");
             m_kodes.Add(7, "Сложные материалы");
-            m_kodes.Add(9, "Материалы");
-            m_kodes.Add(92, "Материалы");
+            m_kodes.Add(9, "Материалы 3");
+            m_kodes.Add(92, "Материалы 2");
+            m_kodes.Add(93, "Материалы 1");
+            m_kodes.Add(94, "Материалы 0");
 
             m_tables = new Dictionary<int, string>();
             m_tables.Add(0, "lid");
@@ -50,17 +52,19 @@ namespace libspec.View
             m_tables.Add(4, "pok");
             m_tables.Add(7, "cid");
             m_tables.Add(9, "mid3");
-            m_tables.Add(92, "mid3");
+            m_tables.Add(92, "mid2");
+            m_tables.Add(93, "mid1");
+            m_tables.Add(94, "mid0");
+            m_tables.Add(100, "cid_");
 
             m_child_tables = new Dictionary<int, string>();
             m_child_tables.Add(0, "lid_old");
-            m_child_tables.Add(1, "bid1");
-            m_child_tables.Add(2, "bid2");
             m_child_tables.Add(3, "oid_old");
-            m_child_tables.Add(4, "pok");
-            m_child_tables.Add(7, "cid_");
-            m_child_tables.Add(9, "mid3");
-            m_child_tables.Add(92, "mid3");
+            m_child_tables.Add(7, "cid_");// cid -> cid_
+            m_child_tables.Add(92, "mid3"); // mid2 -> mid3
+            m_child_tables.Add(93, "mid2"); // mid1 -> mid2
+            m_child_tables.Add(94, "mid1"); // mid0 -> mid2
+
 
             m_pozImages = new Dictionary<int, string>();
             m_pozImages.Add(0, "lid");
@@ -70,7 +74,10 @@ namespace libspec.View
             m_pozImages.Add(4, "pok");
             m_pozImages.Add(7, "cid");
             m_pozImages.Add(9, "mid3");
-            m_pozImages.Add(92, "mid3");
+            m_pozImages.Add(92, "mid0");
+            m_pozImages.Add(93, "mid0");
+            m_pozImages.Add(94, "mid0");
+
 
             m_imageList = new ImageList();
             m_imageList.Images.Add("project", Resources.project);
@@ -95,6 +102,9 @@ namespace libspec.View
             m_imageList.Images.Add("accept", Resources.accept);
             m_imageList.Images.Add("find", Resources.find);
             m_imageList.Images.Add("clear", Resources.clear);
+            m_imageList.Images.Add("mid2", Resources.mid);
+            m_imageList.Images.Add("mid1", Resources.mid);
+            m_imageList.Images.Add("mid0", Resources.mid);
 
 
         }
@@ -104,7 +114,16 @@ namespace libspec.View
         }
         public static string GetChildTable(int num_kod)
         {
-            return m_child_tables[num_kod];
+            string str = "";
+            try
+            {
+                str = m_child_tables[num_kod];
+            }
+            catch
+            {
+                return "";
+            }
+            return str;
         }
         public static string GetPozImageKey(int num_kod)
         {
@@ -130,8 +149,17 @@ namespace libspec.View
             }
             return string.Empty;
         }
+        public static Image GetMidImage(MidObject o)
+        {
+            if (o is MidObject)
+            {
+                return m_imageList.Images["mid0"];
+            }
+            return null;
+        }
         public static Image GetNodeImage(BaseObject o)
         {
+
             if (o is ProjectObject)
             {
                 return (o.status == Closed.N) ? m_imageList.Images["project"] : m_imageList.Images["project_minus"];
@@ -144,6 +172,7 @@ namespace libspec.View
             {
                 return (o.status == Closed.N) ? m_imageList.Images["doc"] : m_imageList.Images["doc_minus"];
             }
+            
             return null;
         }
         public static ImageList ImageList { get { return m_imageList; } }
@@ -234,13 +263,21 @@ namespace libspec.View
             ret = !string.IsNullOrEmpty(Server) && !string.IsNullOrEmpty(admis) && admis.Contains(user);
             return ret;
         }
-        public static string GetKidString(string kei)
+        public static string GetKeiNaimen(string kei_num)
         {
-            KidObject k = KidList.Find(o => o.obozn == kei);
+            KeiObject k = KidList.Find(o => o.obozn == kei_num);
             if (k != null)
                 return k.naimen;
             else
-                return kei;
+                return kei_num;
+        }
+        public static string GetKeiObozn(string kei_str)
+        {
+            KeiObject k = KidList.Find(o => o.naimen == kei_str);
+            if (k != null)
+                return k.obozn;
+            else
+                return kei_str;
         }
     }
 }

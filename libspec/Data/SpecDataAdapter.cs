@@ -66,10 +66,10 @@ namespace libspec.View.Data
             }
             return ret > 0;
         }
-        public List<KidObject> GetKidList()
+        public List<KeiObject> GetKidList()
         {
             MySqlDataReader reader = null;
-            List<KidObject> list = new List<KidObject>();
+            List<KeiObject> list = new List<KeiObject>();
             MySqlCommand cmd = new MySqlCommand("select id, obozn, naimen from kid order by obozn", m_conn);
             try
             {
@@ -80,7 +80,7 @@ namespace libspec.View.Data
 
                     reader.GetValues(values);
                     //Type t = values[4].GetType();
-                    list.Add(new KidObject(values));
+                    list.Add(new KeiObject(values));
                 }
             }
             catch (MySqlException ex)
@@ -93,5 +93,7 @@ namespace libspec.View.Data
             }
             return list;
         }
+        
+        
     }
 }
