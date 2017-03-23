@@ -1,4 +1,4 @@
-﻿namespace spform
+﻿namespace spbase
 {
     partial class MainForm
     {
@@ -31,14 +31,14 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.SuspendLayout();
             // 
-            // Form1
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1276, 695);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "Form1";
-            this.Text = "Спецификации: заполнение";
+            this.Name = "MainForm";
+            this.Text = "Редактирование таблиц";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
 

@@ -98,39 +98,17 @@ namespace libspec.View
                 dlg.ShowDialog();
             }
         }
-
         private void tbtnEditTab_Click(object sender, EventArgs e)
         {
-            SpecViewTable form = new SpecViewTable();
-            form.SearchEvent += new EventHandler<SearchEventArgs>(form_SearchEvent);
-            form.ExpandEvent += new EventHandler<ExpandEventArgs>(form_ExpandEvent);
-            form.ExpandMidEvent += new EventHandler<ExpandMidEventArgs>(form_ExpandMidEvent);
-            form.Show();
-        }
-
-        void form_ExpandMidEvent(object sender, ExpandMidEventArgs e)
-        {
-            if (ExpandMidEvent != null)
+            string p = Directory.GetCurrentDirectory() + @"\spbase.exe";
+            if (!File.Exists(p))
             {
-                ExpandMidEvent(sender, e);
+                MessageBox.Show("Не найден файл программы расчета.");
+                return;
             }
-        }
-
-        void form_ExpandEvent(object sender, ExpandEventArgs e)
-        {
-            if (ExpandEvent != null)
-            {
-                ExpandEvent(sender, e);
-            }
-        }
-
-        void form_SearchEvent(object sender, SearchEventArgs e)
-        {
-            if (SearchEvent != null)
-            {
-                SearchEvent(sender, e);
-            }
-        }
+            Process.Start(p);
+        }        
+        
         void dlg_NodeEditEvent(object sender, NodeEditEventArgs e)
         {
             if (NodeEditEvent != null)
@@ -172,7 +150,6 @@ namespace libspec.View
         {
             Paste();
         }
-
         void dlg_SearchEvent(object sender, SearchEventArgs e)
         {
             if (SearchEvent != null)

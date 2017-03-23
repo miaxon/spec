@@ -12,7 +12,7 @@ using libspec.View.Objects;
 
 namespace libspec.View
 {
-    public partial class SpecViewTable : Form
+    public partial class SpecViewTable : UserControl
     {
         private object m_oldValue;
         private DataGridViewCell m_cellCurrent;
@@ -21,6 +21,12 @@ namespace libspec.View
             if (treeView.CurrentNode != null)
                 stlblNum.Text = "элементов: " + treeView.CurrentNode.Nodes.Count;
         }
+
+        internal void FillTree(List<ProjectObject> m_projects)
+        {
+            
+        }
+
         private void treeView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             m_nodeCurrent = treeView.CurrentNode;
@@ -34,8 +40,7 @@ namespace libspec.View
                 }
                 if (o is MidObject)
                 {
-                    ExpandMidEvent(this, new ExpandMidEventArgs((o as MidObject), m_num_kod));
-                    stlblNum.Text = "элементов: " + treeView.CurrentNode.Nodes.Count;
+                   
                 }
             }
 
@@ -95,6 +100,16 @@ namespace libspec.View
                 e.Handled = true;
             }
 
+        }
+        
+        internal void RemoveNode(TreeGridNode target)
+        {
+            
+        }
+
+        internal void AddNode(BaseObject o)
+        {
+            throw new NotImplementedException();
         }
     }
 }

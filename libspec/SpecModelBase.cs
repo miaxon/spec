@@ -1,23 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using libspec.View.Objects;
+﻿using libspec.View.Data;
 using libspec.View.Dialogs;
-using libspec.View.Data;
-using System.Reflection;
-using System.Globalization;
+using libspec.View.Objects;
 using libspec.View.ViewEvent;
-
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Windows.Forms;
 namespace libspec.View
 {
-    public class SpecModel
+    public class SpecModelBase
     {
         private SpecDataAdapter m_da;
-        private SpecViewTree m_view;
+        private SpecViewTable m_view;
         private List<ProjectObject> m_projects;
-        public SpecModel(SpecViewTree view, SpecDataAdapter da)
+        public SpecModelBase(SpecViewTable view, SpecDataAdapter da)
         {
             m_da = da;
             m_view = view;
@@ -469,19 +466,19 @@ namespace libspec.View
             {
                 ProjectObject o = obj as ProjectObject;
                 List<GroupObject> list = m_da.GetGroupList(o.id);
-                m_view.FillProject(list);
+                //m_view.FillProject(list);
             }
             if (obj is GroupObject)
             {
                 GroupObject o = obj as GroupObject;
                 List<DocObject> list = m_da.GetDocList(o.id);
-                m_view.FillGroup(list);
+               // m_view.FillGroup(list);
             }
             if (obj is DocObject)
             {
                 DocObject o = obj as DocObject;
                 List<PozObject> list = m_da.GetPozList("lid_old", o.refid);
-                m_view.FillPoz(list);
+                //m_view.FillPoz(list);
             }
         }
         private void m_view_SearchEvent(object sender, ViewEvent.SearchEventArgs e)
@@ -490,19 +487,19 @@ namespace libspec.View
             if (string.IsNullOrEmpty(table))
                 return;
             if (sender is SearchPozDialog)
-            {                
+            {
                 SearchPozDialog view = sender as SearchPozDialog;
                 if (e.search_field == "gost")
                     table = "mid2";
                 if (e.search_string.Length == 11)
                     table = "mid3";
-                List<PozObject> list = m_da.SearchPoz(table, e.search_field, e.search_string);                
+                List<PozObject> list = m_da.SearchPoz(table, e.search_field, e.search_string);
                 view.FillPoz(list);
             }
             if (sender is SpecViewTable)
             {
                 SpecViewTable view = sender as SpecViewTable;
-                if(table == "mid0")
+                if (table == "mid0")
                 {
                     List<MidObject> mid0 = m_da.SearchMid(table);
                     view.FillMid(mid0);
@@ -521,7 +518,7 @@ namespace libspec.View
             List<PozObject> list = m_da.GetPozList(table, refid);
             if (sender is SpecViewTree)
                 m_view.FillPoz(list);
-            if(sender is SearchPozDialog)
+            if (sender is SearchPozDialog)
             {
                 SearchPozDialog view = sender as SearchPozDialog;
                 view.FillPoz(list);
@@ -533,26 +530,24 @@ namespace libspec.View
             }
 
         }
-        
+
         private void m_view_NodeClick(object sender, ViewEvent.NodeClickEventArgs e)
         {
             if (e.Object is ProjectObject)
             {
-                m_view.FillProject(m_da.GetGroupList(e.Object.id));
+                //m_view.FillProject(m_da.GetGroupList(e.Object.id));
                 return;
             }
             if (e.Object is GroupObject)
             {
-                m_view.FillGroup(m_da.GetDocList(e.Object.id));
+                //m_view.FillGroup(m_da.GetDocList(e.Object.id));
                 return;
             }
             if (e.Object is DocObject)
             {
-                m_view.FillPoz(m_da.GetPozList("lid_old", e.Object.refid));
+                //m_view.FillPoz(m_da.GetPozList("lid_old", e.Object.refid));
                 return;
             }
         }
-
-
     }
 }

@@ -94,11 +94,12 @@
     <Compile Include="Data\SpecDataAdapter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpecMain.cs" />
+    <Compile Include="SpecMainBase.cs" />
     <Compile Include="SpecModel.cs" />
-    <Compile Include="ViewEvent\ExpandMidEventArgs.cs" />
+    <Compile Include="SpecModelBase.cs" />
     <Compile Include="ViewEvent\NodeEditEventArgs.cs" />
     <Compile Include="View\SpecViewTableEdit.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="View\SpecViewTreeActions.cs">
       <SubType>UserControl</SubType>
@@ -113,7 +114,7 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="View\SpecViewTable.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="View\SpecViewTable.Designer.cs">
       <DependentUpon>SpecViewTable.cs</DependentUpon>

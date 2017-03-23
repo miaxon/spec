@@ -33,7 +33,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SpecViewTable));
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.tbtn_lid = new System.Windows.Forms.ToolStripButton();
             this.tbtn_bid1 = new System.Windows.Forms.ToolStripButton();
@@ -71,6 +70,7 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.stlblEdit = new System.Windows.Forms.ToolStripStatusLabel();
             this.stlblNum = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tbtnEdit = new System.Windows.Forms.ToolStripButton();
             this.toolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.treeView)).BeginInit();
             this.statusStrip.SuspendLayout();
@@ -101,7 +101,8 @@
             this.tbtnClear,
             this.toolStripSeparator3,
             this.tbtnIsert,
-            this.tbtnDelete});
+            this.tbtnDelete,
+            this.tbtnEdit});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.Size = new System.Drawing.Size(1131, 25);
@@ -458,18 +459,27 @@
             this.stlblNum.Size = new System.Drawing.Size(56, 17);
             this.stlblNum.Text = "stlblNum";
             // 
+            // tbtnEdit
+            // 
+            this.tbtnEdit.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.tbtnEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbtnEdit.Image = global::libspec.View.Properties.Resources.project;
+            this.tbtnEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbtnEdit.Name = "tbtnEdit";
+            this.tbtnEdit.Size = new System.Drawing.Size(23, 22);
+            this.tbtnEdit.Text = "toolStripButton1";
+            this.tbtnEdit.ToolTipText = "перейти к проектам";
+            this.tbtnEdit.Click += new System.EventHandler(this.tbtnEdit_Click);
+            // 
             // SpecViewTable
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1131, 511);
             this.Controls.Add(this.treeView);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.toolStrip);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SpecViewTable";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "SearchPozDialog";
+            this.Size = new System.Drawing.Size(1131, 511);
             this.toolStrip.ResumeLayout(false);
             this.toolStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.treeView)).EndInit();
@@ -519,5 +529,6 @@
         private System.Windows.Forms.ToolStripButton tbtn_mid0;
         private System.Windows.Forms.ToolStripButton tbtnIsert;
         private System.Windows.Forms.ToolStripButton tbtnDelete;
+        private System.Windows.Forms.ToolStripButton tbtnEdit;
     }
 }

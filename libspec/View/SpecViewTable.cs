@@ -9,16 +9,22 @@ using System.Windows.Forms;
 using libspec.View.ViewEvent;
 using AdvancedDataGridView;
 using libspec.View.Objects;
+using System.IO;
+using System.Diagnostics;
 
 namespace libspec.View
 {
-    public partial class SpecViewTable : Form
+    public partial class SpecViewTable : UserControl
     {
         #region events
-        public event EventHandler<SearchEventArgs> SearchEvent;
+        public event EventHandler<NodeClickEventArgs> NodeClickEvent;
         public event EventHandler<ExpandEventArgs> ExpandEvent;
-        public event EventHandler<ExpandMidEventArgs> ExpandMidEvent;
-        //public event EventHandler<AddPozEventArgs> AddPozEvent;
+        public event EventHandler<ButtonActionEventArgs> ButtonActionEvent;
+        public event EventHandler<SearchEventArgs> SearchEvent;
+        public event EventHandler<AddPozEventArgs> AddPozEvent;
+        public event EventHandler<MovePozEventArgs> MovePozEvent;
+        public event EventHandler<AddDocEventArgs> AddDocEvent;
+        public event EventHandler<MoveDocEventArgs> MoveDocEvent;
         public event EventHandler<NodeEditEventArgs> NodeEditEvent;
         #endregion
         private int m_num_kod;
@@ -44,7 +50,7 @@ namespace libspec.View
                 foreach (MidObject o in list)
                 {
                     TreeGridNode node = treeView.Nodes.Add(o.obozn);
-                    UpdateNode(o, node);
+                    //UpdateNode(o, node);
                 }
                 stlblNum.Text = "Найдено элементов: " + list.Count;
             }
@@ -54,13 +60,13 @@ namespace libspec.View
                 foreach (MidObject o in list)
                 {
                     TreeGridNode node = m_nodeCurrent.Nodes.Add(o.obozn);
-                    UpdateNode(o, node);
+                    //UpdateNode(o, node);
                 }
                 stlblNum.Text = "Найдено элементов: " + list.Count;
             }
         }
 
-        private void UpdateNode(object obj, TreeGridNode node = null)
+        public void UpdateNode(object obj, TreeGridNode node = null)
         {
             if (node == null)
             {
@@ -232,6 +238,17 @@ namespace libspec.View
         private void tbtnSearchGost_Click(object sender, EventArgs e)
         {
             SearchGost();
+        }
+
+        private void tbtnEdit_Click(object sender, EventArgs e)
+        {
+            string p = Directory.GetCurrentDirectory() + @"\spform.exe";
+            if (!File.Exists(p))
+            {
+                MessageBox.Show("Не найден файл программы расчета.");
+                return;
+            }
+            Process.Start(p);
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using libspec.View;
-namespace spform
+namespace spbase
 {
     public partial class MainForm : Form
     {
@@ -20,7 +20,7 @@ namespace spform
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            SpecMain se = new SpecMain(this);
+            SpecMainBase se = new SpecMainBase(this);
         }
     }
 }

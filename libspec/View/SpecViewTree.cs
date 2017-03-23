@@ -19,8 +19,7 @@ namespace libspec.View
     public partial class SpecViewTree : UserControl
     {
         #region events
-        public event EventHandler<NodeClickEventArgs> NodeClickEvent; 
-        public event EventHandler<ExpandMidEventArgs> ExpandMidEvent;
+        public event EventHandler<NodeClickEventArgs> NodeClickEvent;
         public event EventHandler<ExpandEventArgs> ExpandEvent;
         public event EventHandler<ButtonActionEventArgs> ButtonActionEvent;
         public event EventHandler<SearchEventArgs> SearchEvent;
