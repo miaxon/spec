@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.9
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "spform", "spform\spform.csproj", "{964548F8-F538-415E-B667-6D898A47E17D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "libspec", "libspec\libspec.csproj", "{5AA88F28-7077-40EE-B9CA-3B2B637577F2}"
@@ -8,6 +10,13 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "transformer", "transformer\transformer.csproj", "{7E52C3AB-5D28-4230-BC65-109064EEB41C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "spbase", "specbase\spbase.csproj", "{36CEA48D-DFBB-44DD-A223-A73E2C87BA75}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{1329F1F3-BCFF-40F1-A7D4-8EC7E88C13DD}"
+	ProjectSection(SolutionItems) = preProject
+		lib\ExpandableGridView.dll = lib\ExpandableGridView.dll
+		lib\Microsoft.Office.Interop.Word.dll = lib\Microsoft.Office.Interop.Word.dll
+		lib\MySql.Data.dll = lib\MySql.Data.dll
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

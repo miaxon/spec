@@ -23,7 +23,7 @@ namespace libspec.View
         {
             if (treeView.CurrentNode != null)
                 stlblNumChilds.Text = "элементов: " + treeView.CurrentNode.Nodes.Count;
-        }
+        }        
         private void treeView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             Fill();

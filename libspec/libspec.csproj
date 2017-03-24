@@ -54,10 +54,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ExpandableGridView">
-      <HintPath>D:\MONOLIT.NET\refs\ExpandableGridView.dll</HintPath>
+      <HintPath>..\lib\ExpandableGridView.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data">
-      <HintPath>D:\MONOLIT.NET\refs\MySql.Data.dll</HintPath>
+      <HintPath>..\lib\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

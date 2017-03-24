@@ -40,5 +40,7 @@ namespace libspec.View
             treeView.SelectionMode = DataGridViewSelectionMode.CellSelect;
 
         }
+
+       
     }
 }
