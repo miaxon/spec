@@ -107,8 +107,7 @@ namespace libspec.View
                 return;
             }
             Process.Start(p);
-        }        
-        
+        }                
         void dlg_NodeEditEvent(object sender, NodeEditEventArgs e)
         {
             if (NodeEditEvent != null)

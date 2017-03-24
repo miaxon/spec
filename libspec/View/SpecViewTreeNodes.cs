@@ -57,7 +57,7 @@ namespace libspec.View
                 ProjectObject o = obj as ProjectObject;
                 node.Image = Utils.GetNodeImage(o);
                 node.Cells[1].Value = o.naimen;
-                node.Cells[8].Value = o.descr;
+                node.Cells[9].Value = o.descr;
                 node.Tag = o;
                 node.Cells[0].ReadOnly = false;
                 node.Cells[1].ReadOnly = false;
@@ -70,7 +70,7 @@ namespace libspec.View
                 GroupObject o = obj as GroupObject;
                 node.Image = Utils.GetNodeImage(o);
                 node.Cells[1].Value = o.naimen;
-                node.Cells[8].Value = o.descr;
+                node.Cells[9].Value = o.descr;
                 node.Tag = o;
                 node.Cells[0].ReadOnly = false;
                 node.Cells[1].ReadOnly = false;
@@ -84,7 +84,7 @@ namespace libspec.View
                 node.Image = Utils.GetNodeImage(o);
                 node.Cells[1].Value = o.naimen;
                 node.Cells[2].Value = o.num_kol;
-                node.Cells[8].Value = o.descr;
+                node.Cells[9].Value = o.descr;
                 node.Tag = o;
                 node.Cells[0].ReadOnly = false;
                 node.Cells[1].ReadOnly = false;
@@ -104,7 +104,8 @@ namespace libspec.View
                 node.Cells[5].Value = o.kei;
                 node.Cells[6].Value = o.num_kfr;
                 node.Cells[7].Value = o.num_knr;
-                node.Cells[8].Value = o.descr;
+                node.Cells[8].Value = o.num_kod;
+                node.Cells[9].Value = o.descr;
                 if (node.Level == 4)
                 {
                     node.Cells[0].ReadOnly = true;
@@ -124,13 +125,6 @@ namespace libspec.View
 
             }
 
-
-        }
-        private void SetEditableCells(TreeGridNode node, bool num_kol = true)
-        {
-            node.Cells[0].ReadOnly = false;
-            node.Cells[1].ReadOnly = false;
-            node.Cells[2].ReadOnly = num_kol;
 
         }
     }
