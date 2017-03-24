@@ -77,7 +77,7 @@ namespace libspec.View
                 MidObject o = obj as MidObject;
                 node.Image = Utils.GetMidImage(o);
                 node.Cells[1].Value = o.naimen;
-                node.Cells[8].Value = o.descr;
+                node.Cells[9].Value = o.descr;
                 node.Tag = o;
                 node.Cells[0].ReadOnly = false;
                 node.Cells[1].ReadOnly = false;
@@ -124,7 +124,8 @@ namespace libspec.View
             node.Cells[5].Value = o.kei;
             node.Cells[6].Value = o.num_kfr;
             node.Cells[7].Value = o.num_knr;
-            node.Cells[8].Value = o.descr;
+            node.Cells[8].Value = o.num_kod;
+            node.Cells[9].Value = o.descr;
             node.Tag = o;
         }
 
@@ -182,10 +183,6 @@ namespace libspec.View
 
         private void treeView_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Modifiers == Keys.Control && e.KeyCode == Keys.Space)
-            {
-                AddPoz();
-            }
             if (e.Modifiers == Keys.Control && e.KeyCode == Keys.Z)
             {
                 Clear();
@@ -197,6 +194,7 @@ namespace libspec.View
             ttxtGost.Text = "";
             ttxtObozn.Text = "";
             stlblNum.Text = "";
+            stlblEdit.Text = "";
         }
         private void AddPoz()
         {
@@ -211,11 +209,6 @@ namespace libspec.View
                 //if (AddPozEvent != null)
                 //    AddPozEvent(this, new AddPozEventArgs(o, doc));
             }
-        }
-
-        private void tbtnIsert_Click(object sender, EventArgs e)
-        {
-            AddPoz();
         }
 
         private void tbtnClear_Click(object sender, EventArgs e)
@@ -249,6 +242,21 @@ namespace libspec.View
                 return;
             }
             Process.Start(p);
+        }
+
+        private void tbtnDelete_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tbtnAddPoz_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tbtnAdd_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

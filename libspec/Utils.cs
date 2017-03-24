@@ -43,6 +43,7 @@ namespace libspec.View
             m_kodes.Add(92, "Материалы 2");
             m_kodes.Add(93, "Материалы 1");
             m_kodes.Add(94, "Материалы 0");
+            m_kodes.Add(100, "Сложные материалы");
 
             m_tables = new Dictionary<int, string>();
             m_tables.Add(0, "lid");
@@ -77,6 +78,7 @@ namespace libspec.View
             m_pozImages.Add(92, "mid0");
             m_pozImages.Add(93, "mid0");
             m_pozImages.Add(94, "mid0");
+            m_pozImages.Add(100, "cid");
 
 
             m_imageList = new ImageList();

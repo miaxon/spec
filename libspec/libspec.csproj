@@ -70,9 +70,6 @@
     <Compile Include="Dialogs\SearchPozDialog.Designer.cs">
       <DependentUpon>SearchPozDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\SearchPozDialogEdit.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Dialogs\SelectProjectDialog.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -24,6 +24,8 @@ namespace libspec.View.Dialogs
         private TreeGridNode m_nodeCurrent;
         private TreeGridNode m_nodeDoc;
         private ToolStripButton m_btnChecked;
+        private object m_oldValue;
+        private DataGridViewCell m_cellCurrent;
         public SearchPozDialog(TreeGridNode nodeDoc)
         {
             InitializeComponent();
@@ -38,7 +40,11 @@ namespace libspec.View.Dialogs
             stlblNum.Text = "";
         }
 
-
+        public void RollBack()
+        {
+            if (m_cellCurrent != null)
+                m_cellCurrent.Value = m_oldValue;
+        }
         public void FillPoz(List<Objects.PozObject> list)
         {
             if (m_nodeCurrent != null)
@@ -78,7 +84,8 @@ namespace libspec.View.Dialogs
             node.Cells[5].Value = o.kei;
             node.Cells[6].Value = o.num_kfr;
             node.Cells[7].Value = o.num_knr;
-            node.Cells[8].Value = o.descr;
+            node.Cells[8].Value = o.num_kod;
+            node.Cells[9].Value = o.descr;
             node.Tag = o;
         }
 
@@ -186,6 +193,32 @@ namespace libspec.View.Dialogs
         private void tbtnSearchGost_Click(object sender, EventArgs e)
         {
             SearchGost();
+        }
+        private void treeView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            m_cellCurrent = treeView.CurrentCell;
+            m_oldValue = treeView.CurrentCell.Value;
+        }
+
+        private void treeView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            m_nodeCurrent = treeView.CurrentNode;
+            if (m_nodeCurrent == null)
+                return;
+            object value = treeView.CurrentCell.Value;
+            if (value.Equals(m_oldValue))
+                return;
+            string field = treeView.CurrentCell.OwningColumn.Name;
+            if (NodeEditEvent != null)
+                NodeEditEvent(this, new NodeEditEventArgs(m_nodeCurrent.Tag, field, value, m_oldValue));
+        }
+
+        private void treeView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            m_nodeCurrent = treeView.CurrentNode;
+            if (m_nodeCurrent == null)
+                return;
+            ExpandEvent(this, new ExpandEventArgs(m_nodeCurrent.Tag as PozObject));
         }
     }
 }

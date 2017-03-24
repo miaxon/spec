@@ -498,19 +498,7 @@ namespace libspec.View
                     table = "mid3";
                 List<PozObject> list = m_da.SearchPoz(table, e.search_field, e.search_string);                
                 view.FillPoz(list);
-            }
-            if (sender is SpecViewTable)
-            {
-                SpecViewTable view = sender as SpecViewTable;
-                if(table == "mid0")
-                {
-                    List<MidObject> mid0 = m_da.SearchMid(table);
-                    view.FillMid(mid0);
-                    return;
-                }
-                List<PozObject> list = m_da.SearchPoz(table, e.search_field, e.search_string);
-                view.FillPoz(list);
-            }
+            }            
         }
         private void m_view_ExpandEvent(object sender, ViewEvent.ExpandEventArgs e)
         {
@@ -525,15 +513,8 @@ namespace libspec.View
             {
                 SearchPozDialog view = sender as SearchPozDialog;
                 view.FillPoz(list);
-            }
-            if (sender is SpecViewTable)
-            {
-                SpecViewTable view = sender as SpecViewTable;
-                view.FillPoz(list);
-            }
-
-        }
-        
+            }           
+        }        
         private void m_view_NodeClick(object sender, ViewEvent.NodeClickEventArgs e)
         {
             if (e.Object is ProjectObject)
@@ -552,7 +533,5 @@ namespace libspec.View
                 return;
             }
         }
-
-
     }
 }

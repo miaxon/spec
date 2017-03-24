@@ -33,6 +33,8 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SearchPozDialog));
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.tbtn_lid = new System.Windows.Forms.ToolStripButton();
@@ -55,6 +57,9 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.tbtnIsert = new System.Windows.Forms.ToolStripButton();
             this.treeView = new AdvancedDataGridView.TreeGridView();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.stlblEdit = new System.Windows.Forms.ToolStripStatusLabel();
+            this.stlblNum = new System.Windows.Forms.ToolStripStatusLabel();
             this.obozn = new AdvancedDataGridView.TreeGridColumn();
             this.naimen = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.num_kol = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -63,10 +68,8 @@
             this.kei = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.num_kfr = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.num_knr = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.num_kod = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.descr = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.statusStrip = new System.Windows.Forms.StatusStrip();
-            this.stlblEdit = new System.Windows.Forms.ToolStripStatusLabel();
-            this.stlblNum = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.treeView)).BeginInit();
             this.statusStrip.SuspendLayout();
@@ -279,6 +282,14 @@
             this.treeView.AllowUserToAddRows = false;
             this.treeView.AllowUserToDeleteRows = false;
             this.treeView.BackgroundColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.treeView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.treeView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.obozn,
             this.naimen,
@@ -288,6 +299,7 @@
             this.kei,
             this.num_kfr,
             this.num_knr,
+            this.num_kod,
             this.descr});
             this.treeView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
@@ -301,83 +313,7 @@
             this.treeView.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.treeView_CellBeginEdit);
             this.treeView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.treeView_CellDoubleClick);
             this.treeView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.treeView_CellEndEdit);
-            this.treeView.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.treeView_EditingControlShowing);
-            this.treeView.SelectionChanged += new System.EventHandler(this.treeView_SelectionChanged);
             this.treeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView_KeyDown);
-            // 
-            // obozn
-            // 
-            this.obozn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.obozn.DefaultNodeImage = null;
-            this.obozn.HeaderText = "ОБОЗНАЧЕНИЕ";
-            this.obozn.Name = "obozn";
-            this.obozn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.obozn.Width = 96;
-            // 
-            // naimen
-            // 
-            this.naimen.HeaderText = "НАИМЕНОВАНИЕ";
-            this.naimen.Name = "naimen";
-            this.naimen.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.naimen.Width = 300;
-            // 
-            // num_kol
-            // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.num_kol.DefaultCellStyle = dataGridViewCellStyle1;
-            this.num_kol.HeaderText = "КОЛ";
-            this.num_kol.Name = "num_kol";
-            this.num_kol.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.num_kol.Width = 60;
-            // 
-            // gost
-            // 
-            this.gost.HeaderText = "НОРМАТИВ";
-            this.gost.Name = "gost";
-            this.gost.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // marka
-            // 
-            this.marka.HeaderText = "МАРКА";
-            this.marka.Name = "marka";
-            this.marka.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // kei
-            // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.kei.DefaultCellStyle = dataGridViewCellStyle2;
-            this.kei.HeaderText = "КЕИ";
-            this.kei.Name = "kei";
-            this.kei.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.kei.Width = 60;
-            // 
-            // num_kfr
-            // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.num_kfr.DefaultCellStyle = dataGridViewCellStyle3;
-            this.num_kfr.HeaderText = "КФ";
-            this.num_kfr.Name = "num_kfr";
-            this.num_kfr.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.num_kfr.Width = 60;
-            // 
-            // num_knr
-            // 
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.num_knr.DefaultCellStyle = dataGridViewCellStyle4;
-            this.num_knr.HeaderText = "НР";
-            this.num_knr.Name = "num_knr";
-            this.num_knr.ReadOnly = true;
-            this.num_knr.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.num_knr.Width = 60;
-            // 
-            // descr
-            // 
-            this.descr.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.Gray;
-            this.descr.DefaultCellStyle = dataGridViewCellStyle5;
-            this.descr.HeaderText = "ИНФОРМАЦИЯ";
-            this.descr.Name = "descr";
-            this.descr.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // statusStrip
             // 
@@ -404,6 +340,90 @@
             this.stlblNum.Name = "stlblNum";
             this.stlblNum.Size = new System.Drawing.Size(56, 17);
             this.stlblNum.Text = "stlblNum";
+            // 
+            // obozn
+            // 
+            this.obozn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.obozn.DefaultNodeImage = null;
+            this.obozn.HeaderText = "ОБОЗНАЧЕНИЕ";
+            this.obozn.Name = "obozn";
+            this.obozn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.obozn.Width = 96;
+            // 
+            // naimen
+            // 
+            this.naimen.HeaderText = "НАИМЕНОВАНИЕ";
+            this.naimen.Name = "naimen";
+            this.naimen.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.naimen.Width = 300;
+            // 
+            // num_kol
+            // 
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.num_kol.DefaultCellStyle = dataGridViewCellStyle2;
+            this.num_kol.HeaderText = "КОЛ";
+            this.num_kol.Name = "num_kol";
+            this.num_kol.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.num_kol.Width = 60;
+            // 
+            // gost
+            // 
+            this.gost.HeaderText = "НОРМАТИВ";
+            this.gost.Name = "gost";
+            this.gost.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // marka
+            // 
+            this.marka.HeaderText = "МАРКА";
+            this.marka.Name = "marka";
+            this.marka.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // kei
+            // 
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.kei.DefaultCellStyle = dataGridViewCellStyle3;
+            this.kei.HeaderText = "КЕИ";
+            this.kei.Name = "kei";
+            this.kei.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.kei.Width = 60;
+            // 
+            // num_kfr
+            // 
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.num_kfr.DefaultCellStyle = dataGridViewCellStyle4;
+            this.num_kfr.HeaderText = "КФ";
+            this.num_kfr.Name = "num_kfr";
+            this.num_kfr.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.num_kfr.Width = 60;
+            // 
+            // num_knr
+            // 
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.num_knr.DefaultCellStyle = dataGridViewCellStyle5;
+            this.num_knr.HeaderText = "НР";
+            this.num_knr.Name = "num_knr";
+            this.num_knr.ReadOnly = true;
+            this.num_knr.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.num_knr.Width = 60;
+            // 
+            // num_kod
+            // 
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.num_kod.DefaultCellStyle = dataGridViewCellStyle6;
+            this.num_kod.HeaderText = "КП";
+            this.num_kod.Name = "num_kod";
+            this.num_kod.ReadOnly = true;
+            this.num_kod.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.num_kod.Width = 50;
+            // 
+            // descr
+            // 
+            this.descr.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.Gray;
+            this.descr.DefaultCellStyle = dataGridViewCellStyle7;
+            this.descr.HeaderText = "ИНФОРМАЦИЯ";
+            this.descr.Name = "descr";
+            this.descr.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // SearchPozDialog
             // 
@@ -462,6 +482,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn kei;
         private System.Windows.Forms.DataGridViewTextBoxColumn num_kfr;
         private System.Windows.Forms.DataGridViewTextBoxColumn num_knr;
+        private System.Windows.Forms.DataGridViewTextBoxColumn num_kod;
         private System.Windows.Forms.DataGridViewTextBoxColumn descr;
 
     }
