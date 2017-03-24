@@ -21,29 +21,19 @@ namespace libspec.View.Data
 
         public void Connect()
         {
-            m_conn = new MySqlConnection(m_conn_string);
-            if (!m_conn.Ping())
+            try
             {
-
-                MessageBox.Show("Server host '" + Utils.Server + "' unreachable.");
-                Application.Exit();
+                m_conn = new MySqlConnection(m_conn_string);
+                m_conn.Open();
             }
-            else
+            catch (MySqlException ex)
             {
-                try
-                {
-
-                    m_conn.Open();
-                }
-                catch (MySqlException ex)
-                {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                if (m_conn.State == ConnectionState.Open)
-                {
-                    Utils.KidList = GetKidList();
-                }
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (m_conn.State == ConnectionState.Open)
+            {
+                Utils.KidList = GetKidList();
             }
         }
         public void Disconnect()
