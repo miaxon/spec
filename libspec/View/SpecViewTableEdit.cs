@@ -16,6 +16,7 @@ namespace libspec.View
     {
         private object m_oldValue;
         private DataGridViewCell m_cellCurrent;
+        private int m_minChars;
         private void treeView_SelectionChanged(object sender, EventArgs e)
         {
             if (treeView.CurrentNode != null)
@@ -110,6 +111,35 @@ namespace libspec.View
         internal void AddNode(BaseObject o)
         {
             throw new NotImplementedException();
+        }
+
+        private void tbtnSearchObozn_Click(object sender, EventArgs e)
+        {
+            SearchObozn();
+        }
+
+        private void SearchObozn()
+        {
+            string str = ttxtObozn.Text;
+            if (str.Length > m_minChars)
+            {
+                m_nodeCurrent = null;
+                SearchEvent(this, new SearchEventArgs("obozn", str, m_num_kod));
+            }
+            else
+                stlblNum.Text = "Найдено элементов: <недостаточное количество символов>";
+
+        }
+        private void SearchGost()
+        {
+            string str = ttxtGost.Text;
+            if (str.Length > 5)
+            {
+                m_nodeCurrent = null;
+                SearchEvent(this, new SearchEventArgs("gost", str, m_num_kod));
+            }
+            else
+                stlblNum.Text = "Найдено элементов: <недостаточное количество символов>";
         }
     }
 }

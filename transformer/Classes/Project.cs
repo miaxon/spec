@@ -43,14 +43,14 @@ namespace transformer
                         writer.WriteStartElement(hpid_Node);
                         //writer.WriteAttributeString("obozn", baseTOansi(ds.GetString("obozn")));
                         //writer.WriteAttributeString("naimen", baseTOansi(ds.GetString("naimen")));
-                        writer.WriteAttributeString("title", "Проект " + baseTOansi(ds.GetString("obozn")) + " " + baseTOansi(ds.GetString("naimen")));
+                        writer.WriteAttributeString("title", "Проект " + ds.GetString("obozn") + " " + ds.GetString("naimen"));
                         writer.WriteEndElement();
                     }
                     writer.WriteStartElement(pid_Node);
                     writer.WriteAttributeString("id", Convert.ToString(ds.GetInt32("id")));
-                    writer.WriteAttributeString("obozn", baseTOansi(ds.GetString("obozn")));
-                    writer.WriteAttributeString("naimen", baseTOansi(ds.GetString("naimen")));
-                    writer.WriteAttributeString("descr", baseTOansi(ds.GetString("descr")));
+                    writer.WriteAttributeString("obozn", ds.GetString("obozn"));
+                    writer.WriteAttributeString("naimen", ds.GetString("naimen"));
+                    writer.WriteAttributeString("descr", ds.GetString("descr"));
                 }
             }
             catch (MySqlException ex)

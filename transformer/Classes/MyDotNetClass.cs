@@ -276,8 +276,8 @@ namespace transformer
         public void init()
         {
             if (isInit) return;
-            //dbg = new DbgForm();
-            //dbg.Show();
+            dbg = new DbgForm();
+            dbg.Show();
             
             int res = Connect();
             if (res == 0)
@@ -398,7 +398,7 @@ namespace transformer
                 ds = cmd.ExecuteReader();
                 while (ds.Read())
                 {
-                    kei.Add(baseTOansi(ds.GetString("obozn")), baseTOansi(ds.GetString("naimen")));
+                    kei.Add(ds.GetString("obozn"), ds.GetString("naimen"));
                 }
             }
             catch (MySqlException ex)
@@ -410,27 +410,7 @@ namespace transformer
             trace("End get_KEI");
 
         }
-        protected static string baseTOansi(string str)
-        {
-            return str;
-            /*
-            byte[] unicodeBytes = Encoding.Unicode.GetBytes(str);
-            byte[] ansiBytes = new byte[str.Length + 1];
-            int j = 0;
-            int i = 0;
-            for (i = 0; i < str.Length; i++)
-            {
-
-                ansiBytes[i] = unicodeBytes[j];
-                j = j + 2;
-
-            }
-            ansiBytes[i] = 0;
-            char[] ansiChars = new char[i];
-            Encoding.Default.GetChars(ansiBytes, 0, i, ansiChars, 0);
-            return new string(ansiChars);*/
-        }
-        
+                
         protected string saveDoc(string wml)
         {
             if (!checkWord()) return "";

@@ -59,11 +59,14 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tbtnClear = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.tbtnAdd = new System.Windows.Forms.ToolStripButton();
             this.tbtnAddPoz = new System.Windows.Forms.ToolStripButton();
             this.tbtnDelete = new System.Windows.Forms.ToolStripButton();
             this.tbtnEdit = new System.Windows.Forms.ToolStripButton();
-            this.tbtnAdd = new System.Windows.Forms.ToolStripButton();
             this.treeView = new AdvancedDataGridView.TreeGridView();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.stlblEdit = new System.Windows.Forms.ToolStripStatusLabel();
+            this.stlblNum = new System.Windows.Forms.ToolStripStatusLabel();
             this.obozn = new AdvancedDataGridView.TreeGridColumn();
             this.naimen = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.num_kol = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -74,9 +77,6 @@
             this.num_knr = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.num_kod = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.descr = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.statusStrip = new System.Windows.Forms.StatusStrip();
-            this.stlblEdit = new System.Windows.Forms.ToolStripStatusLabel();
-            this.stlblNum = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.treeView)).BeginInit();
             this.statusStrip.SuspendLayout();
@@ -315,6 +315,17 @@
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
             // 
+            // tbtnAdd
+            // 
+            this.tbtnAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbtnAdd.Image = global::libspec.View.Properties.Resources.table_row_insert;
+            this.tbtnAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbtnAdd.Name = "tbtnAdd";
+            this.tbtnAdd.Size = new System.Drawing.Size(23, 22);
+            this.tbtnAdd.Text = "toolStripButton1";
+            this.tbtnAdd.ToolTipText = "добавить запись";
+            this.tbtnAdd.Click += new System.EventHandler(this.tbtnAdd_Click);
+            // 
             // tbtnAddPoz
             // 
             this.tbtnAddPoz.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -348,17 +359,6 @@
             this.tbtnEdit.Text = "toolStripButton1";
             this.tbtnEdit.ToolTipText = "перейти к проектам";
             this.tbtnEdit.Click += new System.EventHandler(this.tbtnEdit_Click);
-            // 
-            // tbtnAdd
-            // 
-            this.tbtnAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbtnAdd.Image = global::libspec.View.Properties.Resources.table_row_insert;
-            this.tbtnAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tbtnAdd.Name = "tbtnAdd";
-            this.tbtnAdd.Size = new System.Drawing.Size(23, 22);
-            this.tbtnAdd.Text = "toolStripButton1";
-            this.tbtnAdd.ToolTipText = "добавить запись";
-            this.tbtnAdd.Click += new System.EventHandler(this.tbtnAdd_Click);
             // 
             // treeView
             // 
@@ -416,15 +416,42 @@
             this.treeView.SelectionChanged += new System.EventHandler(this.treeView_SelectionChanged);
             this.treeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView_KeyDown);
             // 
+            // statusStrip
+            // 
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.stlblEdit,
+            this.stlblNum});
+            this.statusStrip.Location = new System.Drawing.Point(0, 489);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.statusStrip.Size = new System.Drawing.Size(1131, 22);
+            this.statusStrip.TabIndex = 3;
+            this.statusStrip.Text = "statusStrip";
+            // 
+            // stlblEdit
+            // 
+            this.stlblEdit.Name = "stlblEdit";
+            this.stlblEdit.Size = new System.Drawing.Size(1060, 17);
+            this.stlblEdit.Spring = true;
+            this.stlblEdit.Text = "stlblEdit";
+            this.stlblEdit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // stlblNum
+            // 
+            this.stlblNum.Name = "stlblNum";
+            this.stlblNum.Size = new System.Drawing.Size(56, 17);
+            this.stlblNum.Text = "stlblNum";
+            // 
             // obozn
             // 
+            this.obozn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.obozn.DefaultCellStyle = dataGridViewCellStyle2;
             this.obozn.DefaultNodeImage = null;
             this.obozn.HeaderText = "ОБОЗНАЧЕНИЕ";
             this.obozn.Name = "obozn";
             this.obozn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.obozn.Width = 200;
+            this.obozn.Width = 96;
             // 
             // naimen
             // 
@@ -499,32 +526,6 @@
             this.descr.Name = "descr";
             this.descr.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
-            // statusStrip
-            // 
-            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.stlblEdit,
-            this.stlblNum});
-            this.statusStrip.Location = new System.Drawing.Point(0, 489);
-            this.statusStrip.Name = "statusStrip";
-            this.statusStrip.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.statusStrip.Size = new System.Drawing.Size(1131, 22);
-            this.statusStrip.TabIndex = 3;
-            this.statusStrip.Text = "statusStrip";
-            // 
-            // stlblEdit
-            // 
-            this.stlblEdit.Name = "stlblEdit";
-            this.stlblEdit.Size = new System.Drawing.Size(1060, 17);
-            this.stlblEdit.Spring = true;
-            this.stlblEdit.Text = "stlblEdit";
-            this.stlblEdit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // stlblNum
-            // 
-            this.stlblNum.Name = "stlblNum";
-            this.stlblNum.Size = new System.Drawing.Size(56, 17);
-            this.stlblNum.Text = "stlblNum";
-            // 
             // SpecViewTable
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -575,6 +576,7 @@
         private System.Windows.Forms.ToolStripButton tbtnAddPoz;
         private System.Windows.Forms.ToolStripButton tbtnDelete;
         private System.Windows.Forms.ToolStripButton tbtnEdit;
+        private System.Windows.Forms.ToolStripButton tbtnAdd;
         private AdvancedDataGridView.TreeGridColumn obozn;
         private System.Windows.Forms.DataGridViewTextBoxColumn naimen;
         private System.Windows.Forms.DataGridViewTextBoxColumn num_kol;
@@ -585,6 +587,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn num_knr;
         private System.Windows.Forms.DataGridViewTextBoxColumn num_kod;
         private System.Windows.Forms.DataGridViewTextBoxColumn descr;
-        private System.Windows.Forms.ToolStripButton tbtnAdd;
     }
 }

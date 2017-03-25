@@ -23,7 +23,7 @@ namespace libspec.View
         {
             if (treeView.CurrentNode != null)
                 stlblNumChilds.Text = "элементов: " + treeView.CurrentNode.Nodes.Count;
-        }        
+        }
         private void treeView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             Fill();
@@ -35,6 +35,25 @@ namespace libspec.View
                 return;
             switch (e.KeyCode)
             {
+                case Keys.Up:
+                    {
+                        if (e.Modifiers == Keys.Control)
+                        {
+                            if (m_nodeCurrent.Tag is BaseObject)
+                            {
+                                BaseObject o = m_nodeCurrent.Tag as BaseObject;
+                                MessageBox.Show(o.id.ToString());
+                                Clipboard.SetText(o.id.ToString());
+                            }
+                            if (m_nodeCurrent.Tag is PozObject)
+                            {
+                                PozObject o = m_nodeCurrent.Tag as PozObject;
+                                MessageBox.Show(o.id.ToString());
+                                Clipboard.SetText(o.id.ToString());
+                            }
+                        }
+                    }
+                    break;
                 case Keys.Delete:
                     if (treeView.CurrentNode.Level < 5)
                         ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyDelete, treeView.CurrentNode));
@@ -104,7 +123,7 @@ namespace libspec.View
                 {
                     tx.KeyPress += new KeyPressEventHandler(tx_KeyPress);
                     tx.Tag = true;
-                }                         
+                }
             }
             else
             {

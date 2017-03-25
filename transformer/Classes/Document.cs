@@ -39,9 +39,9 @@ namespace transformer
                     if (needHead)
                     {
                         writer.WriteStartElement(hdid_Node);
-                        string obozn = baseTOansi(reader.GetString("obozn"));
-                        string naimen = baseTOansi(reader.GetString("naimen"));
-                        string descr = baseTOansi(reader.GetString("descr"));
+                        string obozn = reader.GetString("obozn");
+                        string naimen = reader.GetString("naimen");
+                        string descr = reader.GetString("descr");
                         //string num_kol = reader.GetUInt32("num_kol").ToString();
                         //writer.WriteAttributeString("title", obozn);
                         //writer.WriteAttributeString("naimen", naimen);
@@ -70,9 +70,9 @@ namespace transformer
             int intUID = reader.GetInt32("uid");
             string id = Convert.ToString(intID);
             string uid = Convert.ToString(intUID);
-            obozn = baseTOansi(reader.GetString("obozn"));
-            string naimen = baseTOansi(reader.GetString("naimen"));
-            string descr = baseTOansi(reader.GetString("descr"));
+            obozn = reader.GetString("obozn");
+            string naimen = reader.GetString("naimen");
+            string descr = reader.GetString("descr");
             string num_kol = reader.GetUInt32("num_kol").ToString();
             writer.WriteAttributeString("id", id);
             writer.WriteAttributeString("obozn", obozn);
@@ -209,11 +209,11 @@ namespace transformer
             //<mid3 id="1" obozn="111" naimen="111" descr="" gost="111" num_kol="111" marka="111" kei="кг.">
             if (ds.Read())
             {
-                obozn3 = baseTOansi(ds.GetString("obozn"));
-                naimen3 = baseTOansi(ds.GetString("naimen"));
-                gost3 = baseTOansi(ds.GetString("gost"));
-                marka3 = baseTOansi(ds.GetString("marka"));
-                kei3 = (string)kei[baseTOansi(ds.GetString("kei"))];
+                obozn3 = ds.GetString("obozn");
+                naimen3 = ds.GetString("naimen");
+                gost3 = ds.GetString("gost");
+                marka3 = ds.GetString("marka");
+                kei3 = (string)kei[ds.GetString("kei")];
                 parent3 = ds.GetInt32("parent");
                 id3 = ds.GetInt32("id");
 
@@ -232,7 +232,7 @@ namespace transformer
 
                 writer.WriteAttributeString("obozn", obozn3);
                 writer.WriteAttributeString("naimen", naimen3);
-                writer.WriteAttributeString("descr", baseTOansi(ds.GetString("descr")));
+                writer.WriteAttributeString("descr", ds.GetString("descr"));
                 writer.WriteAttributeString("gost", gost3);
                 writer.WriteAttributeString("marka", marka3);
                 writer.WriteAttributeString("kei", kei3);
@@ -268,9 +268,9 @@ namespace transformer
             //<mid2 id="22" obozn="" naimen="" descr="" gost="">
             if (ds.Read())
             {
-                obozn2 = baseTOansi(ds.GetString("obozn"));
-                naimen2 = baseTOansi(ds.GetString("naimen"));
-                gost2 = baseTOansi(ds.GetString("gost"));
+                obozn2 = ds.GetString("obozn");
+                naimen2 = ds.GetString("naimen");
+                gost2 = ds.GetString("gost");
                 parent2 = ds.GetInt32("parent");
                 id2 = ds.GetInt32("id");
 
@@ -284,7 +284,7 @@ namespace transformer
 
                 writer.WriteAttributeString("obozn", obozn2);
                 writer.WriteAttributeString("naimen", naimen2);
-                writer.WriteAttributeString("descr", baseTOansi(ds.GetString("descr")));
+                writer.WriteAttributeString("descr", ds.GetString("descr"));
                 writer.WriteAttributeString("gost", gost2);
             }
             if (ds != null) ds.Close();
@@ -316,8 +316,8 @@ namespace transformer
             //<mid1 id="zz" obozn="" naimen="" descr="">
             if (ds.Read())
             {
-                obozn1 = baseTOansi(ds.GetString("obozn"));
-                naimen1 = baseTOansi(ds.GetString("naimen"));
+                obozn1 = ds.GetString("obozn");
+                naimen1 = ds.GetString("naimen");
                 parent1 = ds.GetInt32("parent");
                 id1 = ds.GetInt32("id");
 
@@ -330,7 +330,7 @@ namespace transformer
 
                 writer.WriteAttributeString("obozn", obozn1);
                 writer.WriteAttributeString("naimen", naimen1);
-                writer.WriteAttributeString("descr", baseTOansi(ds.GetString("descr")));
+                writer.WriteAttributeString("descr", ds.GetString("descr"));
 
             }
             if (ds != null) ds.Close();
@@ -361,8 +361,8 @@ namespace transformer
             //<mid0 id="xx" obozn="" naimen="" descr=""/>
             if (ds.Read())
             {
-                obozn0 = baseTOansi(ds.GetString("obozn"));
-                naimen0 = baseTOansi(ds.GetString("naimen"));
+                obozn0 = ds.GetString("obozn");
+                naimen0 = ds.GetString("naimen");
                 id0 = ds.GetInt32("id");
 
                 DataRow row = mid0.NewRow();
@@ -373,7 +373,7 @@ namespace transformer
 
                 //writer.WriteAttributeString("obozn", baseTOansi(ds.GetString("obozn")));
                 writer.WriteAttributeString("naimen", naimen0);
-                writer.WriteAttributeString("descr", baseTOansi(ds.GetString("descr")));
+                writer.WriteAttributeString("descr", ds.GetString("descr"));
             }
             if (ds != null) ds.Close();
             writer.WriteEndElement();
@@ -402,8 +402,8 @@ namespace transformer
             string naimeno = "";
             if (ds.Read())
             {
-                obozno = baseTOansi(ds.GetString("obozn"));
-                naimeno = baseTOansi(ds.GetString("naimen"));
+                obozno = ds.GetString("obozn");
+                naimeno = ds.GetString("naimen");
                 if (needHead == false)
                 {
                     DataRow row = msch.NewRow();
@@ -419,7 +419,7 @@ namespace transformer
 
                 writer.WriteAttributeString("obozn", obozno);
                 writer.WriteAttributeString("naimen", naimeno);
-                writer.WriteAttributeString("descr", baseTOansi(ds.GetString("descr")));
+                writer.WriteAttributeString("descr", ds.GetString("descr"));
             }
             if (ds != null) ds.Close();
             int poz = get_POZ(refid, "oid_old", kol, obozno);
@@ -450,8 +450,8 @@ namespace transformer
             string naimenl = "";
             if (ds.Read())
             {
-                oboznl = baseTOansi(ds.GetString("obozn"));
-                naimenl = baseTOansi(ds.GetString("naimen"));
+                oboznl = ds.GetString("obozn");
+                naimenl = ds.GetString("naimen");
                 if (needHead == false)
                 {
                     DataRow row = msch.NewRow();
@@ -467,7 +467,7 @@ namespace transformer
 
                 writer.WriteAttributeString("obozn", oboznl);
                 writer.WriteAttributeString("naimen", naimenl);
-                writer.WriteAttributeString("descr", baseTOansi(ds.GetString("descr")));
+                writer.WriteAttributeString("descr", ds.GetString("descr"));
             }
             if (ds != null) ds.Close();
             int poz = get_POZ(refid, "lid_old", kol, oboznl);
@@ -496,10 +496,10 @@ namespace transformer
             //<cid id="1" obozn="111" naimen="111" descr="" num_kol="111" >
             if (ds.Read())
             {
-                writer.WriteAttributeString("obozn", baseTOansi(ds.GetString("obozn")));
-                writer.WriteAttributeString("naimen", baseTOansi(ds.GetString("naimen")));
-                writer.WriteAttributeString("descr", baseTOansi(ds.GetString("descr")));
-                writer.WriteAttributeString("kei", (string)kei[baseTOansi(ds.GetString("kei"))]);
+                writer.WriteAttributeString("obozn", ds.GetString("obozn"));
+                writer.WriteAttributeString("naimen", ds.GetString("naimen"));
+                writer.WriteAttributeString("descr", ds.GetString("descr"));
+                writer.WriteAttributeString("kei", (string)kei[ds.GetString("kei")]);
             }
             string obozn = ds.GetString("obozn");
             if (ds != null) ds.Close();
@@ -531,10 +531,10 @@ namespace transformer
             //<cid id="1" obozn="111" naimen="111" descr="" num_kol="111" >
             if (ds.Read())
             {
-                writer.WriteAttributeString("obozn", baseTOansi(ds.GetString("obozn")));
-                writer.WriteAttributeString("naimen", baseTOansi(ds.GetString("naimen")));
-                writer.WriteAttributeString("descr", baseTOansi(ds.GetString("descr")));
-                writer.WriteAttributeString("kei", (string)kei[baseTOansi(ds.GetString("kei"))]);
+                writer.WriteAttributeString("obozn", ds.GetString("obozn"));
+                writer.WriteAttributeString("naimen", ds.GetString("naimen"));
+                writer.WriteAttributeString("descr", ds.GetString("descr"));
+                writer.WriteAttributeString("kei", (string)kei[ds.GetString("kei")]);
             }
             if (ds != null) ds.Close();
             //get_POZ(refid, "cid_");
@@ -562,10 +562,10 @@ namespace transformer
             //<cid id="1" obozn="111" naimen="111" descr="" num_kol="111" >
             if (ds.Read())
             {
-                writer.WriteAttributeString("obozn", baseTOansi(ds.GetString("obozn")));
-                writer.WriteAttributeString("naimen", baseTOansi(ds.GetString("naimen")));
-                writer.WriteAttributeString("descr", baseTOansi(ds.GetString("descr")));
-                writer.WriteAttributeString("kei", (string)kei[baseTOansi(ds.GetString("kei"))]);
+                writer.WriteAttributeString("obozn", ds.GetString("obozn"));
+                writer.WriteAttributeString("naimen", ds.GetString("naimen"));
+                writer.WriteAttributeString("descr", ds.GetString("descr"));
+                writer.WriteAttributeString("kei", (string)kei[ds.GetString("kei")]);
             }
             if (ds != null) ds.Close();
             //get_POZ(refid, "bid1");

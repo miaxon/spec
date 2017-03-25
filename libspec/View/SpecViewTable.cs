@@ -17,7 +17,6 @@ namespace libspec.View
     public partial class SpecViewTable : UserControl
     {
         #region events
-        public event EventHandler<NodeClickEventArgs> NodeClickEvent;
         public event EventHandler<ExpandEventArgs> ExpandEvent;
         public event EventHandler<ButtonActionEventArgs> ButtonActionEvent;
         public event EventHandler<SearchEventArgs> SearchEvent;
@@ -50,7 +49,7 @@ namespace libspec.View
                 foreach (MidObject o in list)
                 {
                     TreeGridNode node = treeView.Nodes.Add(o.obozn);
-                    //UpdateNode(o, node);
+                    UpdateNode(o, node);
                 }
                 stlblNum.Text = "Найдено элементов: " + list.Count;
             }
@@ -129,37 +128,9 @@ namespace libspec.View
             node.Tag = o;
         }
 
-
-
-
-        private void tbtnSearchObozn_Click(object sender, EventArgs e)
-        {
-            SearchObozn();
-        }
+        
      
-        private void SearchObozn()
-        {
-            string str = ttxtObozn.Text;
-            if (str.Length > 5)
-            {
-                m_nodeCurrent = null;
-                SearchEvent(this, new SearchEventArgs("obozn", str, m_num_kod));
-            }
-            else
-                stlblNum.Text = "Найдено элементов: <недостаточное количество символов>";
-
-        }
-        private void SearchGost()
-        {
-            string str = ttxtGost.Text;
-            if (str.Length > 5)
-            {
-                m_nodeCurrent = null;
-                SearchEvent(this, new SearchEventArgs("gost", str, m_num_kod));
-            }
-            else
-                stlblNum.Text = "Найдено элементов: <недостаточное количество символов>";
-        }
+        
         private void tbtn_num_kod_Click(object sender, EventArgs e)
         {
             ToolStripButton btn = sender as ToolStripButton;
@@ -176,7 +147,14 @@ namespace libspec.View
             if (btn.Equals(tbtn_mid0))
             {
                 m_nodeCurrent = null;
+                m_minChars = 0;
                 SearchEvent(this, new SearchEventArgs("obozn", "", m_num_kod));
+            }
+            if (btn.Equals(tbtn_mid1))
+            {
+                m_nodeCurrent = null;
+                m_minChars = 2;
+                //SearchEvent(this, new SearchEventArgs("obozn", "", m_num_kod));
             }
 
         }

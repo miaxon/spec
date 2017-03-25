@@ -38,20 +38,20 @@ namespace transformer
                 ds = cmd.ExecuteReader();
                 if (ds.Read())
                 {   
-                    gr = baseTOansi(ds.GetString("obozn"));
+                    gr = ds.GetString("obozn");
                     if (needHead)
                     {
                         writer.WriteStartElement(hgid_Node);
                         //writer.WriteAttributeString("obozn", baseTOansi(ds.GetString("obozn")));
                         //writer.WriteAttributeString("naimen", baseTOansi(ds.GetString("naimen")));
-                        writer.WriteAttributeString("title", "Группа " + gr + " " + baseTOansi(ds.GetString("naimen")));
+                        writer.WriteAttributeString("title", "Группа " + gr + " " + ds.GetString("naimen"));
                         writer.WriteEndElement();
                     }
                     writer.WriteStartElement(gid_Node);
                     writer.WriteAttributeString("id", Convert.ToString(ds.GetInt32("id")));
-                    writer.WriteAttributeString("obozn", baseTOansi(ds.GetString("obozn")));
-                    writer.WriteAttributeString("naimen", baseTOansi(ds.GetString("naimen")));
-                    writer.WriteAttributeString("descr", baseTOansi(ds.GetString("descr")));
+                    writer.WriteAttributeString("obozn", ds.GetString("obozn"));
+                    writer.WriteAttributeString("naimen", ds.GetString("naimen"));
+                    writer.WriteAttributeString("descr", ds.GetString("descr"));
                 }
             }
             catch (MySqlException ex)
