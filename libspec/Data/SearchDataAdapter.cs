@@ -52,7 +52,7 @@ namespace libspec.View.Data
                     object[] values = new object[reader.FieldCount];
                     reader.GetValues(values);
                     //Type t = values[0].GetType();
-                    list.Add(new MidObject(values));
+                    list.Add(new MidObject(values, 94));
                 }
             }
             catch (MySqlException ex)
@@ -79,7 +79,7 @@ namespace libspec.View.Data
                     object[] values = new object[reader.FieldCount];
                     reader.GetValues(values);
                     //Type t = values[0].GetType();
-                    list.Add(new MidObject(values));
+                    list.Add(new MidObject(values, 93));
                 }
             }
             catch (MySqlException ex)

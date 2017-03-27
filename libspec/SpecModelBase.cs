@@ -13,13 +13,10 @@ namespace libspec.View
     {
         private SpecDataAdapter m_da;
         private SpecViewTable m_view;
-        private List<ProjectObject> m_projects;
         public SpecModelBase(SpecViewTable view, SpecDataAdapter da)
         {
             m_da = da;
             m_view = view;
-            m_projects = Utils.LoadProjectList();
-            m_view.FillTree(m_projects);
             AddListeners();
         }
         private void AddListeners()
@@ -39,125 +36,9 @@ namespace libspec.View
             {
                 EditSearchPoz(sender as SearchPozDialog, e);
             }
-            if (sender is SpecViewTree)
+            if (sender is SpecViewTable)
             {
-                EditView(e);
-            }
-
-        }
-        private void EditView(NodeEditEventArgs e)
-        {
-            string value = e.Value.ToString();
-            bool noError = true;
-            string query = "";
-            string query_val = "'" + value + "'";
-            if (e.Object is ProjectObject)
-            {
-                ProjectObject o = e.Object as ProjectObject;
-                switch (e.Field)
-                {
-                    case "obozn":
-                        o.obozn = value;
-                        break;
-                    case "naimen":
-                        o.naimen = value;
-                        break;
-                    case "descr":
-                        o.descr = value;
-                        break;
-                }
-                query = string.Format("update _pid set {0}={1} where id={2}", e.Field, query_val, o.id);
-            }
-            if (e.Object is GroupObject)
-            {
-                GroupObject o = e.Object as GroupObject;
-                switch (e.Field)
-                {
-                    case "obozn":
-                        o.obozn = value;
-                        break;
-                    case "naimen":
-                        o.naimen = value;
-                        break;
-                    case "descr":
-                        o.descr = value;
-                        break;
-                }
-                query = string.Format("update _gid set {0}={1} where id={2}", e.Field, query_val, o.id);
-            }
-            if (e.Object is DocObject)
-            {
-                DocObject o = e.Object as DocObject;
-                switch (e.Field)
-                {
-                    case "obozn":
-                        o.obozn = value;
-                        break;
-                    case "naimen":
-                        o.naimen = value;
-                        break;
-                    case "descr":
-                        o.descr = value;
-                        break;
-                    case "num_kol":
-                        {
-                            query_val = value;
-                            UInt16 c = 0;
-                            if (noError = UInt16.TryParse(value, NumberStyles.Number, CultureInfo.InvariantCulture, out c))
-                                o.num_kol = c;
-                        }
-                        break;
-                }
-                query = string.Format("update lid set {0}={1} where id={2}", e.Field, query_val, o.refid);
-            }
-            if (e.Object is PozObject)
-            {
-                PozObject o = e.Object as PozObject;
-                switch (e.Field)
-                {
-                    case "descr":
-                        o.descr = value;
-                        break;
-                    case "num_kol":
-                        {
-                            query_val = value;
-                            UInt16 c = 0;
-                            if (noError = UInt16.TryParse(value, NumberStyles.Number, CultureInfo.InvariantCulture, out c))
-                                o.num_kol = c;
-                        }
-                        break;
-                    case "num_kfr":
-                        {
-                            query_val = value;
-                            double c = 0;
-                            if (noError = double.TryParse(value, NumberStyles.Number, CultureInfo.InvariantCulture, out c))
-                                o.num_kfr = c;
-                        }
-                        break;
-                }
-                query = string.Format("update lid_old set {0}={1} where id={2}", e.Field, query_val, o.id);
-            }
-
-            if (!noError)
-            {
-                m_view.RollBack();
-                return;
-            }
-            if (!m_da.ExecQuery(query))
-            {
-                m_view.RollBack();
-                return;
-            }
-            m_view.UpdateNode(e.Object);
-            if (e.Object is ProjectObject)
-            {
-                ProjectObject pEdit = e.Object as ProjectObject;
-                ProjectObject pSaved = m_projects.Find(o => o.id == pEdit.id);
-                if (pSaved != null)
-                    m_projects.Remove(pSaved);
-                m_projects.Add(pEdit);
-                m_projects = m_projects.OrderBy(o => o.obozn).ToList();
-                Utils.SaveProjectList(m_projects);
+                EditView(sender as SpecViewTable, e);
             }
         }
         private void EditSearchPoz(SearchPozDialog view, NodeEditEventArgs e)
@@ -242,6 +123,121 @@ namespace libspec.View
             }
             view.UpdateNode(o);
         }
+        private void EditView(SpecViewTable view, NodeEditEventArgs e)
+        {
+            string value = e.Value.ToString();
+            
+            string query = "";
+            string query_val = "'" + value + "'";
+            if (e.Object is PozObject)
+            {
+                PozObject o = e.Object as PozObject;
+                string table = Utils.GetTable(o.num_kod);
+                if (string.IsNullOrEmpty(table))
+                    return;
+                bool noError = true;
+                switch (e.Field)
+                {
+                    case "obozn":
+                        o.obozn = value;
+                        break;
+                    case "naimen":
+                        o.naimen = value;
+                        break;
+                    case "num_kol":
+                        {
+                            query_val = value;
+                            UInt16 c = 0;
+                            if (noError = UInt16.TryParse(value, NumberStyles.Number, CultureInfo.InvariantCulture, out c))
+                                o.num_kol = c;
+                        }
+                        break;
+                    case "gost":
+                        o.gost = value;
+                        break;
+                    case "marka":
+                        o.marka = value;
+                        break;
+                    case "kei":
+                        {
+                            // if value is kei obozn number string
+                            string kei_naimen = Utils.GetKeiNaimen(value);
+                            if (noError = !(kei_naimen == value))
+                            {
+                                o.kei = value;
+                                break;
+                            }
+                            // if value is kei naimen string
+                            string kei_obozn = Utils.GetKeiObozn(value);
+                            if (noError = !(kei_obozn == value))
+                            {
+                                o.kei = value = kei_obozn;
+                                query_val = "'" + value + "'";
+                            }
+                        }
+                        break;
+                    case "num_kfr":
+                        {
+                            query_val = value;
+                            double c = 0;
+                            if (noError = double.TryParse(value, NumberStyles.Number, CultureInfo.InvariantCulture, out c))
+                                o.num_kfr = c;
+                        }
+                        break;
+                    case "descr":
+                        o.descr = value;
+                        break;
+                }
+                if (!noError)
+                {
+                    view.RollBack();
+                    return;
+                }
+                if (MessageBox.Show("Сохранить внесенные изменения?", "Предупреждение", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.Cancel)
+                {
+                    view.RollBack();
+                    return;
+                }
+                query = string.Format("update {0} set {1}={2} where id={3}", table, e.Field, query_val, o.id);
+                if (!m_da.ExecQuery(query))
+                {
+                    view.RollBack();
+                    return;
+                }
+                view.UpdateNode(o);
+            }
+            if (e.Object is MidObject)
+            {
+                MidObject o = e.Object as MidObject;
+                string table = Utils.GetTable(o.num_kod);
+                if (string.IsNullOrEmpty(table))
+                    return;
+                switch (e.Field)
+                {
+                    case "obozn":
+                        o.obozn = value;
+                        break;
+                    case "naimen":
+                        o.naimen = value;
+                        break;                    
+                    case "descr":
+                        o.descr = value;
+                        break;
+                }                
+                if (MessageBox.Show("Сохранить внесенные изменения?", "Предупреждение", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.Cancel)
+                {
+                    view.RollBack();
+                    return;
+                }
+                query = string.Format("update {0} set {1}={2} where id={3}", table, e.Field, query_val, o.id);
+                if (!m_da.ExecQuery(query))
+                {
+                    view.RollBack();
+                    return;
+                }
+                view.UpdateNode(o);
+            }
+        }
         private void m_view_MoveDocEvent(object sender, ViewEvent.MoveDocEventArgs e)
         {
             m_da.MoveDoc(e.doc, e.grp.id);
@@ -286,9 +282,9 @@ namespace libspec.View
         {
             switch (e.Action)
             {
-                
+
                 case ViewEvent.ButtonAction.KeyDelete:
-                    {                        
+                    {
                         if (e.Target.Tag is PozObject)
                         {
                             PozObject o = e.Target.Tag as PozObject;
@@ -353,7 +349,7 @@ namespace libspec.View
                             goto ddlg;
                     }
                     break;
-                
+
                 case ViewEvent.ButtonAction.KeyUpdate:
                     {
                         UpdateFill(e.Target.Tag);
@@ -373,7 +369,7 @@ namespace libspec.View
             {
                 GroupObject o = obj as GroupObject;
                 List<DocObject> list = m_da.GetDocList(o.id);
-               // m_view.FillGroup(list);
+                // m_view.FillGroup(list);
             }
             if (obj is DocObject)
             {
@@ -438,6 +434,6 @@ namespace libspec.View
 
         }
 
-        
+
     }
 }

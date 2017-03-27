@@ -34,7 +34,7 @@ namespace libspec.View
             InitializeComponent();
             tbtn_lid.Checked = true;
             m_btnChecked = tbtn_lid;
-            m_num_kod = Convert.ToInt32(tbtn_lid.Tag);            
+            m_num_kod = Convert.ToInt32(tbtn_lid.Tag);
             ttxtGost.Enabled = tbtnSearchGost.Enabled = false;
             stlblEdit.Text = "";
             stlblNum.Alignment = ToolStripItemAlignment.Right;
@@ -63,7 +63,6 @@ namespace libspec.View
                 stlblNum.Text = "Найдено элементов: " + list.Count;
             }
         }
-
         public void UpdateNode(object obj, TreeGridNode node = null)
         {
             if (node == null)
@@ -106,7 +105,6 @@ namespace libspec.View
                 stlblNum.Text = "Найдено элементов: " + list.Count;
             }
         }
-
         public void UpdatePozNode(PozObject o, TreeGridNode node = null)
         {
             if (node == null)
@@ -126,10 +124,6 @@ namespace libspec.View
             node.Cells[9].Value = o.descr;
             node.Tag = o;
         }
-
-
-
-
         private void tbtn_num_kod_Click(object sender, EventArgs e)
         {
             ToolStripButton btn = sender as ToolStripButton;
@@ -144,28 +138,30 @@ namespace libspec.View
             m_num_kod = Convert.ToInt32(btn.Tag);
             (this.Parent as Form).Text = "Редактирование таблицы: " + Utils.NumKodString(m_num_kod);
             ttxtGost.Enabled = tbtnSearchGost.Enabled = btn.Equals(tbtn_mid3) || btn.Equals(tbtn_mid2);
-
-            if (btn.Equals(tbtn_mid0))
-            {
-                m_nodeCurrent = null;
-                m_minChars = -1;
+            // correct view columns
+            if (m_num_kod > 90)
                 for (int i = 2; i < 9; i++)
                     treeView.Columns[i].Visible = false;
+            if (m_num_kod == 94) //mid0            {
+            {
+                m_minChars = -1;
                 SearchObozn();
                 return;
             }
-            if (btn.Equals(tbtn_mid1))
+            if (m_num_kod == 93) // mid1
             {
                 m_minChars = 2;
-                for (int i = 2; i < 9; i++)
-                    treeView.Columns[i].Visible = false;
+                return;
+            }
+            if (m_num_kod == 92) // mid2
+            {
+                treeView.Columns[3].Visible = true;
                 return;
             }
             for (int i = 0; i < 10; i++)
                 treeView.Columns[i].Visible = true;
 
         }
-
         private void treeView_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Modifiers == Keys.Control && e.KeyCode == Keys.Z)
@@ -195,29 +191,20 @@ namespace libspec.View
                 //    AddPozEvent(this, new AddPozEventArgs(o, doc));
             }
         }
-
         private void tbtnClear_Click(object sender, EventArgs e)
         {
             Clear();
         }
-
         private void ttxtObozn_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
                 SearchObozn();
         }
-
         private void ttxtGost_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
                 SearchGost();
         }
-
-        private void tbtnSearchGost_Click(object sender, EventArgs e)
-        {
-            SearchGost();
-        }
-
         private void tbtnEdit_Click(object sender, EventArgs e)
         {
             string p = Directory.GetCurrentDirectory() + @"\spform.exe";
@@ -228,22 +215,18 @@ namespace libspec.View
             }
             Process.Start(p);
         }
-
         private void tbtnDelete_Click(object sender, EventArgs e)
         {
 
         }
-
         private void tbtnAddPoz_Click(object sender, EventArgs e)
         {
 
         }
-
         private void tbtnAdd_Click(object sender, EventArgs e)
         {
 
         }
-
         private void SpecViewTable_Load(object sender, EventArgs e)
         {
             (this.Parent as Form).Text = "Редактирование таблицы: " + Utils.NumKodString(m_num_kod);

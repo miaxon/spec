@@ -21,13 +21,7 @@ namespace libspec.View
         {
             if (treeView.CurrentNode != null)
                 stlblNum.Text = "элементов: " + treeView.CurrentNode.Nodes.Count;
-        }
-
-        internal void FillTree(List<ProjectObject> m_projects)
-        {
-            
-        }
-
+        }      
         private void treeView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             m_nodeCurrent = treeView.CurrentNode;
@@ -68,8 +62,6 @@ namespace libspec.View
             string field = treeView.CurrentCell.OwningColumn.Name;
             if (NodeEditEvent != null)
                 NodeEditEvent(this, new NodeEditEventArgs(m_nodeCurrent.Tag, field, value, m_oldValue));
-
-
         }
         private void treeView_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
@@ -101,8 +93,7 @@ namespace libspec.View
                 e.Handled = true;
             }
 
-        }
-        
+        }        
         internal void RemoveNode(TreeGridNode target)
         {
             
@@ -113,11 +104,14 @@ namespace libspec.View
             throw new NotImplementedException();
         }
 
+        private void tbtnSearchGost_Click(object sender, EventArgs e)
+        {
+            SearchGost();
+        }
         private void tbtnSearchObozn_Click(object sender, EventArgs e)
         {
             SearchObozn();
         }
-
         private void SearchObozn()
         {
             string str = ttxtObozn.Text;

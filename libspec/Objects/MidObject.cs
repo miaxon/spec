@@ -16,15 +16,13 @@ namespace libspec.View.Objects
         public UInt32 id { get { return m_id; } }
         public Int32 num_kod { get { return m_num_kod; } }
         public virtual string Text { get { return obozn; } }
-        public MidObject(object[] values)
+        public MidObject(object[] values, int kod)
         {
             m_id = (UInt32)values[0];
             obozn = (string)values[1];
             naimen = (string)values[2];
             descr = (string)values[3];
-            if (values.Length == 5)
-                m_num_kod = (Int32)values[4];
-
+            m_num_kod = kod;
         }
         public MidObject() { }
     }
