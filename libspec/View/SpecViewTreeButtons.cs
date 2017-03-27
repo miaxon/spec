@@ -107,12 +107,7 @@ namespace libspec.View
                 return;
             }
             Process.Start(p);
-        }                
-        void dlg_NodeEditEvent(object sender, NodeEditEventArgs e)
-        {
-            if (NodeEditEvent != null)
-                NodeEditEvent(sender, e);
-        }
+        }                       
         private void tbtnCalc_Click(object sender, EventArgs e)
         {
             string p = Directory.GetCurrentDirectory() + @"\transformer.exe";
@@ -170,6 +165,11 @@ namespace libspec.View
                 AddPozEvent(this, e);
                 ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyUpdate, treeView.CurrentNode));
             }
+        }
+        void dlg_NodeEditEvent(object sender, NodeEditEventArgs e)
+        {
+            if (NodeEditEvent != null)
+                NodeEditEvent(sender, e);
         }
     }
 }

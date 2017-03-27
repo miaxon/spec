@@ -11,6 +11,7 @@ using AdvancedDataGridView;
 using libspec.View.Objects;
 using System.IO;
 using System.Diagnostics;
+using libspec.View.Dialogs;
 
 namespace libspec.View
 {
@@ -221,7 +222,50 @@ namespace libspec.View
         }
         private void tbtnAddPoz_Click(object sender, EventArgs e)
         {
+            m_nodeCurrent = treeView.CurrentNode;
+            if (m_nodeCurrent == null)
+                return;
+            if (m_nodeCurrent.Tag is PozObject)
+            {
+                PozObject o = m_nodeCurrent.Tag as PozObject;
+                if (o.num_kod < 9)
+                {
+                    SearchPozDialog dlg = new SearchPozDialog(m_nodeCurrent);
+                    dlg.SearchEvent += new EventHandler<SearchEventArgs>(dlg_SearchEvent);
+                    dlg.ExpandEvent += new EventHandler<ExpandEventArgs>(dlg_ExpandEvent);
+                    dlg.AddPozEvent += new EventHandler<AddPozEventArgs>(dlg_AddPozEvent);
+                    dlg.NodeEditEvent += new EventHandler<NodeEditEventArgs>(dlg_NodeEditEvent);
+                    dlg.ShowDialog();
+                }
+            }
 
+        }
+        void dlg_SearchEvent(object sender, SearchEventArgs e)
+        {
+            if (SearchEvent != null)
+            {
+                SearchEvent(sender, e);
+            }
+        }
+        void dlg_ExpandEvent(object sender, ExpandEventArgs e)
+        {
+            if (ExpandEvent != null)
+            {
+                ExpandEvent(sender, e);
+            }
+        }
+        void dlg_AddPozEvent(object sender, AddPozEventArgs e)
+        {
+            if (AddPozEvent != null)
+            {
+                AddPozEvent(this, e);
+                ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyUpdate, treeView.CurrentNode));
+            }
+        }
+        void dlg_NodeEditEvent(object sender, NodeEditEventArgs e)
+        {
+            if (NodeEditEvent != null)
+                NodeEditEvent(sender, e);
         }
         private void tbtnAdd_Click(object sender, EventArgs e)
         {
@@ -230,6 +274,11 @@ namespace libspec.View
         private void SpecViewTable_Load(object sender, EventArgs e)
         {
             (this.Parent as Form).Text = "Редактирование таблицы: " + Utils.NumKodString(m_num_kod);
+        }
+
+        private void tbtnUpdate_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

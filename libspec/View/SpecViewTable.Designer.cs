@@ -77,6 +77,8 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.stlblEdit = new System.Windows.Forms.ToolStripStatusLabel();
             this.stlblNum = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tbtnUpdate = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.treeView)).BeginInit();
             this.statusStrip.SuspendLayout();
@@ -109,7 +111,9 @@
             this.tbtnAdd,
             this.tbtnAddPoz,
             this.tbtnDelete,
-            this.tbtnEdit});
+            this.tbtnEdit,
+            this.toolStripSeparator5,
+            this.tbtnUpdate});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.Size = new System.Drawing.Size(1131, 25);
@@ -526,6 +530,21 @@
             this.stlblNum.Size = new System.Drawing.Size(56, 17);
             this.stlblNum.Text = "stlblNum";
             // 
+            // tbtnUpdate
+            // 
+            this.tbtnUpdate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbtnUpdate.Image = global::libspec.View.Properties.Resources.refresh;
+            this.tbtnUpdate.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbtnUpdate.Name = "tbtnUpdate";
+            this.tbtnUpdate.Size = new System.Drawing.Size(23, 22);
+            this.tbtnUpdate.Text = "toolStripButton1";
+            this.tbtnUpdate.Click += new System.EventHandler(this.tbtnUpdate_Click);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
+            // 
             // SpecViewTable
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -588,5 +607,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn num_knr;
         private System.Windows.Forms.DataGridViewTextBoxColumn num_kod;
         private System.Windows.Forms.DataGridViewTextBoxColumn descr;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripButton tbtnUpdate;
     }
 }

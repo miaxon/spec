@@ -69,7 +69,7 @@ namespace libspec.View.Data
         {
             MySqlDataReader reader = null;
             List<MidObject> list = new List<MidObject>();
-            string query = string.Format("select id, obozn, naimen, descr from mid1 where obozn like '{0}%' order by naimen", searchString);
+            string query = string.Format("select id, obozn, naimen, descr from mid1 where obozn like '{0}%' order by obozn", searchString);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             try
             {

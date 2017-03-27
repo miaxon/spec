@@ -22,20 +22,20 @@ namespace libspec.View.Dialogs
         #endregion
         private int m_num_kod;
         private TreeGridNode m_nodeCurrent;
-        private TreeGridNode m_nodeDoc;
+        private TreeGridNode m_targetNode;
         private ToolStripButton m_btnChecked;
         private object m_oldValue;
         private DataGridViewCell m_cellCurrent;
-        public SearchPozDialog(TreeGridNode nodeDoc)
+        public SearchPozDialog(TreeGridNode target)
         {
             InitializeComponent();
             tbtn_lid.Checked = true;
             m_btnChecked = tbtn_lid;
             m_num_kod = Convert.ToInt32(tbtn_lid.Tag);
             Text = "Поиск позиций: " + Utils.NumKodString(m_num_kod);
-            m_nodeDoc = nodeDoc;
+            m_targetNode = target;
             ttxtGost.Enabled = tbtnSearchGost.Enabled = false;
-            stlblEdit.Text = "Редактируется документ: " + m_nodeDoc.Cells[0].Value.ToString();
+            stlblEdit.Text = "Редактируется документ: " + m_targetNode.Cells[0].Value.ToString();
             stlblNum.Alignment = ToolStripItemAlignment.Right;
             stlblNum.Text = "";
         }
@@ -156,15 +156,16 @@ namespace libspec.View.Dialogs
         private void AddPoz()
         {
             m_nodeCurrent = treeView.CurrentNode;
-            if (m_nodeCurrent != null && m_nodeDoc != null)
+            if (m_nodeCurrent != null && m_targetNode != null)
             {
                 PozObject poz = m_nodeCurrent.Tag as PozObject;
+                if (poz == null)
+                    return;
                 if (poz.num_kod != m_num_kod)
                     return;
-                DocObject doc = m_nodeDoc.Tag as DocObject;
                 PozObject o = poz.Clone();
                 if (AddPozEvent != null)
-                    AddPozEvent(this, new AddPozEventArgs(o, doc));
+                    AddPozEvent(this, new AddPozEventArgs(o, m_targetNode.Tag));
             }
         }
 

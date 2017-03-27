@@ -284,7 +284,11 @@ namespace libspec.View
         }
         private void m_view_AddPozEvent(object sender, ViewEvent.AddPozEventArgs e)
         {
-            m_da.AddPoz(e.doc, e.poz);
+            if (e.target is DocObject)
+            {
+                DocObject o = e.target as DocObject;
+                m_da.AddPoz(o, e.poz);
+            }
         }
         private void m_view_ButtonActionEvent(object sender, ViewEvent.ButtonActionEventArgs e)
         {
