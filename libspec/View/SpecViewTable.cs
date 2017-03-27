@@ -218,7 +218,9 @@ namespace libspec.View
         }
         private void tbtnDelete_Click(object sender, EventArgs e)
         {
-
+            m_nodeCurrent = treeView.CurrentNode;
+            if (m_nodeCurrent != null && ButtonActionEvent != null)
+                ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyDelete, treeView.CurrentNode));
         }
         private void tbtnAddPoz_Click(object sender, EventArgs e)
         {
@@ -278,7 +280,10 @@ namespace libspec.View
 
         private void tbtnUpdate_Click(object sender, EventArgs e)
         {
-
+            m_nodeCurrent = treeView.CurrentNode;
+            if (m_nodeCurrent == null || ButtonActionEvent == null)
+                return;
+            ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyUpdate, treeView.CurrentNode));
         }
     }
 }

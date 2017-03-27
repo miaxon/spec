@@ -59,9 +59,9 @@ namespace libspec.View.Data
             }
             return ret > 0;
         }
-        public bool DeletePoz(PozObject o)
+        public bool DeletePoz(string table, PozObject o)
         {
-            string query = string.Format("delete from lid_old where id={0}", o.id);
+            string query = string.Format("delete from {0} where id={1}", table, o.id);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             int ret = 0;
             try
@@ -74,6 +74,54 @@ namespace libspec.View.Data
                 return false;
             }
             return ret > 0;
+        }
+        public bool DeletePozRoot(string table, PozObject o)
+        {
+            int ret = 0;
+            string query = null;
+            MySqlCommand cmd = null;
+            string child_table = Utils.GetChildTable(o.num_kod);
+            if(string.IsNullOrEmpty(child_table))
+                return false;
+            UInt32 refid = o.refid == 0 ? o.id : o.refid;
+            query = string.Format("delete from {0} where parent = {1}", child_table, refid);
+            cmd = new MySqlCommand(query, m_conn);
+            try
+            {
+                ret = cmd.ExecuteNonQuery();
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Failed to delete doc (2): " + ex.Message);
+                return false;
+            }
+
+            query = string.Format("delete from {0} where id = {1}", table, o.id);
+            cmd = new MySqlCommand(query, m_conn);
+            try
+            {
+                ret = cmd.ExecuteNonQuery();
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Failed to delete doc (1): " + ex.Message);
+                return false;
+            }
+            if (table == "lid") // remove lid refernce from _did if exists
+            {
+                query = string.Format("delete from _did where uid = {0}", o.id);
+                cmd = new MySqlCommand(query, m_conn);
+                try
+                {
+                    ret = cmd.ExecuteNonQuery();
+                }
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show("Failed to delete doc (3): " + ex.Message);
+                    return false;
+                }
+            }
+            return ret != 0;
         }
         public bool UpdatePoz(PozObject o)
         {

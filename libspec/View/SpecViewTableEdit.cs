@@ -94,9 +94,12 @@ namespace libspec.View
             }
 
         }        
-        internal void RemoveNode(TreeGridNode target)
+        internal void RemoveNode(TreeGridNode node)
         {
-            
+            if (node.Parent == null)
+                treeView.Nodes.Remove(node);
+            else
+                node.Parent.Nodes.Remove(node);
         }
 
         internal void AddNode(BaseObject o)

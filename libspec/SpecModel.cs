@@ -345,7 +345,7 @@ namespace libspec.View
                             PozObject o = e.Target.Tag as PozObject;
                             if (MessageBox.Show("Удалить позицию " + o.obozn + "?", "Предупреждение", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.OK)
                             {
-                                if (m_da.DeletePoz(o))
+                                if (m_da.DeletePoz("lid_old", o))
                                 {
                                     m_view.RemoveNode(e.Target);
                                 }

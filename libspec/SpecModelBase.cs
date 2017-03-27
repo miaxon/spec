@@ -294,13 +294,34 @@ namespace libspec.View
                     {
                         if (e.Target.Tag is PozObject)
                         {
+                            PozObject parent = e.Target.Parent.Tag as PozObject;
                             PozObject o = e.Target.Tag as PozObject;
-                            if (MessageBox.Show("Удалить позицию " + o.obozn + "?", "Предупреждение", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.OK)
-                            {
-                                if (m_da.DeletePoz(o))
+                            if (parent != null)
+                            {                                
+                                string table = Utils.GetChildTable(parent.num_kod);
+                                if (string.IsNullOrEmpty(table))
+                                    return;
+                                if (MessageBox.Show("Удалить позицию " + o.obozn + "?", "Предупреждение", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.OK)
                                 {
-                                    m_view.RemoveNode(e.Target);
+                                    if (m_da.DeletePoz(table, o))
+                                    {
+                                        m_view.RemoveNode(e.Target);
+                                    }
                                 }
+                            }
+                            else
+                            {
+                                string table = Utils.GetTable(o.num_kod);
+                                if (string.IsNullOrEmpty(table))
+                                    return;
+                                if (MessageBox.Show("Удалить позицию " + o.obozn + "?", "Предупреждение", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.OK)
+                                {
+                                    if (m_da.DeletePozRoot(table, o))
+                                    {
+                                        m_view.RemoveNode(e.Target);
+                                    }
+                                }
+                                
                             }
                         }
                     }
@@ -366,24 +387,17 @@ namespace libspec.View
         }
         private void UpdateFill(object obj)
         {
-            if (obj is ProjectObject)
+            if (obj is PozObject)
             {
-                ProjectObject o = obj as ProjectObject;
-                List<GroupObject> list = m_da.GetGroupList(o.id);
-                //m_view.FillProject(list);
+                PozObject o = obj as PozObject;
+                UInt32 refid = o.refid == 0 ? o.id : o.refid;
+                string table = Utils.GetChildTable(o.num_kod);
+                if (string.IsNullOrEmpty(table))
+                    return;
+                List<PozObject> list = m_da.GetPozList(table, refid);
+                m_view.FillPoz(list);
             }
-            if (obj is GroupObject)
-            {
-                GroupObject o = obj as GroupObject;
-                List<DocObject> list = m_da.GetDocList(o.id);
-                // m_view.FillGroup(list);
-            }
-            if (obj is DocObject)
-            {
-                DocObject o = obj as DocObject;
-                List<PozObject> list = m_da.GetPozList("lid_old", o.refid);
-                //m_view.FillPoz(list);
-            }
+            
         }
         private void m_view_SearchEvent(object sender, ViewEvent.SearchEventArgs e)
         {
@@ -426,19 +440,17 @@ namespace libspec.View
             if (string.IsNullOrEmpty(table))
                 return;
             List<PozObject> list = m_da.GetPozList(table, refid);
-            if (sender is SpecViewTree)
-                m_view.FillPoz(list);
-            if (sender is SearchPozDialog)
-            {
-                SearchPozDialog view = sender as SearchPozDialog;
-                view.FillPoz(list);
-            }
             if (sender is SpecViewTable)
             {
                 SpecViewTable view = sender as SpecViewTable;
                 view.FillPoz(list);
             }
-
+            if (sender is SearchPozDialog)
+            {
+                SearchPozDialog view = sender as SearchPozDialog;
+                view.FillPoz(list);
+            }
+            
         }
 
 
