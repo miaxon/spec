@@ -34,8 +34,7 @@ namespace libspec.View
             InitializeComponent();
             tbtn_lid.Checked = true;
             m_btnChecked = tbtn_lid;
-            m_num_kod = Convert.ToInt32(tbtn_lid.Tag);
-            Text = "Редактирование таблицы: " + Utils.NumKodString(m_num_kod);            
+            m_num_kod = Convert.ToInt32(tbtn_lid.Tag);            
             ttxtGost.Enabled = tbtnSearchGost.Enabled = false;
             stlblEdit.Text = "";
             stlblNum.Alignment = ToolStripItemAlignment.Right;
@@ -128,34 +127,42 @@ namespace libspec.View
             node.Tag = o;
         }
 
-        
-     
-        
+
+
+
         private void tbtn_num_kod_Click(object sender, EventArgs e)
         {
             ToolStripButton btn = sender as ToolStripButton;
             if (btn.CheckState == CheckState.Checked)
                 return;
             Clear();
+            m_nodeCurrent = null;
+            m_minChars = 5;
             btn.Checked = true;
             m_btnChecked.Checked = false;
             m_btnChecked = btn;
             m_num_kod = Convert.ToInt32(btn.Tag);
-            Text = "Редактирование таблицы: " + Utils.NumKodString(m_num_kod);
+            (this.Parent as Form).Text = "Редактирование таблицы: " + Utils.NumKodString(m_num_kod);
             ttxtGost.Enabled = tbtnSearchGost.Enabled = btn.Equals(tbtn_mid3) || btn.Equals(tbtn_mid2);
 
             if (btn.Equals(tbtn_mid0))
             {
                 m_nodeCurrent = null;
-                m_minChars = 0;
-                SearchEvent(this, new SearchEventArgs("obozn", "", m_num_kod));
+                m_minChars = -1;
+                for (int i = 2; i < 9; i++)
+                    treeView.Columns[i].Visible = false;
+                SearchObozn();
+                return;
             }
             if (btn.Equals(tbtn_mid1))
             {
-                m_nodeCurrent = null;
                 m_minChars = 2;
-                //SearchEvent(this, new SearchEventArgs("obozn", "", m_num_kod));
+                for (int i = 2; i < 9; i++)
+                    treeView.Columns[i].Visible = false;
+                return;
             }
+            for (int i = 0; i < 10; i++)
+                treeView.Columns[i].Visible = true;
 
         }
 
@@ -235,6 +242,11 @@ namespace libspec.View
         private void tbtnAdd_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void SpecViewTable_Load(object sender, EventArgs e)
+        {
+            (this.Parent as Form).Text = "Редактирование таблицы: " + Utils.NumKodString(m_num_kod);
         }
     }
 }

@@ -402,14 +402,14 @@ namespace libspec.View
                 SpecViewTable view = sender as SpecViewTable;
                 if (table == "mid0")
                 {
-                    List<MidObject> mid0 = m_da.SearchMid(table);
+                    List<MidObject> mid0 = m_da.SearchMid0();
                     view.FillMid(mid0);
                     return;
                 }
                 if (table == "mid1")
                 {
-                    List<MidObject> mid0 = m_da.SearchMid(table);
-                    view.FillMid(mid0);
+                    List<MidObject> mid1 = m_da.SearchMid1(e.search_string);
+                    view.FillMid(mid1);
                     return;
                 }
                 List<PozObject> list = m_da.SearchPoz(table, e.search_field, e.search_string);
