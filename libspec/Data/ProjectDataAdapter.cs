@@ -7,13 +7,14 @@ using MySql.Data.MySqlClient;
 using System.Windows.Forms;
 using System.Data;
 using libspec.View.Objects;
+using System.Globalization;
 namespace libspec.View.Data
 {
     public partial class SpecDataAdapter
     {
         public ProjectObject AddProject(ProjectObject o)
         {
-            string query = string.Format("insert into _pid (obozn, naimen, descr) values('{0}', '{1}', '{2}')", o.obozn, o.naimen, o.descr);
+            string query = string.Format(CultureInfo.InvariantCulture, "insert into _pid (obozn, naimen, descr) values('{0}', '{1}', '{2}')", o.obozn, o.naimen, o.descr);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             try
             {
@@ -30,7 +31,7 @@ namespace libspec.View.Data
         }
         public void DeleteProject(ProjectObject o)
         {
-            string query = string.Format("delete from _pid where id = {0}", o.id);
+            string query = string.Format(CultureInfo.InvariantCulture, "delete from _pid where id = {0}", o.id);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             try
             {
@@ -43,7 +44,7 @@ namespace libspec.View.Data
         }
         public void UpdateProject(ProjectObject o)
         {
-            string query = string.Format("update _pid set obozn = '{0}', naimen = '{1}', descr = '{2}', closed= '{3}' where id = {4}", o.obozn, o.naimen, o.descr, o.status, o.id);
+            string query = string.Format(CultureInfo.InvariantCulture, "update _pid set obozn = '{0}', naimen = '{1}', descr = '{2}', closed= '{3}' where id = {4}", o.obozn, o.naimen, o.descr, o.status, o.id);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             try
             {
@@ -62,7 +63,7 @@ namespace libspec.View.Data
         {
             MySqlDataReader reader = null;
             ProjectObject ret = null;
-            string query = string.Format("select id, obozn, naimen, descr, closed from _pid where obozn='{0}'", obozn);
+            string query = string.Format(CultureInfo.InvariantCulture, "select id, obozn, naimen, descr, closed from _pid where obozn='{0}'", obozn);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             try
             {
@@ -86,7 +87,7 @@ namespace libspec.View.Data
         }
         public bool ProjectExists(string obozn)
         {
-            string query = string.Format("select * from _pid where obozn='{0}'", obozn);
+            string query = string.Format(CultureInfo.InvariantCulture, "select * from _pid where obozn='{0}'", obozn);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             MySqlDataReader reader = null;
             int ret = 0;

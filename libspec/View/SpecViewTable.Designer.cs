@@ -462,6 +462,7 @@
             this.treeView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.treeView.ImageList = null;
             this.treeView.Location = new System.Drawing.Point(0, 25);
+            this.treeView.MultiSelect = false;
             this.treeView.Name = "treeView";
             dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;

@@ -7,13 +7,14 @@ using MySql.Data.MySqlClient;
 using System.Windows.Forms;
 using System.Data;
 using libspec.View.Objects;
+using System.Globalization;
 namespace libspec.View.Data
 {
     public partial class SpecDataAdapter
     {
         public GroupObject AddGroup(GroupObject o, UInt32 parent)
         {
-            string query = string.Format("insert into _gid (obozn, naimen, descr, parent) values('{0}', '{1}', '{2}', {3})", o.obozn, o.naimen, o.descr, parent);
+            string query = string.Format(CultureInfo.InvariantCulture, "insert into _gid (obozn, naimen, descr, parent) values('{0}', '{1}', '{2}', {3})", o.obozn, o.naimen, o.descr, parent);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             try
             {
@@ -33,7 +34,7 @@ namespace libspec.View.Data
             string query = null;
             MySqlCommand cmd = null;
             int r = 0;
-            query = string.Format("update _gid set closed='{0}' where id = {1}", status, o.id);
+            query = string.Format(CultureInfo.InvariantCulture, "update _gid set closed='{0}' where id = {1}", status, o.id);
             cmd = new MySqlCommand(query, m_conn);
             try
             {
@@ -51,7 +52,7 @@ namespace libspec.View.Data
         public bool DeleteGroup(GroupObject o)
         {
             int r = 0;
-            string query = string.Format("select count(*) from _did where parent = {0}", o.id);
+            string query = string.Format(CultureInfo.InvariantCulture, "select count(*) from _did where parent = {0}", o.id);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             try
             {
@@ -65,7 +66,7 @@ namespace libspec.View.Data
                 return false;
             }
 
-            query = string.Format("delete from _gid where id = {0}", o.id);
+            query = string.Format(CultureInfo.InvariantCulture, "delete from _gid where id = {0}", o.id);
             cmd = new MySqlCommand(query, m_conn);
             try
             {
@@ -80,7 +81,7 @@ namespace libspec.View.Data
         }
         public void UpdateGroup(GroupObject o)
         {
-            string query = string.Format("update _pid set obozn = '{0}', naimen = '{1}', descr = '{2}', closed= '{3}' where id = {4}", o.obozn, o.naimen, o.descr, o.status, o.id);
+            string query = string.Format(CultureInfo.InvariantCulture, "update _pid set obozn = '{0}', naimen = '{1}', descr = '{2}', closed= '{3}' where id = {4}", o.obozn, o.naimen, o.descr, o.status, o.id);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             try
             {
@@ -99,7 +100,7 @@ namespace libspec.View.Data
         {
             MySqlDataReader reader = null;
             GroupObject ret = null;
-            string query = string.Format("select id, obozn, naimen, descr, closed from _gid where obozn='{0}' and parent={1}", obozn, parent);
+            string query = string.Format(CultureInfo.InvariantCulture, "select id, obozn, naimen, descr, closed from _gid where obozn='{0}' and parent={1}", obozn, parent);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             try
             {
@@ -124,7 +125,7 @@ namespace libspec.View.Data
         }
         public bool GroupExists(string obozn, UInt32 parent)
         {
-            string query = string.Format("select * from _gid where obozn='{0}' and parent={1}", obozn, parent);
+            string query = string.Format(CultureInfo.InvariantCulture, "select * from _gid where obozn='{0}' and parent={1}", obozn, parent);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             MySqlDataReader reader = null;
             int ret = 0;

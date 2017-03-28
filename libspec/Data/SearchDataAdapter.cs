@@ -7,6 +7,7 @@ using MySql.Data.MySqlClient;
 using System.Windows.Forms;
 using System.Data;
 using libspec.View.Objects;
+using System.Globalization;
 namespace libspec.View.Data
 {
     public partial class SpecDataAdapter
@@ -15,7 +16,7 @@ namespace libspec.View.Data
         {            
             MySqlDataReader reader = null;
             List<PozObject> list = new List<PozObject>();
-            string query = string.Format("select refid, num_kol, num_kod, id, num_kfr, obozn, naimen, descr, kei, marka, gost from {0} where {1} like '{2}%'", table, field, searchString);
+            string query = string.Format(CultureInfo.InvariantCulture, "select refid, num_kol, num_kod, id, num_kfr, obozn, naimen, descr, kei, marka, gost from {0} where {1} like '{2}%'", table, field, searchString);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             try
             {
@@ -42,7 +43,7 @@ namespace libspec.View.Data
         {
             MySqlDataReader reader = null;
             List<MidObject> list = new List<MidObject>();
-            string query = string.Format("select id, obozn, naimen, descr from mid0 order by naimen");
+            string query = string.Format(CultureInfo.InvariantCulture, "select id, obozn, naimen, descr from mid0 order by naimen");
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             try
             {
@@ -69,7 +70,7 @@ namespace libspec.View.Data
         {
             MySqlDataReader reader = null;
             List<MidObject> list = new List<MidObject>();
-            string query = string.Format("select id, obozn, naimen, descr from mid1 where obozn like '{0}%' order by obozn", searchString);
+            string query = string.Format(CultureInfo.InvariantCulture, "select id, obozn, naimen, descr from mid1 where obozn like '{0}%' order by obozn", searchString);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             try
             {

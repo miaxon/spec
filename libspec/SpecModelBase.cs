@@ -32,9 +32,12 @@ namespace libspec.View
 
         void m_view_AddRootPozEvent(object sender, AddRootPozEventArgs e)
         {
-        dlg: PozObject o = NewObject(ViewEvent.ButtonAction.AddPoz) as PozObject;
+            string name = "";
+        dlg: PozObject o = NewObject(ViewEvent.ButtonAction.AddRootPoz, name) as PozObject;
             if (o == null)
-                return;;
+                return;
+            o.num_kod = e.num_kod;
+            name = o.obozn;
             if (!m_da.PozExists(o))
             {
                 PozObject poz = m_da.AddRootPoz(o);

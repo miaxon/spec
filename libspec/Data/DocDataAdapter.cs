@@ -7,6 +7,7 @@ using MySql.Data.MySqlClient;
 using System.Windows.Forms;
 using System.Data;
 using libspec.View.Objects;
+using System.Globalization;
 namespace libspec.View.Data
 {
     public partial class SpecDataAdapter
@@ -14,7 +15,7 @@ namespace libspec.View.Data
         
         public DocObject AddDoc(DocObject o, UInt32 parent)
         {
-            string query = string.Format("insert into lid (obozn, descr) values('{0}', '{1}')", o.obozn, o.descr);
+            string query = string.Format(CultureInfo.InvariantCulture, "insert into lid (obozn, descr) values('{0}', '{1}')", o.obozn, o.descr);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             try
             {
@@ -31,7 +32,7 @@ namespace libspec.View.Data
             UInt32 uid = DocIdByObozn(o.obozn);
             if (uid == 0)
                 return null;
-            query = string.Format("insert into _did (parent, uid) values({0}, {1})", parent, uid);
+            query = string.Format(CultureInfo.InvariantCulture, "insert into _did (parent, uid) values({0}, {1})", parent, uid);
             cmd = new MySqlCommand(query, m_conn);
             try
             {
@@ -77,7 +78,7 @@ namespace libspec.View.Data
             string query = null;
             MySqlCommand cmd = null;
 
-            query = string.Format("delete from lid_old where parent = {0}", o.refid);
+            query = string.Format(CultureInfo.InvariantCulture, "delete from lid_old where parent = {0}", o.refid);
             cmd = new MySqlCommand(query, m_conn);
             try
             {
@@ -89,7 +90,7 @@ namespace libspec.View.Data
                 return false;
             }
 
-            query = string.Format("delete from lid where id = {0}", o.refid);
+            query = string.Format(CultureInfo.InvariantCulture, "delete from lid where id = {0}", o.refid);
             cmd = new MySqlCommand(query, m_conn);
             try
             {
@@ -101,7 +102,7 @@ namespace libspec.View.Data
                 return false;
             }
 
-            query = string.Format("delete from _did where id = {0}", o.id);
+            query = string.Format(CultureInfo.InvariantCulture, "delete from _did where id = {0}", o.id);
             cmd = new MySqlCommand(query, m_conn);
             try
             {
@@ -116,7 +117,7 @@ namespace libspec.View.Data
         }
         public bool UpdateDoc(DocObject o)
         {
-            string query = string.Format("update _pid set obozn = '{0}', naimen = '{1}', descr = '{2}', closed= '{3}' where id = {4}", o.obozn, o.naimen, o.descr, o.status, o.id);
+            string query = string.Format(CultureInfo.InvariantCulture, "update _pid set obozn = '{0}', naimen = '{1}', descr = '{2}', closed= '{3}' where id = {4}", o.obozn, o.naimen, o.descr, o.status, o.id);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             int ret = 0;
             try
@@ -134,7 +135,7 @@ namespace libspec.View.Data
         {
             MySqlDataReader reader = null;
             UInt32 ret = 0;
-            string query = string.Format("select id from lid where obozn='{0}'", obozn);
+            string query = string.Format(CultureInfo.InvariantCulture, "select id from lid where obozn='{0}'", obozn);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             try
             {
@@ -156,7 +157,7 @@ namespace libspec.View.Data
         }
         private DocObject DocByObozn(string obozn)
         {
-            string query = string.Format("select _did.id, lid.obozn, lid.naimen, lid.descr, _did.closed, _did.num_kol, _did.uid from _did inner join lid on _did.uid=lid.id where lid.obozn = '{0}'", obozn);
+            string query = string.Format(CultureInfo.InvariantCulture, "select _did.id, lid.obozn, lid.naimen, lid.descr, _did.closed, _did.num_kol, _did.uid from _did inner join lid on _did.uid=lid.id where lid.obozn = '{0}'", obozn);
             MySqlDataReader reader = null;
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             DocObject ret = null;
@@ -184,7 +185,7 @@ namespace libspec.View.Data
 
         public bool MoveDoc(DocObject doc, UInt32 parent)
         {
-            string query = string.Format("update _did set parent={0} where id={1}", parent, doc.id);
+            string query = string.Format(CultureInfo.InvariantCulture, "update _did set parent={0} where id={1}", parent, doc.id);
 
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             int ret = 0;
@@ -201,7 +202,7 @@ namespace libspec.View.Data
         }
         public bool DocExists(string obozn)
         {
-            string query = string.Format("select * from lid where obozn='{0}'", obozn);
+            string query = string.Format(CultureInfo.InvariantCulture, "select * from lid where obozn='{0}'", obozn);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             MySqlDataReader reader = null;
             int ret = 0;
