@@ -112,7 +112,11 @@
     <Compile Include="SpecMainBase.cs" />
     <Compile Include="SpecModel.cs" />
     <Compile Include="SpecModelBase.cs" />
+    <Compile Include="ViewEvent\AddRootPozEventArgs.cs" />
     <Compile Include="ViewEvent\NodeEditEventArgs.cs" />
+    <Compile Include="View\SpecViewTableActions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="View\SpecViewTableEdit.cs">
       <SubType>UserControl</SubType>
     </Compile>

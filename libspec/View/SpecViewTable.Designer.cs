@@ -59,10 +59,16 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tbtnClear = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.tbtnPaste = new System.Windows.Forms.ToolStripButton();
+            this.tbtnCut = new System.Windows.Forms.ToolStripButton();
+            this.tbtnCopy = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.tbtnAdd = new System.Windows.Forms.ToolStripButton();
             this.tbtnAddPoz = new System.Windows.Forms.ToolStripButton();
             this.tbtnDelete = new System.Windows.Forms.ToolStripButton();
             this.tbtnEdit = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.tbtnUpdate = new System.Windows.Forms.ToolStripButton();
             this.treeView = new AdvancedDataGridView.TreeGridView();
             this.obozn = new AdvancedDataGridView.TreeGridColumn();
             this.naimen = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -76,9 +82,7 @@
             this.descr = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.stlblEdit = new System.Windows.Forms.ToolStripStatusLabel();
-            this.stlblNum = new System.Windows.Forms.ToolStripStatusLabel();
-            this.tbtnUpdate = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.stlblAction = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.treeView)).BeginInit();
             this.statusStrip.SuspendLayout();
@@ -108,6 +112,10 @@
             this.toolStripSeparator2,
             this.tbtnClear,
             this.toolStripSeparator3,
+            this.tbtnPaste,
+            this.tbtnCut,
+            this.tbtnCopy,
+            this.toolStripSeparator6,
             this.tbtnAdd,
             this.tbtnAddPoz,
             this.tbtnDelete,
@@ -319,6 +327,44 @@
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
             // 
+            // tbtnPaste
+            // 
+            this.tbtnPaste.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbtnPaste.Image = global::libspec.View.Properties.Resources.paste;
+            this.tbtnPaste.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbtnPaste.Name = "tbtnPaste";
+            this.tbtnPaste.Size = new System.Drawing.Size(23, 22);
+            this.tbtnPaste.Text = "toolStripButton3";
+            this.tbtnPaste.ToolTipText = "вставить";
+            this.tbtnPaste.Click += new System.EventHandler(this.tbtnPaste_Click);
+            // 
+            // tbtnCut
+            // 
+            this.tbtnCut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbtnCut.Image = global::libspec.View.Properties.Resources.cut;
+            this.tbtnCut.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbtnCut.Name = "tbtnCut";
+            this.tbtnCut.Size = new System.Drawing.Size(23, 22);
+            this.tbtnCut.Text = "toolStripButton2";
+            this.tbtnCut.ToolTipText = "вырезать";
+            this.tbtnCut.Click += new System.EventHandler(this.tbtnCut_Click);
+            // 
+            // tbtnCopy
+            // 
+            this.tbtnCopy.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbtnCopy.Image = global::libspec.View.Properties.Resources.copy;
+            this.tbtnCopy.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbtnCopy.Name = "tbtnCopy";
+            this.tbtnCopy.Size = new System.Drawing.Size(23, 22);
+            this.tbtnCopy.Text = "toolStripButton1";
+            this.tbtnCopy.ToolTipText = "копировать";
+            this.tbtnCopy.Click += new System.EventHandler(this.tbtnCopy_Click);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 25);
+            // 
             // tbtnAdd
             // 
             this.tbtnAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -363,6 +409,22 @@
             this.tbtnEdit.Text = "toolStripButton1";
             this.tbtnEdit.ToolTipText = "перейти к проектам";
             this.tbtnEdit.Click += new System.EventHandler(this.tbtnEdit_Click);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
+            // 
+            // tbtnUpdate
+            // 
+            this.tbtnUpdate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbtnUpdate.Image = global::libspec.View.Properties.Resources.refresh;
+            this.tbtnUpdate.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbtnUpdate.Name = "tbtnUpdate";
+            this.tbtnUpdate.Size = new System.Drawing.Size(23, 22);
+            this.tbtnUpdate.Text = "toolStripButton1";
+            this.tbtnUpdate.ToolTipText = "обновить содержание";
+            this.tbtnUpdate.Click += new System.EventHandler(this.tbtnUpdate_Click);
             // 
             // treeView
             // 
@@ -508,7 +570,7 @@
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.stlblEdit,
-            this.stlblNum});
+            this.stlblAction});
             this.statusStrip.Location = new System.Drawing.Point(0, 489);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -524,26 +586,11 @@
             this.stlblEdit.Text = "stlblEdit";
             this.stlblEdit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // stlblNum
+            // stlblAction
             // 
-            this.stlblNum.Name = "stlblNum";
-            this.stlblNum.Size = new System.Drawing.Size(56, 17);
-            this.stlblNum.Text = "stlblNum";
-            // 
-            // tbtnUpdate
-            // 
-            this.tbtnUpdate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbtnUpdate.Image = global::libspec.View.Properties.Resources.refresh;
-            this.tbtnUpdate.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tbtnUpdate.Name = "tbtnUpdate";
-            this.tbtnUpdate.Size = new System.Drawing.Size(23, 22);
-            this.tbtnUpdate.Text = "toolStripButton1";
-            this.tbtnUpdate.Click += new System.EventHandler(this.tbtnUpdate_Click);
-            // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
+            this.stlblAction.Name = "stlblAction";
+            this.stlblAction.Size = new System.Drawing.Size(56, 17);
+            this.stlblAction.Text = "stlblNum";
             // 
             // SpecViewTable
             // 
@@ -589,7 +636,7 @@
         private System.Windows.Forms.ToolStripButton tbtn_mid3;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripStatusLabel stlblEdit;
-        private System.Windows.Forms.ToolStripStatusLabel stlblNum;
+        private System.Windows.Forms.ToolStripStatusLabel stlblAction;
         private System.Windows.Forms.ToolStripButton tbtn_mid2;
         private System.Windows.Forms.ToolStripButton tbtn_mid1;
         private System.Windows.Forms.ToolStripButton tbtn_mid0;
@@ -609,5 +656,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn descr;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripButton tbtnUpdate;
+        private System.Windows.Forms.ToolStripButton tbtnPaste;
+        private System.Windows.Forms.ToolStripButton tbtnCut;
+        private System.Windows.Forms.ToolStripButton tbtnCopy;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
     }
 }

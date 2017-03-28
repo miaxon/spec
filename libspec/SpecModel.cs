@@ -249,16 +249,7 @@ namespace libspec.View
         private void m_view_MoveDocEvent(object sender, ViewEvent.MoveDocEventArgs e)
         {
             m_da.MoveDoc(e.doc, e.grp.id);
-        }
-        private BaseObject NewObject(ViewEvent.ButtonAction action, string name = "")
-        {
-            AddObjectDialog dlg = new AddObjectDialog(action, name);
-            if (dlg.ShowDialog() == DialogResult.OK)
-            {
-                return dlg.Object;
-            }
-            return null;
-        }
+        }        
         private void m_view_AddDocEvent(object sender, ViewEvent.AddDocEventArgs e)
         {
             string name = string.Format("{0}-{1}-", e.Project.obozn, e.Group.obozn);
@@ -280,14 +271,18 @@ namespace libspec.View
         }
         private void m_view_MovePozEvent(object sender, ViewEvent.MovePozEventArgs e)
         {
-            m_da.MovePoz(e.poz, e.doc);
+            if (e.dst is DocObject)
+            {
+                DocObject dst = e.dst as DocObject;
+                m_da.MovePoz(e.src, dst);
+            }
         }
         private void m_view_AddPozEvent(object sender, ViewEvent.AddPozEventArgs e)
         {
-            if (e.target is DocObject)
+            if (e.dst is DocObject)
             {
-                DocObject o = e.target as DocObject;
-                m_da.AddPoz(o, e.poz);
+                DocObject o = e.dst as DocObject;
+                m_da.AddPoz(e.src, o);
             }
         }
         private void m_view_ButtonActionEvent(object sender, ViewEvent.ButtonActionEventArgs e)
@@ -466,28 +461,7 @@ namespace libspec.View
                     }
                     break;
             }
-        }
-        private void UpdateFill(object obj)
-        {
-            if (obj is ProjectObject)
-            {
-                ProjectObject o = obj as ProjectObject;
-                List<GroupObject> list = m_da.GetGroupList(o.id);
-                m_view.FillProject(list);
-            }
-            if (obj is GroupObject)
-            {
-                GroupObject o = obj as GroupObject;
-                List<DocObject> list = m_da.GetDocList(o.id);
-                m_view.FillGroup(list);
-            }
-            if (obj is DocObject)
-            {
-                DocObject o = obj as DocObject;
-                List<PozObject> list = m_da.GetPozList("lid_old", o.refid);
-                m_view.FillPoz(list);
-            }
-        }
+        }        
         private void m_view_SearchEvent(object sender, ViewEvent.SearchEventArgs e)
         {
             string table = Utils.GetTable(e.num_kod);
@@ -536,6 +510,36 @@ namespace libspec.View
                 m_view.FillPoz(m_da.GetPozList("lid_old", e.Object.refid));
                 return;
             }
+        }
+        private void UpdateFill(object obj)
+        {
+            if (obj is ProjectObject)
+            {
+                ProjectObject o = obj as ProjectObject;
+                List<GroupObject> list = m_da.GetGroupList(o.id);
+                m_view.FillProject(list);
+            }
+            if (obj is GroupObject)
+            {
+                GroupObject o = obj as GroupObject;
+                List<DocObject> list = m_da.GetDocList(o.id);
+                m_view.FillGroup(list);
+            }
+            if (obj is DocObject)
+            {
+                DocObject o = obj as DocObject;
+                List<PozObject> list = m_da.GetPozList("lid_old", o.refid);
+                m_view.FillPoz(list);
+            }
+        }
+        private BaseObject NewObject(ViewEvent.ButtonAction action, string name = "")
+        {
+            AddObjectDialog dlg = new AddObjectDialog(action, name);
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                return dlg.Object;
+            }
+            return null;
         }
     }
 }

@@ -1,27 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using AdvancedDataGridView;
 using libspec.View.ViewEvent;
+using AdvancedDataGridView;
 using libspec.View.Objects;
-using libspec.View.Dialogs;
 using System.IO;
 using System.Diagnostics;
+using libspec.View.Dialogs;
 
 namespace libspec.View
 {
-    public enum CPAction
-    {
-        Copy,
-        Cut,
-        None
-    }
-    public partial class SpecViewTree : UserControl
+    public partial class SpecViewTable : UserControl
     {
 
         private TreeGridNode m_nodeAction;
@@ -43,12 +37,23 @@ namespace libspec.View
             if (m_nodeCurrent == null)
                 return;
 
-            if (m_nodeCurrent.Level == 3 || m_nodeCurrent.Level == 4)
+            if (m_nodeCurrent.Level == 2) // only root childs
             {
                 stlblAction.Text = "Копировать: " + treeView.CurrentNode.Cells[0].Value;
                 tbtnCopy.Checked = true;
                 m_nodeAction = m_nodeCurrent;
                 m_action = CPAction.Copy;
+            }
+            if (m_nodeCurrent.Level == 1) // root (duplicate)
+            {
+                if (MessageBox.Show("Дублировать корневую запись?", "Подтверждение", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
+                    return;
+                if (AddPozEvent != null)
+                {
+                    PozObject src = m_nodeCurrent.Tag as PozObject;
+                    AddPozEvent(this, new AddPozEventArgs(src, null));
+                    ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyUpdate, m_nodeCurrent));
+                }
             }
 
         }
@@ -59,7 +64,7 @@ namespace libspec.View
             if (m_nodeCurrent == null)
                 return;
 
-            if (m_nodeCurrent.Level == 3 || m_nodeCurrent.Level == 4)
+            if (m_nodeCurrent.Level == 2)// only root childs
             {
                 stlblAction.Text = "Вырезать: " + treeView.CurrentNode.Cells[0].Value;
                 tbtnCut.Checked = true;
@@ -75,42 +80,12 @@ namespace libspec.View
             if (m_nodeCurrent == null)
                 return;
             if (m_nodeAction == null)
-                return;
-            if ((m_nodeAction.Level - m_nodeCurrent.Level) > 1 || m_nodeAction.Level == m_nodeCurrent.Level)
-                return;
+                return;           
             stlblAction.Text = "Вставить: " + m_nodeAction.Cells[0].Value;
-            if (m_nodeCurrent.Level == 2 || m_nodeAction.Level == 3) //вставка документа в группу 
+            if (m_nodeCurrent.Level == 1) //вставка позиции в корневой документ 
             {
-                DocObject doc = m_nodeAction.Tag as DocObject;
-                GroupObject grp = m_nodeCurrent.Tag as GroupObject;
-                ProjectObject prj = m_nodeCurrent.Parent.Tag as ProjectObject;
-
-                if (m_action == CPAction.Cut) // перемещение
-                {
-                    if (MoveDocEvent != null)
-                    {
-                        TreeGridNode parentNode = m_nodeAction.Parent;
-                        if (!parentNode.Equals(m_nodeCurrent))
-                        {
-                            MoveDocEvent(this, new MoveDocEventArgs(doc, grp));
-                            ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyUpdate, m_nodeCurrent));
-                            parentNode.Nodes.Remove(m_nodeAction);
-                        }
-                    }
-                }
-                if (m_action == CPAction.Copy) // копирование
-                {
-                    if (AddDocEvent != null)
-                    {
-                        AddDocEvent(this, new AddDocEventArgs(doc, grp, prj));
-                        ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyUpdate, m_nodeCurrent));
-                    }
-                }
-            }
-            if (m_nodeCurrent.Level == 3 || m_nodeAction.Level == 4) //вставка позиции в документ 
-            {
-                PozObject poz = m_nodeAction.Tag as PozObject;
-                DocObject doc = m_nodeCurrent.Tag as DocObject;
+                PozObject src = m_nodeAction.Tag as PozObject;
+                PozObject dst = m_nodeCurrent.Tag as PozObject;
 
                 if (m_action == CPAction.Cut) // перемещение
                 {
@@ -119,7 +94,7 @@ namespace libspec.View
                         TreeGridNode parentNode = m_nodeAction.Parent;
                         if (!parentNode.Equals(m_nodeCurrent))
                         {
-                            MovePozEvent(this, new MovePozEventArgs(poz, doc));
+                            MovePozEvent(this, new MovePozEventArgs(src, dst));
                             ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyUpdate, m_nodeCurrent));
                             parentNode.Nodes.Remove(m_nodeAction);
                         }
@@ -129,15 +104,13 @@ namespace libspec.View
                 {
                     if (AddPozEvent != null)
                     {
-                        PozObject o = poz.Clone();
-                        AddPozEvent(this, new AddPozEventArgs(o, doc));
+                        AddPozEvent(this, new AddPozEventArgs(src, dst));
                         ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyUpdate, m_nodeCurrent));
                     }
                 }
-
             }
             EndAction();
 
-        }        
+        }
     }
 }

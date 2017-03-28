@@ -31,6 +31,8 @@ namespace libspec.View
             m_actions.Add(0, "Добавить проект");
             m_actions.Add(1, "Добавить группу");
             m_actions.Add(2, "Добавить документ");
+            m_actions.Add(8, "Добавить запись");
+            m_actions.Add(9, "Добавить корневую запись");
 
             m_kodes = new Dictionary<int, string>();
             m_kodes.Add(0, "Лицевые чертежи");

@@ -20,7 +20,7 @@ namespace libspec.View
         private void treeView_SelectionChanged(object sender, EventArgs e)
         {
             if (treeView.CurrentNode != null)
-                stlblNum.Text = "элементов: " + treeView.CurrentNode.Nodes.Count;
+                stlblAction.Text = "элементов: " + treeView.CurrentNode.Nodes.Count;
         }      
         private void treeView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -31,7 +31,7 @@ namespace libspec.View
                 if (o is PozObject)
                 {
                     ExpandEvent(this, new ExpandEventArgs(o as PozObject));
-                    stlblNum.Text = "элементов: " + treeView.CurrentNode.Nodes.Count;
+                    stlblAction.Text = "элементов: " + treeView.CurrentNode.Nodes.Count;
                 }
                 if (o is MidObject)
                 {
@@ -42,6 +42,11 @@ namespace libspec.View
         }
         private void treeView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
+            if (treeView.CurrentNode.Level > 2)
+            {
+                e.Cancel = true;
+                return;
+            }
             m_cellCurrent = treeView.CurrentCell;
             m_oldValue = treeView.CurrentCell.Value;
             m_nodeCurrent = treeView.CurrentNode;
@@ -102,9 +107,11 @@ namespace libspec.View
                 node.Parent.Nodes.Remove(node);
         }
 
-        internal void AddNode(BaseObject o)
+        internal void AddRootNode(PozObject o)
         {
-            throw new NotImplementedException();
+            TreeGridNode node = treeView.Nodes.Add(o.obozn);
+            UpdatePozNode(o, node);
+            node.Selected = true;
         }
 
         private void tbtnSearchGost_Click(object sender, EventArgs e)
@@ -124,7 +131,7 @@ namespace libspec.View
                 SearchEvent(this, new SearchEventArgs("obozn", str, m_num_kod));
             }
             else
-                stlblNum.Text = "Найдено элементов: <недостаточное количество символов>";
+                stlblAction.Text = "Найдено элементов: <недостаточное количество символов>";
 
         }
         private void SearchGost()
@@ -136,7 +143,7 @@ namespace libspec.View
                 SearchEvent(this, new SearchEventArgs("gost", str, m_num_kod));
             }
             else
-                stlblNum.Text = "Найдено элементов: <недостаточное количество символов>";
+                stlblAction.Text = "Найдено элементов: <недостаточное количество символов>";
         }
     }
 }

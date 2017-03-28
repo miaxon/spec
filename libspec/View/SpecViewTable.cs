@@ -23,9 +23,8 @@ namespace libspec.View
         public event EventHandler<SearchEventArgs> SearchEvent;
         public event EventHandler<AddPozEventArgs> AddPozEvent;
         public event EventHandler<MovePozEventArgs> MovePozEvent;
-        public event EventHandler<AddDocEventArgs> AddDocEvent;
-        public event EventHandler<MoveDocEventArgs> MoveDocEvent;
         public event EventHandler<NodeEditEventArgs> NodeEditEvent;
+        public event EventHandler<AddRootPozEventArgs> AddRootPozEvent;
         #endregion
         private int m_num_kod;
         private TreeGridNode m_nodeCurrent;
@@ -38,8 +37,8 @@ namespace libspec.View
             m_num_kod = Convert.ToInt32(tbtn_lid.Tag);
             ttxtGost.Enabled = tbtnSearchGost.Enabled = false;
             stlblEdit.Text = "";
-            stlblNum.Alignment = ToolStripItemAlignment.Right;
-            stlblNum.Text = "";
+            stlblAction.Alignment = ToolStripItemAlignment.Right;
+            stlblAction.Text = "";
         }
         public void FillMid(List<MidObject> list)
         {
@@ -51,7 +50,7 @@ namespace libspec.View
                     TreeGridNode node = treeView.Nodes.Add(o.obozn);
                     UpdateNode(o, node);
                 }
-                stlblNum.Text = "Найдено элементов: " + list.Count;
+                stlblAction.Text = "Найдено элементов: " + list.Count;
             }
             else
             {
@@ -61,7 +60,7 @@ namespace libspec.View
                     TreeGridNode node = m_nodeCurrent.Nodes.Add(o.obozn);
                     //UpdateNode(o, node);
                 }
-                stlblNum.Text = "Найдено элементов: " + list.Count;
+                stlblAction.Text = "Найдено элементов: " + list.Count;
             }
         }
         public void UpdateNode(object obj, TreeGridNode node = null)
@@ -103,7 +102,7 @@ namespace libspec.View
                     TreeGridNode node = treeView.Nodes.Add(o.obozn);
                     UpdatePozNode(o, node);
                 }
-                stlblNum.Text = "Найдено элементов: " + list.Count;
+                stlblAction.Text = "Найдено элементов: " + list.Count;
             }
         }
         public void UpdatePozNode(PozObject o, TreeGridNode node = null)
@@ -165,9 +164,38 @@ namespace libspec.View
         }
         private void treeView_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Modifiers == Keys.Control && e.KeyCode == Keys.Z)
+            m_nodeCurrent = treeView.CurrentNode;
+            if (m_nodeCurrent == null || ButtonActionEvent == null)
+                return;
+            switch (e.KeyCode)
             {
-                Clear();
+                case Keys.Z:
+                    if (e.Modifiers == Keys.Control)
+                        Clear();
+                    break;
+                case Keys.F3:
+                    if (m_nodeCurrent.Level < 3)
+                        ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyUpdate, treeView.CurrentNode));
+                    break;
+                case Keys.Escape:
+                    EndAction();
+                    break;
+                case Keys.C:
+                    if (e.Modifiers == Keys.Control)
+                        Copy();
+                    break;
+                case Keys.X:
+                    if (e.Modifiers == Keys.Control)
+                        Cut();
+                    break;
+                case Keys.V:
+                    if (e.Modifiers == Keys.Control)
+                        Paste();
+                    break;                    
+                case Keys.Delete:
+                    if (m_nodeCurrent.Level < 3)
+                        ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyDelete, treeView.CurrentNode));
+                    break;
             }
         }
         private void Clear()
@@ -175,23 +203,11 @@ namespace libspec.View
             treeView.Nodes.Clear();
             ttxtGost.Text = "";
             ttxtObozn.Text = "";
-            stlblNum.Text = "";
+            stlblAction.Text = "";
             stlblEdit.Text = "";
+            EndAction();
         }
-        private void AddPoz()
-        {
-            m_nodeCurrent = treeView.CurrentNode;
-            if (m_nodeCurrent != null)
-            {
-                //PozObject poz = m_nodeCurrent.Tag as PozObject;
-                //if (poz.num_kod != m_num_kod)
-                //    return;
-                //DocObject doc = m_nodeDoc.Tag as DocObject;
-                //PozObject o = poz.Clone();
-                //if (AddPozEvent != null)
-                //    AddPozEvent(this, new AddPozEventArgs(o, doc));
-            }
-        }
+        
         private void tbtnClear_Click(object sender, EventArgs e)
         {
             Clear();
@@ -219,13 +235,15 @@ namespace libspec.View
         private void tbtnDelete_Click(object sender, EventArgs e)
         {
             m_nodeCurrent = treeView.CurrentNode;
-            if (m_nodeCurrent != null && ButtonActionEvent != null)
+            if (m_nodeCurrent != null && m_nodeCurrent.Level < 3 && ButtonActionEvent != null)
                 ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyDelete, treeView.CurrentNode));
         }
         private void tbtnAddPoz_Click(object sender, EventArgs e)
         {
             m_nodeCurrent = treeView.CurrentNode;
             if (m_nodeCurrent == null)
+                return;
+            if (m_nodeCurrent.Level > 2)
                 return;
             if (m_nodeCurrent.Tag is PozObject)
             {
@@ -271,19 +289,31 @@ namespace libspec.View
         }
         private void tbtnAdd_Click(object sender, EventArgs e)
         {
-
+            if (AddRootPozEvent != null)
+                AddRootPozEvent(this, new AddRootPozEventArgs(m_num_kod));
         }
         private void SpecViewTable_Load(object sender, EventArgs e)
         {
             (this.Parent as Form).Text = "Редактирование таблицы: " + Utils.NumKodString(m_num_kod);
         }
-
         private void tbtnUpdate_Click(object sender, EventArgs e)
         {
             m_nodeCurrent = treeView.CurrentNode;
             if (m_nodeCurrent == null || ButtonActionEvent == null)
                 return;
             ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyUpdate, treeView.CurrentNode));
+        }
+        private void tbtnPaste_Click(object sender, EventArgs e)
+        {
+            Paste();
+        }
+        private void tbtnCut_Click(object sender, EventArgs e)
+        {
+            Cut();
+        }
+        private void tbtnCopy_Click(object sender, EventArgs e)
+        {
+            Copy();
         }
     }
 }

@@ -9,6 +9,8 @@
         KeyDelete,
         KeyClose,
         KeyOpen,
-        KeyUpdate
+        KeyUpdate,
+        AddPoz,
+        AddRootPoz
     }
 }

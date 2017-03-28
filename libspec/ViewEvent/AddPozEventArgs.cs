@@ -8,13 +8,13 @@ namespace libspec.View.ViewEvent
 {
     public class AddPozEventArgs : System.EventArgs
     {
-        public readonly PozObject poz;
-        public readonly object target;
+        public readonly PozObject src;
+        public readonly object dst;
 
-        public AddPozEventArgs(PozObject p, object d)
+        public AddPozEventArgs(PozObject src, object dst)
         {
-            poz = p;
-            target = d;
+            this.src = src;
+            this.dst = dst;
         }
     }
 }

@@ -46,7 +46,7 @@ namespace libspec.View.Data
             List<PozObject> list = GetPozList("lid_old", o.refid);
             foreach (PozObject poz in list)
             {
-                AddPoz(doc, poz);
+                AddPoz(poz, doc);
             }
             return doc;
         }

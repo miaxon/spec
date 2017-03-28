@@ -24,6 +24,17 @@ namespace libspec.View.Dialogs
             m_action = action;
             txt_obozn.Text = name;
         }
+        public PozObject PozObject
+        {
+            get
+            {
+                PozObject o = new PozObject();
+                o.obozn = txt_obozn.Text;
+                o.naimen = txt_naimen.Text;
+                o.descr = DateTime.Now.ToString("Создан: dd-MM-yy HH:mm:ss ") + txt_descr.Text;
+                return o;
+            }
+        }
         public BaseObject Object
         {
             get

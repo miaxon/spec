@@ -76,6 +76,10 @@ namespace libspec.View.Objects
             o.gost = gost;
             return o;
         }
+        public void SetRootId(UInt32 id)
+        {
+            m_id = id;
+        }
         public PozObject() { }
     }
 }
