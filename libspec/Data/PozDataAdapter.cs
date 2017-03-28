@@ -180,7 +180,27 @@ namespace libspec.View.Data
                     return false;
                 }
             }
+            RemovePozRefs(o);
             return ret != 0;
+        }
+        private void RemovePozRefs(PozObject o)
+        {
+            string query = null;
+            MySqlCommand cmd = null;
+            string[] tables = Utils.GetChildTables();
+            foreach (string table in tables)
+            {
+                query = string.Format(CultureInfo.InvariantCulture, "delete from {0} where refid = {0} and num_kod={1}", table, o.id, o.num_kod);
+                cmd = new MySqlCommand(query, m_conn);
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show("Failed to delete doc (3): " + ex.Message);
+                }
+            }
         }
         public bool UpdatePoz(PozObject o)
         {

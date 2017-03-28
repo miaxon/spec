@@ -283,5 +283,9 @@ namespace libspec.View
             else
                 return kei_str;
         }
+        public static string[] GetChildTables()
+        {
+            return new string[] { "lid_old", "oid_old", "cid_"};
+        }
     }
 }
