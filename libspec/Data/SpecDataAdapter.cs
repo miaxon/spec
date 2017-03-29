@@ -28,7 +28,7 @@ namespace libspec.View.Data
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
                 return;
             }
             if (m_conn.State == ConnectionState.Open)
@@ -45,7 +45,7 @@ namespace libspec.View.Data
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
             }
         }
         public bool ExecQuery(string query)
@@ -59,9 +59,9 @@ namespace libspec.View.Data
             catch (MySqlException ex)
             {
                 if (ex.Number == 1062)
-                    MessageBox.Show("Значение уже существет.");
+                    Utils.Error("Значение уже существет.");
                 else
-                    MessageBox.Show("MySqlError: " + ex.Message);
+                    Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
                 return false;
             }
             return ret > 0;
@@ -85,7 +85,7 @@ namespace libspec.View.Data
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show("Failed to populate projects list: " + ex.Message);
+                Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
             }
             finally
             {

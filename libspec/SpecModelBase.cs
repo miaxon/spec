@@ -116,11 +116,11 @@ namespace libspec.View
             string query = "";
             string query_val = "'" + value + "'";
             PozObject o = e.Object as PozObject;
-            string table = Utils.GetTable(o.num_kod);
             if (o == null)
             {
                 return;
             }
+            string table = Utils.GetTable(o.num_kod);            
             switch (e.Field)
             {
                 case "obozn":
@@ -178,7 +178,7 @@ namespace libspec.View
                 view.RollBack();
                 return;
             }
-            if (MessageBox.Show("Сохранить внесенные изменения?", "Предупреждение", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.Cancel)
+            if (Utils.Warning("Сохранить внесенные изменения?"))
             {
                 view.RollBack();
                 return;
@@ -261,7 +261,7 @@ namespace libspec.View
                     view.RollBack();
                     return;
                 }
-                if (MessageBox.Show("Сохранить внесенные изменения?", "Предупреждение", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.Cancel)
+                if (Utils.Warning("Сохранить внесенные изменения?"))
                 {
                     view.RollBack();
                     return;
@@ -292,7 +292,7 @@ namespace libspec.View
                         o.descr = value;
                         break;
                 }
-                if (MessageBox.Show("Сохранить внесенные изменения?", "Предупреждение", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.Cancel)
+                if (Utils.Warning("Сохранить внесенные изменения?"))
                 {
                     view.RollBack();
                     return;
@@ -387,7 +387,7 @@ namespace libspec.View
                                 string table = Utils.GetChildTable(parent.num_kod);
                                 if (string.IsNullOrEmpty(table))
                                     return;
-                                if (MessageBox.Show("Удалить позицию " + o.obozn + "?", "Предупреждение", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.OK)
+                                if (Utils.Warning("Удалить позицию " + o.obozn + "?"))
                                 {
                                     if (m_da.DeletePoz(table, o))
                                     {
@@ -397,7 +397,7 @@ namespace libspec.View
                             }
                             else
                             {
-                                if (MessageBox.Show("Удалить позицию " + o.obozn + "?", "Предупреждение", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.OK)
+                                if (Utils.Warning("Удалить позицию " + o.obozn + "?"))
                                 {
                                     if (m_da.DeletePozRoot(o))
                                     {
@@ -410,7 +410,7 @@ namespace libspec.View
                         if (e.Target.Tag is MidObject)
                         {
                             MidObject o = e.Target.Tag as MidObject;
-                            if (MessageBox.Show("Удалить позицию " + o.obozn + "?", "Предупреждение", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.OK)
+                            if (Utils.Warning("Удалить позицию " + o.obozn + "?"))
                             {
                                 if (m_da.DeleteMidRoot(o))
                                 {

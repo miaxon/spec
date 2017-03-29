@@ -23,9 +23,9 @@ namespace libspec.View.Data
             catch (MySqlException ex)
             {
                 if (ex.Number == 1062)
-                    MessageBox.Show("Failed to add object: name exists!");
+                    Utils.Error("Значение уж существует.");
                 else
-                    MessageBox.Show("Failed to add project: " + ex.Message);
+                    Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
             }
             return GroupByObozn(o.obozn, parent);
         }
@@ -42,7 +42,7 @@ namespace libspec.View.Data
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show("Failed to delete doc (2): " + ex.Message);
+                Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
                 return false;
             }
             if (r > 0)
@@ -62,7 +62,7 @@ namespace libspec.View.Data
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show("Failed to populate projects list: " + ex.Message);
+                Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
                 return false;
             }
 
@@ -74,28 +74,12 @@ namespace libspec.View.Data
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show("Failed to populate projects list: " + ex.Message);
+                Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
                 return false;
             }
             return r > 0;
         }
-        public void UpdateGroup(GroupObject o)
-        {
-            string query = string.Format(CultureInfo.InvariantCulture, "update _pid set obozn = '{0}', naimen = '{1}', descr = '{2}', closed= '{3}' where id = {4}", o.obozn, o.naimen, o.descr, o.status, o.id);
-            MySqlCommand cmd = new MySqlCommand(query, m_conn);
-            try
-            {
-                int r = cmd.ExecuteNonQuery();
-            }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show("Failed to populate projects list: " + ex.Message);
-            }
-            finally
-            {
-
-            }
-        }
+        
         public GroupObject GroupByObozn(string obozn, UInt32 parent)
         {
             MySqlDataReader reader = null;
@@ -114,7 +98,7 @@ namespace libspec.View.Data
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show("Failed to populate list: " + ex.Message);
+                Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
             }
             finally
             {
@@ -125,7 +109,7 @@ namespace libspec.View.Data
         }
         public bool GroupExists(string obozn, UInt32 parent)
         {
-            string query = string.Format(CultureInfo.InvariantCulture, "select * from _gid where obozn='{0}' and parent={1}", obozn, parent);
+            string query = string.Format(CultureInfo.InvariantCulture, "select count(id) from _gid where obozn='{0}' and parent={1}", obozn, parent);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             MySqlDataReader reader = null;
             int ret = 0;
@@ -134,13 +118,13 @@ namespace libspec.View.Data
                 reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    ret++;
+                    ret = reader.GetInt32(0);
                 }
 
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show("Failed to add project: " + ex.Message);
+                Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
                 return false;
             }
             finally

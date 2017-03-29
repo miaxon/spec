@@ -233,7 +233,7 @@ namespace libspec.View
                 view.RollBack();
                 return;
             }
-            if (MessageBox.Show("Сохранить внесенные изменения?", "Предупреждение", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.Cancel)
+            if (Utils.Warning("Сохранить внесенные изменения?"))
             {
                 view.RollBack();
                 return;
@@ -317,7 +317,7 @@ namespace libspec.View
                         if (e.Target.Tag is GroupObject)
                         {
                             GroupObject o = e.Target.Tag as GroupObject;
-                            if (MessageBox.Show("Удалить группу " + o.obozn + "?", "Предупреждение", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.OK)
+                            if (Utils.Warning("Удалить группу " + o.obozn + "?"))
                             {
                                 if (m_da.DeleteGroup(o))
                                 {
@@ -328,7 +328,7 @@ namespace libspec.View
                         if (e.Target.Tag is DocObject)
                         {
                             DocObject o = e.Target.Tag as DocObject;
-                            if (MessageBox.Show("Удалить документ " + o.obozn + "?", "Предупреждение", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.OK)
+                            if (Utils.Warning("Удалить докуимент " + o.obozn + "?"))
                             {
                                 if (m_da.DeleteDoc(o))
                                 {
@@ -339,7 +339,7 @@ namespace libspec.View
                         if (e.Target.Tag is PozObject)
                         {
                             PozObject o = e.Target.Tag as PozObject;
-                            if (MessageBox.Show("Удалить позицию " + o.obozn + "?", "Предупреждение", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.OK)
+                            if (Utils.Warning("Удалить позицию " + o.obozn + "?"))
                             {
                                 if (m_da.DeletePoz("lid_old", o))
                                 {

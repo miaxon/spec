@@ -31,7 +31,7 @@ namespace libspec.View.Data
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show("Failed to populate projects list: " + ex.Message);
+                Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
             }
             finally
             {
@@ -58,7 +58,7 @@ namespace libspec.View.Data
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show("Failed to populate group list: " + ex.Message);
+                Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
             }
             finally
             {
@@ -86,7 +86,7 @@ namespace libspec.View.Data
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show("Failed to populate doc list: " + ex.Message);
+                Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
             }
             finally
             {
@@ -122,7 +122,7 @@ namespace libspec.View.Data
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show("Failed to populate poz list: " + ex.Message);
+                Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
             }
             finally
             {
@@ -154,7 +154,7 @@ namespace libspec.View.Data
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show("Failed to populate poz reference list: " + ex.Message);
+                Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
             }
             finally
             {
@@ -178,7 +178,7 @@ namespace libspec.View.Data
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show("Failed to populate gost reference list: " + ex.Message);
+                Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
             }
             finally
             {

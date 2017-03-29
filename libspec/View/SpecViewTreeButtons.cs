@@ -103,7 +103,7 @@ namespace libspec.View
             string p = Directory.GetCurrentDirectory() + @"\spbase.exe";
             if (!File.Exists(p))
             {
-                MessageBox.Show("Не найден файл программы расчета.");
+                Utils.Error("Не найден файл программы редактирования таблиц.");
                 return;
             }
             Process.Start(p);
@@ -113,7 +113,7 @@ namespace libspec.View
             string p = Directory.GetCurrentDirectory() + @"\transformer.exe";
             if (!File.Exists(p))
             {
-                MessageBox.Show("Не найден файл программы расчета.");
+                Utils.Error("Не найден файл программы расчета.");
                 return;
             }
             m_nodeCurrent = treeView.CurrentNode;

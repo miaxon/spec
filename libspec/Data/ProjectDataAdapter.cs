@@ -23,9 +23,9 @@ namespace libspec.View.Data
             catch (MySqlException ex)
             {
                 if (ex.Number == 1062)
-                    MessageBox.Show("Failed to add object: name exists!");
+                    Utils.Error("Значение уж существует.");
                 else
-                    MessageBox.Show("Failed to add project: " + ex.Message);
+                    Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
             }
             return ProjectByObozn(o.obozn);
         }
@@ -39,26 +39,9 @@ namespace libspec.View.Data
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show("Failed to populate projects list: " + ex.Message);
+                Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
             }            
-        }
-        public void UpdateProject(ProjectObject o)
-        {
-            string query = string.Format(CultureInfo.InvariantCulture, "update _pid set obozn = '{0}', naimen = '{1}', descr = '{2}', closed= '{3}' where id = {4}", o.obozn, o.naimen, o.descr, o.status, o.id);
-            MySqlCommand cmd = new MySqlCommand(query, m_conn);
-            try
-            {
-                int r = cmd.ExecuteNonQuery();
-            }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show("Failed to populate projects list: " + ex.Message);
-            }
-            finally
-            {
-
-            }
-        }
+        }        
         public ProjectObject ProjectByObozn(string obozn)
         {
             MySqlDataReader reader = null;
@@ -77,7 +60,7 @@ namespace libspec.View.Data
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show("Failed to populate list: " + ex.Message);
+                Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
             }
             finally
             {
@@ -87,7 +70,7 @@ namespace libspec.View.Data
         }
         public bool ProjectExists(string obozn)
         {
-            string query = string.Format(CultureInfo.InvariantCulture, "select * from _pid where obozn='{0}'", obozn);
+            string query = string.Format(CultureInfo.InvariantCulture, "select count(id) from _pid where obozn='{0}'", obozn);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             MySqlDataReader reader = null;
             int ret = 0;
@@ -96,13 +79,13 @@ namespace libspec.View.Data
                 reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    ret++;
+                    ret = reader.GetInt32(0);
                 }
 
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show("Failed to add project: " + ex.Message);
+                Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
                 return false;
             }
             finally

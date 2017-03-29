@@ -230,7 +230,7 @@ namespace libspec.View
             {
                 return (o.status == Closed.N) ? m_imageList.Images["doc"] : m_imageList.Images["doc_minus"];
             }
-            
+
             return null;
         }
         public static ImageList ImageList { get { return m_imageList; } }
@@ -295,7 +295,7 @@ namespace libspec.View
             string p = Directory.GetCurrentDirectory() + @"\Config\config.xml";
             if (!File.Exists(p))
             {
-                MessageBox.Show("Не найден файл конфигураци.");
+                Utils.Error("Не найден файл конфигураци config.xml.");
                 return false;
             }
             XmlTextReader reader = new XmlTextReader(p);
@@ -306,12 +306,11 @@ namespace libspec.View
                 if (reader.NodeType == XmlNodeType.Element && reader.Name == "server")
                 {
                     if (!reader.MoveToAttribute("address"))
-
-                        MessageBox.Show("Файл конфигурации не содержит address.");
+                        Utils.Error("Файл конфигурации не содержит address.");
                     else
                         Server = reader.Value;
                     if (!reader.MoveToAttribute("admins"))
-                        MessageBox.Show("Файл конфигурации не содержит admins.");
+                        Utils.Error("Файл конфигурации не содержит admins.");
                     else
                         admis = reader.Value;
 
@@ -339,7 +338,23 @@ namespace libspec.View
         }
         public static string[] GetChildTables()
         {
-            return new string[] { "lid_old", "oid_old", "cid_"};
+            return new string[] { "lid_old", "oid_old", "cid_" };
+        }
+        public static void Error(string text)
+        {
+            MessageBox.Show(text, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+        public static void DBError(string text, MySql.Data.MySqlClient.MySqlException ex)
+        {
+            MessageBox.Show(text + ": " + ex.Message, "Ошибка MySql", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+        public static bool Warning(string text)
+        {
+            return MessageBox.Show(text, "Предупреждение", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.OK;
+        }
+        public static void Info(string text)
+        {
+            MessageBox.Show(text, "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

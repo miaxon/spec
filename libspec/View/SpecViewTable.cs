@@ -154,17 +154,13 @@ namespace libspec.View
             if (m_num_kod == 93) // mid1
             {
                 m_minChars = 2;
-                treeView.Columns[2].Visible = true;
-                if (FillBadEvent != null)
-                    FillBadEvent(this, new FillBadEventArgs(m_num_kod));
+                treeView.Columns[2].Visible = true;                
                 return;
             }
             if (m_num_kod == 92) // mid2
             {
                 treeView.Columns[3].Visible = true;
-                treeView.Columns[2].Visible = true;
-                if (FillBadEvent != null)
-                    FillBadEvent(this, new FillBadEventArgs(m_num_kod));
+                treeView.Columns[2].Visible = true;                
                 return;
             }
             if (m_num_kod == 9) // mid3
@@ -178,8 +174,7 @@ namespace libspec.View
                 treeView.Columns[6].Visible = true;
                 treeView.Columns[7].Visible = false;
                 treeView.Columns[8].Visible = true;
-                if (FillBadEvent != null)
-                    FillBadEvent(this, new FillBadEventArgs(m_num_kod));
+                
                 return;
             }
               
@@ -252,7 +247,7 @@ namespace libspec.View
             string p = Directory.GetCurrentDirectory() + @"\spform.exe";
             if (!File.Exists(p))
             {
-                MessageBox.Show("Не найден файл программы расчета.");
+                Utils.Error("Не найден файл программы заполнения спецификаций.");
                 return;
             }
             Process.Start(p);
@@ -339,6 +334,12 @@ namespace libspec.View
         private void tbtnCopy_Click(object sender, EventArgs e)
         {
             Copy();
+        }
+
+        private void tbtnBadShow_Click(object sender, EventArgs e)
+        {
+            if (FillBadEvent != null)
+                FillBadEvent(this, new FillBadEventArgs(m_num_kod));
         }
     }
 }

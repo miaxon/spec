@@ -29,7 +29,7 @@ namespace libspec.View.Data
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show("Failed to add poz: " + ex.Message);
+                Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
                 return false;
             }
             return ret > 0;
@@ -54,7 +54,7 @@ namespace libspec.View.Data
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show("Failed to add poz: " + ex.Message);
+                Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
                 return false;
             }
             return ret > 0;
@@ -73,9 +73,9 @@ namespace libspec.View.Data
             catch (MySqlException ex)
             {
                 if (ex.Number == 1062)
-                    MessageBox.Show("Failed to add object: name exists!");
+                    Utils.Error("Значение уж существует.");
                 else
-                    MessageBox.Show("Failed to add project: " + ex.Message);
+                    Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
                 return null;
             }
             query = string.Format(CultureInfo.InvariantCulture, "select id from {0} where obozn='{1}'", table, target.obozn);
@@ -92,7 +92,7 @@ namespace libspec.View.Data
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show("Failed to add project: " + ex.Message);
+                Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
                 return null;
             }
             finally
@@ -113,7 +113,7 @@ namespace libspec.View.Data
             }
             target.SetRootId(id);
             if(target.num_kod == 9 || target.num_kod == 92)
-                SetMidParent(target);
+                SetMidPozParent(target);
             return target;
         }
 
@@ -128,7 +128,7 @@ namespace libspec.View.Data
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show("Failed to add poz: " + ex.Message);
+                Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
                 return false;
             }
             return ret > 0;
@@ -152,7 +152,7 @@ namespace libspec.View.Data
                 }
                 catch (MySqlException ex)
                 {
-                    MessageBox.Show("Failed to delete doc (2): " + ex.Message);
+                    Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
                     return false;
                 }
             }
@@ -166,7 +166,7 @@ namespace libspec.View.Data
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show("Failed to delete doc (1): " + ex.Message);
+                Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
                 return false;
             }
             int ret_lid = 0;
@@ -180,7 +180,7 @@ namespace libspec.View.Data
                 }
                 catch (MySqlException ex)
                 {
-                    MessageBox.Show("Failed to delete doc (3): " + ex.Message);
+                    Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
                     return false;
                 }
             }
@@ -203,27 +203,10 @@ namespace libspec.View.Data
                 }
                 catch (MySqlException ex)
                 {
-                    MessageBox.Show("Failed to delete doc (3): " + ex.Message);
+                    Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
                 }
             }
-        }
-        public bool UpdatePoz(PozObject o)
-        {
-            string query = string.Format(CultureInfo.InvariantCulture, "update lid_old set num_kol = {0}, num_kfr = {1} where id={2}", o.num_kol, o.num_kfr, o.id);
-            MySqlCommand cmd = new MySqlCommand(query, m_conn);
-            int ret = 0;
-            try
-            {
-                ret = cmd.ExecuteNonQuery();
-            }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show("Failed to add poz: " + ex.Message);
-                return false;
-            }
-            return ret > 0;
-        }
-
+        }      
         public bool MovePoz(PozObject src, DocObject dst)
         {
             string query = string.Format(CultureInfo.InvariantCulture, "update lid_old set parent={0} where id={1}", dst.refid, src.id);
@@ -236,7 +219,7 @@ namespace libspec.View.Data
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show("Failed to add poz: " + ex.Message);
+                Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
                 return false;
             }
             return ret > 0;
@@ -256,7 +239,7 @@ namespace libspec.View.Data
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show("Failed to add poz: " + ex.Message);
+                Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
                 return false;
             }
             return ret > 0;
@@ -267,7 +250,7 @@ namespace libspec.View.Data
             string table = Utils.GetTable(o.num_kod);
             if (string.IsNullOrEmpty(table))
                 return false;
-            string query = string.Format(CultureInfo.InvariantCulture, "select * from {0} where obozn='{1}'", table, o.obozn);
+            string query = string.Format(CultureInfo.InvariantCulture, "select count(id) from {0} where obozn='{1}'", table, o.obozn);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             MySqlDataReader reader = null;
             int ret = 0;
@@ -276,13 +259,13 @@ namespace libspec.View.Data
                 reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    ret++;
+                    ret = reader.GetInt32(0);
                 }
 
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show("Failed to add project: " + ex.Message);
+                Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
                 return false;
             }
             finally

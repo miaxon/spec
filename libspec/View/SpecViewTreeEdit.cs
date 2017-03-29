@@ -42,13 +42,13 @@ namespace libspec.View
                             if (m_nodeCurrent.Tag is BaseObject)
                             {
                                 BaseObject o = m_nodeCurrent.Tag as BaseObject;
-                                MessageBox.Show(o.id.ToString());
+                                Utils.Info(o.id.ToString());
                                 Clipboard.SetText(o.id.ToString());
                             }
                             if (m_nodeCurrent.Tag is PozObject)
                             {
                                 PozObject o = m_nodeCurrent.Tag as PozObject;
-                                MessageBox.Show(o.id.ToString());
+                                Utils.Info(o.id.ToString());
                                 Clipboard.SetText(o.id.ToString());
                             }
                         }

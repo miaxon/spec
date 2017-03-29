@@ -24,9 +24,9 @@ namespace libspec.View.Data
             catch (MySqlException ex)
             {
                 if (ex.Number == 1062)
-                    MessageBox.Show("Failed to add object: name exists!");
+                    Utils.Error("Значение уж существует.");
                 else
-                    MessageBox.Show("Failed to add project: " + ex.Message);
+                    Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
                 return null;
             }
             UInt32 uid = DocIdByObozn(o.obozn);
@@ -40,7 +40,7 @@ namespace libspec.View.Data
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show("Failed to add project: " + ex.Message);
+                Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
                 return null;
             }
             DocObject doc = DocByObozn(o.obozn);
@@ -65,7 +65,7 @@ namespace libspec.View.Data
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show("Failed to open/clode doc : " + ex.Message);
+                Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
                 return false;
             }
             if (r > 0)
@@ -86,7 +86,7 @@ namespace libspec.View.Data
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show("Failed to delete doc (2): " + ex.Message);
+                Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
                 return false;
             }
 
@@ -98,7 +98,7 @@ namespace libspec.View.Data
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show("Failed to delete doc (1): " + ex.Message);
+                Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
                 return false;
             }
 
@@ -110,27 +110,11 @@ namespace libspec.View.Data
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show("Failed to delete doc (3): " + ex.Message);
+                Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
                 return false;
             }
             return ret != 0;
-        }
-        public bool UpdateDoc(DocObject o)
-        {
-            string query = string.Format(CultureInfo.InvariantCulture, "update _pid set obozn = '{0}', naimen = '{1}', descr = '{2}', closed= '{3}' where id = {4}", o.obozn, o.naimen, o.descr, o.status, o.id);
-            MySqlCommand cmd = new MySqlCommand(query, m_conn);
-            int ret = 0;
-            try
-            {
-                ret = cmd.ExecuteNonQuery();
-            }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show("Failed to update doc: " + ex.Message);
-                return false;
-            }
-            return ret > 0;
-        }
+        }        
         private UInt32 DocIdByObozn(string obozn)
         {
             MySqlDataReader reader = null;
@@ -147,7 +131,7 @@ namespace libspec.View.Data
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show("Failed to populate list: " + ex.Message);
+                Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
             }
             finally
             {
@@ -174,7 +158,7 @@ namespace libspec.View.Data
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show("Failed to populate doc list: " + ex.Message);
+                Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
             }
             finally
             {
@@ -195,14 +179,14 @@ namespace libspec.View.Data
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show("Failed to add poz: " + ex.Message);
+                Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
                 return false;
             }
             return ret > 0;
         }
         public bool DocExists(string obozn)
         {
-            string query = string.Format(CultureInfo.InvariantCulture, "select * from lid where obozn='{0}'", obozn);
+            string query = string.Format(CultureInfo.InvariantCulture, "select count(id) from lid where obozn='{0}'", obozn);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             MySqlDataReader reader = null;
             int ret = 0;
@@ -211,13 +195,13 @@ namespace libspec.View.Data
                 reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    ret++;
+                    ret = reader.GetInt32(0);
                 }
 
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show("Failed to add project: " + ex.Message);
+                Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
                 return false;
             }
             finally

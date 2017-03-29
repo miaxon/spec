@@ -83,6 +83,7 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.stlblEdit = new System.Windows.Forms.ToolStripStatusLabel();
             this.stlblAction = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tbtnBadShow = new System.Windows.Forms.ToolStripButton();
             this.toolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.treeView)).BeginInit();
             this.statusStrip.SuspendLayout();
@@ -121,7 +122,8 @@
             this.tbtnDelete,
             this.tbtnEdit,
             this.toolStripSeparator5,
-            this.tbtnUpdate});
+            this.tbtnUpdate,
+            this.tbtnBadShow});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.Size = new System.Drawing.Size(1131, 25);
@@ -593,6 +595,17 @@
             this.stlblAction.Size = new System.Drawing.Size(56, 17);
             this.stlblAction.Text = "stlblNum";
             // 
+            // tbtnBadShow
+            // 
+            this.tbtnBadShow.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbtnBadShow.Image = global::libspec.View.Properties.Resources.table_row_delete;
+            this.tbtnBadShow.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbtnBadShow.Name = "tbtnBadShow";
+            this.tbtnBadShow.Size = new System.Drawing.Size(23, 22);
+            this.tbtnBadShow.Text = "toolStripButton1";
+            this.tbtnBadShow.ToolTipText = "показать проблемные записи";
+            this.tbtnBadShow.Click += new System.EventHandler(this.tbtnBadShow_Click);
+            // 
             // SpecViewTable
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -661,5 +674,6 @@
         private System.Windows.Forms.ToolStripButton tbtnCut;
         private System.Windows.Forms.ToolStripButton tbtnCopy;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripButton tbtnBadShow;
     }
 }
