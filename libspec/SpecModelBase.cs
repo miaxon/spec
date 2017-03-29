@@ -28,25 +28,75 @@ namespace libspec.View
             m_view.MovePozEvent += new EventHandler<ViewEvent.MovePozEventArgs>(m_view_MovePozEvent);
             m_view.NodeEditEvent += new EventHandler<ViewEvent.NodeEditEventArgs>(m_view_NodeEditEvent);
             m_view.AddRootPozEvent += new EventHandler<AddRootPozEventArgs>(m_view_AddRootPozEvent);
+            m_view.FillBadEvent += new EventHandler<FillBadEventArgs>(m_view_FillBadEvent);
+        }
+
+        void m_view_FillBadEvent(object sender, FillBadEventArgs e)
+        {
+            switch (e.num_kod)
+            {
+                case 9: // mid3
+                    {
+                        List<PozObject> list = m_da.SearchMid3Bad();
+                        m_view.FillPoz(list);
+                    }
+                    break;
+                case 92: // mid2
+                    {
+                        List<PozObject> list = m_da.SearchMid2Bad();
+                        m_view.FillPoz(list);
+                    }
+                    break;
+                case 93: // mid1
+                    {
+                        List<MidObject> list = m_da.SearchMid1Bad();
+                        m_view.FillMid(list);
+                    }
+                    break;
+            }
         }
 
         void m_view_AddRootPozEvent(object sender, AddRootPozEventArgs e)
         {
-            string name = "";
-        dlg: PozObject o = NewObject(ViewEvent.ButtonAction.AddRootPoz, name) as PozObject;
-            if (o == null)
-                return;
-            o.num_kod = e.num_kod;
-            name = o.obozn;
-            if (!m_da.PozExists(o))
+            if (e.num_kod < 9)
             {
-                PozObject poz = m_da.AddRootPoz(o);
-                if (poz != null)
-                    m_view.AddRootNode(poz);
-                return;
+                string name = "";
+            dlg: PozObject o = NewObject(ViewEvent.ButtonAction.AddRootPoz, name) as PozObject;
+                if (o == null)
+                    return;
+                o.num_kod = e.num_kod;
+                name = o.obozn;
+                if (!m_da.PozExists(o))
+                {
+                    PozObject poz = m_da.AddRootPoz(o);
+                    if (poz != null)
+                        m_view.AddRootNode(poz);
+                    return;
+                }
+                else
+                    goto dlg;
             }
             else
-                goto dlg;
+            {
+                string name = "";
+            dlg: PozObject o = NewObject(ViewEvent.ButtonAction.AddRootPoz, name) as PozObject;
+                if (o == null)
+                    return;
+                MidObject p = new MidObject(e.num_kod);
+                p.obozn = o.obozn;
+                p.naimen = o.naimen;
+                p.descr = o.descr;
+
+                if (!m_da.MidExists(p))
+                {
+                    MidObject poz = m_da.AddRootMid(p);
+                    if (poz != null)
+                        m_view.AddMidNode(poz);
+                    return;
+                }
+                else
+                    goto dlg;
+            }
         }
         void m_view_NodeEditEvent(object sender, ViewEvent.NodeEditEventArgs e)
         {
@@ -222,7 +272,7 @@ namespace libspec.View
                     view.RollBack();
                     return;
                 }
-                view.UpdateNode(o);
+                view.UpdateMidNode(o);
             }
             if (e.Object is MidObject)
             {
@@ -253,9 +303,9 @@ namespace libspec.View
                     view.RollBack();
                     return;
                 }
-                view.UpdateNode(o);
+                view.UpdateMidNode(o);
             }
-        }   
+        }
         private void m_view_MovePozEvent(object sender, ViewEvent.MovePozEventArgs e)
         {
             if (e.dst is PozObject)
@@ -266,37 +316,66 @@ namespace libspec.View
         }
         private void m_view_AddPozEvent(object sender, ViewEvent.AddPozEventArgs e)
         {
-            if (e.dst is PozObject)
+            if (e.src is PozObject)
             {
-                PozObject dst = e.dst as PozObject;
-                m_da.AddPoz(e.src, dst);
-            }
-            if (e.dst == null)
-            {
-            dlg: PozObject o = NewObject(ViewEvent.ButtonAction.AddPoz, e.src.obozn) as PozObject;
-                if (o == null)
-                    return;
-                PozObject p = e.src.Clone();
-                p.obozn = o.obozn;
-                p.naimen = string.IsNullOrEmpty(o.naimen) ? e.src.naimen : o.naimen;
-                p.descr = o.descr;
-                if (!m_da.PozExists(p))
+                PozObject src = e.src as PozObject;
+                if (e.dst is PozObject)
                 {
-                    PozObject poz = m_da.AddRootPoz(p);
-                    if (poz != null)
-                        m_view.AddRootNode(poz);
-                    return;
+                    PozObject dst = e.dst as PozObject;
+                    m_da.AddPoz(src, dst);
                 }
-                else
-                    goto dlg;
-                
+                if (e.dst == null)
+                {
+                dlg: PozObject o = NewObject(ViewEvent.ButtonAction.AddPoz, src.obozn) as PozObject;
+                    if (o == null)
+                        return;
+                    PozObject p = src.Clone();
+                    p.obozn = o.obozn;
+                    p.naimen = string.IsNullOrEmpty(o.naimen) ? src.naimen : o.naimen;
+                    p.descr = o.descr;
+                    if (!m_da.PozExists(p))
+                    {
+                        PozObject poz = m_da.AddRootPoz(p);
+                        if (poz != null)
+                            m_view.AddRootNode(poz);
+                        return;
+                    }
+                    else
+                        goto dlg;
+
+                }
+            }
+            if (e.src is MidObject)
+            {
+                MidObject src = e.src as MidObject;
+                if (e.dst == null)
+                {
+                dlg: PozObject o = NewObject(ViewEvent.ButtonAction.AddRootPoz, src.obozn) as PozObject;
+                    if (o == null)
+                        return;
+                    MidObject p = new MidObject(src.num_kod);
+                    p.obozn = o.obozn;
+                    p.naimen = string.IsNullOrEmpty(o.naimen) ? src.naimen : o.naimen;
+                    p.descr = o.descr;
+
+                    if (!m_da.MidExists(p))
+                    {
+                        MidObject poz = m_da.AddRootMid(p);
+                        if (poz != null)
+                            m_view.AddMidNode(poz);
+                        return;
+                    }
+                    else
+                        goto dlg;
+
+                }
             }
         }
         private void m_view_ButtonActionEvent(object sender, ViewEvent.ButtonActionEventArgs e)
         {
             switch (e.Action)
             {
-               
+
                 case ViewEvent.ButtonAction.KeyDelete:
                     {
                         if (e.Target.Tag is PozObject)
@@ -317,7 +396,7 @@ namespace libspec.View
                                 }
                             }
                             else
-                            {                                
+                            {
                                 if (MessageBox.Show("Удалить позицию " + o.obozn + "?", "Предупреждение", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.OK)
                                 {
                                     if (m_da.DeletePozRoot(o))
@@ -326,6 +405,17 @@ namespace libspec.View
                                     }
                                 }
 
+                            }
+                        }
+                        if (e.Target.Tag is MidObject)
+                        {
+                            MidObject o = e.Target.Tag as MidObject;
+                            if (MessageBox.Show("Удалить позицию " + o.obozn + "?", "Предупреждение", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.OK)
+                            {
+                                if (m_da.DeleteMidRoot(o))
+                                {
+                                    m_view.RemoveNode(e.Target);
+                                }
                             }
                         }
                     }

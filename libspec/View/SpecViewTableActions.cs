@@ -37,7 +37,7 @@ namespace libspec.View
             if (m_nodeCurrent == null)
                 return;
 
-            if (m_nodeCurrent.Level == 2) // only root childs
+            if (m_nodeCurrent.Level == 2) // only root childs, no mid object
             {
                 stlblAction.Text = "Копировать: " + treeView.CurrentNode.Cells[0].Value;
                 tbtnCopy.Checked = true;
@@ -45,13 +45,10 @@ namespace libspec.View
                 m_action = CPAction.Copy;
             }
             if (m_nodeCurrent.Level == 1) // root (duplicate)
-            {
-                if (MessageBox.Show("Дублировать корневую запись?", "Подтверждение", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
-                    return;
+            {                
                 if (AddPozEvent != null)
                 {
-                    PozObject src = m_nodeCurrent.Tag as PozObject;
-                    AddPozEvent(this, new AddPozEventArgs(src, null));
+                    AddPozEvent(this, new AddPozEventArgs(m_nodeCurrent.Tag, null));
                     ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyUpdate, m_nodeCurrent));
                 }
             }
@@ -59,18 +56,20 @@ namespace libspec.View
         }
         private void Cut()
         {
-            EndAction();
+            EndAction();        
             m_nodeCurrent = treeView.CurrentNode;
             if (m_nodeCurrent == null)
                 return;
-
-            if (m_nodeCurrent.Level == 2)// only root childs
+            if (m_num_kod < 9) // no mid object
             {
-                stlblAction.Text = "Вырезать: " + treeView.CurrentNode.Cells[0].Value;
-                tbtnCut.Checked = true;
-                m_nodeAction = m_nodeCurrent;
-                m_nodeAction.DefaultCellStyle.ForeColor = Color.Gray;
-                m_action = CPAction.Cut;
+                if (m_nodeCurrent.Level == 2)// only root childs
+                {
+                    stlblAction.Text = "Вырезать: " + treeView.CurrentNode.Cells[0].Value;
+                    tbtnCut.Checked = true;
+                    m_nodeAction = m_nodeCurrent;
+                    m_nodeAction.DefaultCellStyle.ForeColor = Color.Gray;
+                    m_action = CPAction.Cut;
+                }
             }
 
         }

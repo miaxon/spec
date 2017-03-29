@@ -25,6 +25,7 @@ namespace libspec.View
         public event EventHandler<MovePozEventArgs> MovePozEvent;
         public event EventHandler<NodeEditEventArgs> NodeEditEvent;
         public event EventHandler<AddRootPozEventArgs> AddRootPozEvent;
+        public event EventHandler<FillBadEventArgs> FillBadEvent;
         #endregion
         private int m_num_kod;
         private TreeGridNode m_nodeCurrent;
@@ -48,7 +49,7 @@ namespace libspec.View
                 foreach (MidObject o in list)
                 {
                     TreeGridNode node = treeView.Nodes.Add(o.obozn);
-                    UpdateNode(o, node);
+                    UpdateMidNode(o, node);
                 }
                 stlblAction.Text = "Найдено элементов: " + list.Count;
             }
@@ -63,7 +64,7 @@ namespace libspec.View
                 stlblAction.Text = "Найдено элементов: " + list.Count;
             }
         }
-        public void UpdateNode(object obj, TreeGridNode node = null)
+        public void UpdateMidNode(object obj, TreeGridNode node = null)
         {
             if (node == null)
             {
@@ -74,6 +75,7 @@ namespace libspec.View
                 MidObject o = obj as MidObject;
                 node.Image = Utils.GetMidImage(o);
                 node.Cells[1].Value = o.naimen;
+                node.Cells[2].Value = o.num_kol;
                 node.Cells[9].Value = o.descr;
                 node.Tag = o;
                 node.Cells[0].ReadOnly = false;
@@ -145,19 +147,42 @@ namespace libspec.View
             if (m_num_kod == 94) //mid0            {
             {
                 m_minChars = -1;
+                treeView.Columns[2].Visible = true;
                 SearchObozn();
                 return;
             }
             if (m_num_kod == 93) // mid1
             {
                 m_minChars = 2;
+                treeView.Columns[2].Visible = true;
+                if (FillBadEvent != null)
+                    FillBadEvent(this, new FillBadEventArgs(m_num_kod));
                 return;
             }
             if (m_num_kod == 92) // mid2
             {
                 treeView.Columns[3].Visible = true;
+                treeView.Columns[2].Visible = true;
+                if (FillBadEvent != null)
+                    FillBadEvent(this, new FillBadEventArgs(m_num_kod));
                 return;
             }
+            if (m_num_kod == 9) // mid3
+            {
+                treeView.Columns[0].Visible = true;
+                treeView.Columns[1].Visible = true;
+                treeView.Columns[2].Visible = false;
+                treeView.Columns[3].Visible = true;
+                treeView.Columns[4].Visible = true;
+                treeView.Columns[5].Visible = true;
+                treeView.Columns[6].Visible = true;
+                treeView.Columns[7].Visible = false;
+                treeView.Columns[8].Visible = true;
+                if (FillBadEvent != null)
+                    FillBadEvent(this, new FillBadEventArgs(m_num_kod));
+                return;
+            }
+              
             for (int i = 0; i < 10; i++)
                 treeView.Columns[i].Visible = true;
 
@@ -248,7 +273,7 @@ namespace libspec.View
             if (m_nodeCurrent.Tag is PozObject)
             {
                 PozObject o = m_nodeCurrent.Tag as PozObject;
-                if (o.num_kod < 9)
+                if (m_num_kod < 9) // no mid object
                 {
                     SearchPozDialog dlg = new SearchPozDialog(m_nodeCurrent);
                     dlg.SearchEvent += new EventHandler<SearchEventArgs>(dlg_SearchEvent);

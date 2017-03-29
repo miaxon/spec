@@ -18,6 +18,8 @@ namespace libspec.View
     {
         private static Dictionary<int, string> m_tables;
         private static Dictionary<int, string> m_child_tables;
+        private static Dictionary<int, string> m_child_mid_tables;
+        private static Dictionary<int, string> m_parent_tables;
         private static Dictionary<int, string> m_pozImages;
         private static Dictionary<int, string> m_kodes;
         private static Dictionary<int, string> m_actions;
@@ -64,10 +66,16 @@ namespace libspec.View
             m_child_tables.Add(0, "lid_old");
             m_child_tables.Add(3, "oid_old");
             m_child_tables.Add(7, "cid_");// cid -> cid_
-            m_child_tables.Add(92, "mid3"); // mid2 -> mid3
-            m_child_tables.Add(93, "mid2"); // mid1 -> mid2
-            m_child_tables.Add(94, "mid1"); // mid0 -> mid2
 
+            m_child_mid_tables = new Dictionary<int, string>();
+            m_child_mid_tables.Add(92, "mid3"); // mid2 -> mid3
+            m_child_mid_tables.Add(93, "mid2"); // mid1 -> mid2
+            m_child_mid_tables.Add(94, "mid1"); // mid0 -> mid2
+
+            m_parent_tables = new Dictionary<int, string>();
+            m_parent_tables.Add(9, "mid2"); // mid3 -> mid2
+            m_parent_tables.Add(92, "mid1"); // mid2 -> mid1
+            m_parent_tables.Add(93, "mid0"); // mid1 -> mid0
 
             m_pozImages = new Dictionary<int, string>();
             m_pozImages.Add(0, "lid");
@@ -116,16 +124,62 @@ namespace libspec.View
         {
             return m_tables[num_kod];
         }
+        public static string GetChildMidTable(int num_kod)
+        {
+            string str = string.Empty;
+            try
+            {
+                str = m_child_mid_tables[num_kod];
+            }
+            catch
+            {
+                return string.Empty;
+            }
+            return str;
+        }
         public static string GetChildTable(int num_kod)
         {
-            string str = "";
+            string str = string.Empty;
             try
             {
                 str = m_child_tables[num_kod];
             }
             catch
             {
-                return "";
+                return string.Empty;
+            }
+            return str;
+        }
+        public static int OboznLength(string table)
+        {
+            int ret = 0;
+            switch (table)
+            {
+                case "mid3":
+                    ret = 11;
+                    break;
+                case "mid2":
+                    ret = 6;
+                    break;
+                case "mid1":
+                    ret = 4;
+                    break;
+                case "mid0":
+                    ret = 4;
+                    break;
+            }
+            return ret;
+        }
+        public static string GetParentTable(int num_kod)
+        {
+            string str = string.Empty;
+            try
+            {
+                str = m_parent_tables[num_kod];
+            }
+            catch
+            {
+                return string.Empty;
             }
             return str;
         }

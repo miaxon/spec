@@ -112,6 +112,8 @@ namespace libspec.View.Data
                 }
             }
             target.SetRootId(id);
+            if(target.num_kod == 9 || target.num_kod == 92)
+                SetMidParent(target);
             return target;
         }
 
@@ -154,6 +156,8 @@ namespace libspec.View.Data
                     return false;
                 }
             }
+            if (GetMidChilds(o.id, o.num_kod) > 0)
+                return false;
             query = string.Format(CultureInfo.InvariantCulture, "delete from {0} where id = {1}", table, o.id);
             cmd = new MySqlCommand(query, m_conn);
             try
@@ -180,7 +184,8 @@ namespace libspec.View.Data
                     return false;
                 }
             }
-            RemovePozRefs(o);
+            if (o.num_kod <= 9)
+                RemovePozRefs(o);
             return ret != 0;
         }
         private void RemovePozRefs(PozObject o)
@@ -190,7 +195,7 @@ namespace libspec.View.Data
             string[] tables = Utils.GetChildTables();
             foreach (string table in tables)
             {
-                query = string.Format(CultureInfo.InvariantCulture, "delete from {0} where refid = {0} and num_kod={1}", table, o.id, o.num_kod);
+                query = string.Format(CultureInfo.InvariantCulture, "delete from {0} where refid = {1} and num_kod={2}", table, o.id, o.num_kod);
                 cmd = new MySqlCommand(query, m_conn);
                 try
                 {
