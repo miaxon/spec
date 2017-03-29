@@ -58,10 +58,7 @@ namespace libspec.View.Data
             }
             catch (MySqlException ex)
             {
-                if (ex.Number == 1062)
-                    Utils.Error("Значение уже существет.");
-                else
-                    Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
+                Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
                 return false;
             }
             return ret > 0;

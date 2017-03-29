@@ -72,10 +72,7 @@ namespace libspec.View.Data
             }
             catch (MySqlException ex)
             {
-                if (ex.Number == 1062)
-                    Utils.Error("Значение уж существует.");
-                else
-                    Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
+                Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
                 return null;
             }
             query = string.Format(CultureInfo.InvariantCulture, "select id from {0} where obozn='{1}'", table, target.obozn);

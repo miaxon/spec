@@ -346,7 +346,10 @@ namespace libspec.View
         }
         public static void DBError(string text, MySql.Data.MySqlClient.MySqlException ex)
         {
-            MessageBox.Show(text + ": " + ex.Message, "Ошибка MySql", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            if (ex.Number == 1062)
+                Utils.Error("Значение уж существует.");
+            else
+                MessageBox.Show(text + ": " + ex.Message, "Ошибка MySql", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
         public static bool Warning(string text)
         {

@@ -23,10 +23,7 @@ namespace libspec.View.Data
             }
             catch (MySqlException ex)
             {
-                if (ex.Number == 1062)
-                    Utils.Error("Значение уж существует.");
-                else
-                    Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
+                Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
                 return null;
             }
             UInt32 uid = DocIdByObozn(o.obozn);
