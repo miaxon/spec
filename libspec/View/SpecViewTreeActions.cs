@@ -93,7 +93,7 @@ namespace libspec.View
                         if (!parentNode.Equals(m_nodeCurrent))
                         {
                             MoveDocEvent(this, new MoveDocEventArgs(doc, grp));
-                            ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyUpdate, m_nodeCurrent));
+                            ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyUpdate, m_nodeCurrent.Tag));
                             parentNode.Nodes.Remove(m_nodeAction);
                         }
                     }
@@ -103,7 +103,7 @@ namespace libspec.View
                     if (AddDocEvent != null)
                     {
                         AddDocEvent(this, new AddDocEventArgs(doc, grp, prj));
-                        ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyUpdate, m_nodeCurrent));
+                        ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyUpdate, m_nodeCurrent.Tag));
                     }
                 }
             }
@@ -120,7 +120,7 @@ namespace libspec.View
                         if (!parentNode.Equals(m_nodeCurrent))
                         {
                             MovePozEvent(this, new MovePozEventArgs(poz, doc));
-                            ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyUpdate, m_nodeCurrent));
+                            ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyUpdate, m_nodeCurrent.Tag));
                             parentNode.Nodes.Remove(m_nodeAction);
                         }
                     }
@@ -131,7 +131,7 @@ namespace libspec.View
                     {
                         PozObject o = poz.Clone();
                         AddPozEvent(this, new AddPozEventArgs(o, doc));
-                        ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyUpdate, m_nodeCurrent));
+                        ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyUpdate, m_nodeCurrent.Tag));
                     }
                 }
 

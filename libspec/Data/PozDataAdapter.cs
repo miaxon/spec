@@ -114,9 +114,9 @@ namespace libspec.View.Data
             return target;
         }
 
-        public bool DeletePoz(string table, PozObject o)
+        public bool DeletePoz(string table, UInt32 id)
         {
-            string query = string.Format(CultureInfo.InvariantCulture, "delete from {0} where id={1}", table, o.id);
+            string query = string.Format(CultureInfo.InvariantCulture, "delete from {0} where id={1}", table, id);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             int ret = 0;
             try

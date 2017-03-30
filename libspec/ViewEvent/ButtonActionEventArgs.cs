@@ -10,11 +10,13 @@ namespace libspec.View.ViewEvent
     public class ButtonActionEventArgs : EventArgs
     {
         public readonly ButtonAction Action;
-        public readonly TreeGridNode Target;
-        public ButtonActionEventArgs(ButtonAction action, TreeGridNode target = null)
+        public readonly object Target;
+        public readonly object Data;
+        public ButtonActionEventArgs(ButtonAction action, object target = null, object data = null)
         {
             Action = action;
             Target = target;
+            Data = data;
         }
     }
 }

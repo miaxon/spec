@@ -49,7 +49,7 @@ namespace libspec.View
                 if (AddPozEvent != null)
                 {
                     AddPozEvent(this, new AddPozEventArgs(m_nodeCurrent.Tag, null));
-                    ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyUpdate, m_nodeCurrent));
+                    ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyUpdate, m_nodeCurrent.Tag));
                 }
             }
 
@@ -94,7 +94,7 @@ namespace libspec.View
                         if (!parentNode.Equals(m_nodeCurrent))
                         {
                             MovePozEvent(this, new MovePozEventArgs(src, dst));
-                            ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyUpdate, m_nodeCurrent));
+                            ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyUpdate, m_nodeCurrent.Tag));
                             parentNode.Nodes.Remove(m_nodeAction);
                         }
                     }
@@ -104,7 +104,7 @@ namespace libspec.View
                     if (AddPozEvent != null)
                     {
                         AddPozEvent(this, new AddPozEventArgs(src, dst));
-                        ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyUpdate, m_nodeCurrent));
+                        ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyUpdate, m_nodeCurrent.Tag));
                     }
                 }
             }

@@ -56,19 +56,19 @@ namespace libspec.View
                     break;
                 case Keys.Delete:
                     if (treeView.CurrentNode.Level < 5)
-                        ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyDelete, treeView.CurrentNode));
+                        ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyDelete, m_nodeCurrent.Tag));
                     break;
                 case Keys.Add:
                     if (m_nodeCurrent.Level == 2 || m_nodeCurrent.Level == 3)
-                        ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyOpen, treeView.CurrentNode));
+                        ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyOpen, m_nodeCurrent.Tag));
                     break;
                 case Keys.Subtract:
                     if (m_nodeCurrent.Level == 2 || m_nodeCurrent.Level == 3)
-                        ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyClose, treeView.CurrentNode));
+                        ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyClose, m_nodeCurrent.Tag));
                     break;
                 case Keys.F3:
                     if (m_nodeCurrent.Level <= 3)
-                        ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyUpdate, treeView.CurrentNode));
+                        ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyUpdate, m_nodeCurrent.Tag));
                     break;
                 case Keys.Escape:
                     EndAction();

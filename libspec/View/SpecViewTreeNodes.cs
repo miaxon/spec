@@ -17,12 +17,14 @@ namespace libspec.View
 {
     public partial class SpecViewTree : UserControl
     {
-        public void RemoveNode(TreeGridNode node)
+        public void RemoveCurrentNode()
         {
-            if (node.Parent == null)
-                treeView.Nodes.Remove(node);
+            if (m_nodeCurrent == null)
+                return;
+            if (m_nodeCurrent.Parent == null)
+                treeView.Nodes.Remove(m_nodeCurrent);
             else
-                node.Parent.Nodes.Remove(node);
+                m_nodeCurrent.Parent.Nodes.Remove(m_nodeCurrent);
         }
         public void AddNode(object obj)
         {

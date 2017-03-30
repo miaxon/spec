@@ -308,42 +308,42 @@ namespace libspec.View
                     break;
                 case ViewEvent.ButtonAction.KeyDelete:
                     {
-                        if (e.Target.Tag is ProjectObject)
+                        if (e.Target is ProjectObject)
                         {
-                            m_projects.Remove(e.Target.Tag as ProjectObject);
+                            m_projects.Remove(e.Target as ProjectObject);
                             Utils.SaveProjectList(m_projects);
-                            m_view.RemoveNode(e.Target);
+                            m_view.RemoveCurrentNode();
                         }
-                        if (e.Target.Tag is GroupObject)
+                        if (e.Target is GroupObject)
                         {
-                            GroupObject o = e.Target.Tag as GroupObject;
+                            GroupObject o = e.Target as GroupObject;
                             if (Utils.Warning("Удалить группу " + o.obozn + "?"))
                             {
                                 if (m_da.DeleteGroup(o))
                                 {
-                                    m_view.RemoveNode(e.Target);
+                                    m_view.RemoveCurrentNode();
                                 }
                             }
                         }
-                        if (e.Target.Tag is DocObject)
+                        if (e.Target is DocObject)
                         {
-                            DocObject o = e.Target.Tag as DocObject;
+                            DocObject o = e.Target as DocObject;
                             if (Utils.Warning("Удалить докуимент " + o.obozn + "?"))
                             {
                                 if (m_da.DeleteDoc(o))
                                 {
-                                    m_view.RemoveNode(e.Target);
+                                    m_view.RemoveCurrentNode();
                                 }
                             }
                         }
-                        if (e.Target.Tag is PozObject)
+                        if (e.Target is PozObject)
                         {
-                            PozObject o = e.Target.Tag as PozObject;
+                            PozObject o = e.Target as PozObject;
                             if (Utils.Warning("Удалить позицию " + o.obozn + "?"))
                             {
-                                if (m_da.DeletePoz("lid_old", o))
+                                if (m_da.DeletePoz("lid_old", o.id))
                                 {
-                                    m_view.RemoveNode(e.Target);
+                                    m_view.RemoveCurrentNode();
                                 }
                             }
                         }
@@ -372,7 +372,7 @@ namespace libspec.View
                     gdlg: GroupObject o = (NewObject(e.Action) as GroupObject);
                         if (o == null)
                             break;
-                        UInt32 parent = (e.Target.Tag as ProjectObject).id;
+                        UInt32 parent = (e.Target as ProjectObject).id;
                         if (!m_da.GroupExists(o.obozn, parent))
                         {
                             o = m_da.AddGroup(o, parent);
@@ -386,13 +386,14 @@ namespace libspec.View
                     break;
                 case ViewEvent.ButtonAction.AddDoc:
                     {
-                        string name = string.Format("{0}-{1}-", e.Target.Parent.Cells[0].Value, e.Target.Cells[0].Value);
+
+                        string name = e.Data as string;
                     ddlg: DocObject o = (NewObject(e.Action, name) as DocObject);
                         if (o == null)
                             return;
                         if (!m_da.DocExists(o.obozn))
                         {
-                            o = m_da.AddDoc(o, (e.Target.Tag as GroupObject).id);
+                            o = m_da.AddDoc(o, (e.Target as GroupObject).id);
                             if (o != null && o.id > 0)
                                 m_view.AddNode(o);
                         }
@@ -402,27 +403,27 @@ namespace libspec.View
                     break;
                 case ViewEvent.ButtonAction.KeyClose:
                     {
-                        if (e.Target.Tag is GroupObject)
+                        if (e.Target is GroupObject)
                         {
-                            GroupObject o = e.Target.Tag as GroupObject;
+                            GroupObject o = e.Target as GroupObject;
                             if (o.status != Closed.Y)
                             {
                                 if (m_da.SetStatusGroup(ref o, Closed.Y))
                                 {
-                                    m_view.UpdateNode(o, e.Target);
-                                    UpdateFill(e.Target.Tag);
+                                    m_view.UpdateNode(o);
+                                    UpdateChilds(e.Target);
                                 }
                             }
                         }
-                        if (e.Target.Tag is DocObject)
+                        if (e.Target is DocObject)
                         {
-                            DocObject o = e.Target.Tag as DocObject;
+                            DocObject o = e.Target as DocObject;
                             if (o.status != Closed.Y)
                             {
                                 if (m_da.SetStatusDoc(ref o, Closed.Y))
                                 {
-                                    m_view.UpdateNode(o, e.Target);
-                                    UpdateFill(e.Target.Tag);
+                                    m_view.UpdateNode(o);
+                                    UpdateChilds(e.Target);
                                 }
                             }
                         }
@@ -430,27 +431,27 @@ namespace libspec.View
                     break;
                 case ViewEvent.ButtonAction.KeyOpen:
                     {
-                        if (e.Target.Tag is GroupObject)
+                        if (e.Target is GroupObject)
                         {
-                            GroupObject o = e.Target.Tag as GroupObject;
+                            GroupObject o = e.Target as GroupObject;
                             if (o.status != Closed.N)
                             {
                                 if (m_da.SetStatusGroup(ref o, Closed.N))
                                 {
-                                    m_view.UpdateNode(o, e.Target);
-                                    UpdateFill(e.Target.Tag);
+                                    m_view.UpdateNode(o);
+                                    UpdateChilds(e.Target);
                                 }
                             }
                         }
-                        if (e.Target.Tag is DocObject)
+                        if (e.Target is DocObject)
                         {
-                            DocObject o = e.Target.Tag as DocObject;
+                            DocObject o = e.Target as DocObject;
                             if (o.status != Closed.N)
                             {
                                 if (m_da.SetStatusDoc(ref o, Closed.N))
                                 {
-                                    m_view.UpdateNode(o, e.Target);
-                                    UpdateFill(e.Target.Tag);
+                                    m_view.UpdateNode(o);
+                                    UpdateChilds(e.Target);
                                 }
                             }
                         }
@@ -458,7 +459,7 @@ namespace libspec.View
                     break;
                 case ViewEvent.ButtonAction.KeyUpdate:
                     {
-                        UpdateFill(e.Target.Tag);
+                        UpdateChilds(e.Target);
                     }
                     break;
             }
@@ -512,7 +513,7 @@ namespace libspec.View
                 return;
             }
         }
-        private void UpdateFill(object obj)
+        private void UpdateChilds(object obj)
         {
             if (obj is ProjectObject)
             {

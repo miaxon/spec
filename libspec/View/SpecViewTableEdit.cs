@@ -99,12 +99,14 @@ namespace libspec.View
             }
 
         }        
-        internal void RemoveNode(TreeGridNode node)
+        internal void RemoveCurrentNode()
         {
-            if (node.Parent == null)
-                treeView.Nodes.Remove(node);
+            if (m_nodeCurrent == null)
+                return;
+            if (m_nodeCurrent.Parent == null)
+                treeView.Nodes.Remove(m_nodeCurrent);
             else
-                node.Parent.Nodes.Remove(node);
+                m_nodeCurrent.Parent.Nodes.Remove(m_nodeCurrent);
         }
 
         internal void AddRootNode(PozObject o)

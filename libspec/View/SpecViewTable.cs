@@ -154,13 +154,13 @@ namespace libspec.View
             if (m_num_kod == 93) // mid1
             {
                 m_minChars = 2;
-                treeView.Columns[2].Visible = true;                
+                treeView.Columns[2].Visible = true;
                 return;
             }
             if (m_num_kod == 92) // mid2
             {
                 treeView.Columns[3].Visible = true;
-                treeView.Columns[2].Visible = true;                
+                treeView.Columns[2].Visible = true;
                 return;
             }
             if (m_num_kod == 9) // mid3
@@ -174,10 +174,10 @@ namespace libspec.View
                 treeView.Columns[6].Visible = true;
                 treeView.Columns[7].Visible = false;
                 treeView.Columns[8].Visible = true;
-                
+
                 return;
             }
-              
+
             for (int i = 0; i < 10; i++)
                 treeView.Columns[i].Visible = true;
 
@@ -195,7 +195,7 @@ namespace libspec.View
                     break;
                 case Keys.F3:
                     if (m_nodeCurrent.Level < 3)
-                        ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyUpdate, treeView.CurrentNode));
+                        ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyUpdate, m_nodeCurrent.Tag));
                     break;
                 case Keys.Escape:
                     EndAction();
@@ -211,10 +211,10 @@ namespace libspec.View
                 case Keys.V:
                     if (e.Modifiers == Keys.Control)
                         Paste();
-                    break;                    
+                    break;
                 case Keys.Delete:
                     if (m_nodeCurrent.Level < 3)
-                        ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyDelete, treeView.CurrentNode));
+                        ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyDelete, m_nodeCurrent.Tag));
                     break;
             }
         }
@@ -227,7 +227,7 @@ namespace libspec.View
             stlblEdit.Text = "";
             EndAction();
         }
-        
+
         private void tbtnClear_Click(object sender, EventArgs e)
         {
             Clear();
@@ -256,7 +256,12 @@ namespace libspec.View
         {
             m_nodeCurrent = treeView.CurrentNode;
             if (m_nodeCurrent != null && m_nodeCurrent.Level < 3 && ButtonActionEvent != null)
-                ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyDelete, treeView.CurrentNode));
+            {
+                if (m_nodeCurrent.Level == 2)
+                    ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyDelete, m_nodeCurrent.Tag, m_num_kod));
+                if (m_nodeCurrent.Level == 1) // root
+                    ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyDelete, m_nodeCurrent.Tag, -1));
+            }
         }
         private void tbtnAddPoz_Click(object sender, EventArgs e)
         {
@@ -299,7 +304,7 @@ namespace libspec.View
             if (AddPozEvent != null)
             {
                 AddPozEvent(this, e);
-                ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyUpdate, treeView.CurrentNode));
+                ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyUpdate, m_nodeCurrent.Tag));
             }
         }
         void dlg_NodeEditEvent(object sender, NodeEditEventArgs e)
@@ -321,7 +326,7 @@ namespace libspec.View
             m_nodeCurrent = treeView.CurrentNode;
             if (m_nodeCurrent == null || ButtonActionEvent == null)
                 return;
-            ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyUpdate, treeView.CurrentNode));
+            ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyUpdate, m_nodeCurrent.Tag));
         }
         private void tbtnPaste_Click(object sender, EventArgs e)
         {

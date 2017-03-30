@@ -36,7 +36,7 @@ namespace libspec.View
             if (m_nodeCurrent.Level != 1)
                 return;
             if (m_nodeCurrent != null && ButtonActionEvent != null)
-                ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.AddGroup, treeView.CurrentNode));
+                ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.AddGroup, m_nodeCurrent.Tag));
         }
         private void tbtnAddDoc_Click(object sender, EventArgs e)
         {
@@ -44,13 +44,16 @@ namespace libspec.View
             if (m_nodeCurrent.Level != 2)
                 return;
             if (m_nodeCurrent != null && ButtonActionEvent != null)
-                ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.AddDoc, treeView.CurrentNode));
+            {
+                string name = string.Format("{0}-{1}-", m_nodeCurrent.Parent.Cells[0].Value, m_nodeCurrent.Cells[0].Value);
+                ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.AddDoc, m_nodeCurrent.Tag, name));
+            }
         }
         private void tbtnDelObject_Click(object sender, EventArgs e)
         {
             m_nodeCurrent = treeView.CurrentNode;
             if (m_nodeCurrent != null && treeView.CurrentNode.Level < 5 && ButtonActionEvent != null)
-                ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyDelete, treeView.CurrentNode));
+                ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyDelete, m_nodeCurrent.Tag));
         }
         private void tbtnClose_Click(object sender, EventArgs e)
         {
@@ -80,7 +83,7 @@ namespace libspec.View
                 return;
             if (m_nodeCurrent.Level <= 3)
             {
-                ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyUpdate, treeView.CurrentNode));
+                ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyUpdate, m_nodeCurrent.Tag));
             }
         }        
         private void tbtnAddPoz_Click(object sender, EventArgs e)
@@ -163,7 +166,7 @@ namespace libspec.View
             if (AddPozEvent != null)
             {
                 AddPozEvent(this, e);
-                ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyUpdate, treeView.CurrentNode));
+                ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyUpdate, m_nodeCurrent.Tag));
             }
         }
         void dlg_NodeEditEvent(object sender, NodeEditEventArgs e)

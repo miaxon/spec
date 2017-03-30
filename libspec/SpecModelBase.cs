@@ -378,20 +378,20 @@ namespace libspec.View
 
                 case ViewEvent.ButtonAction.KeyDelete:
                     {
-                        if (e.Target.Tag is PozObject)
+                        if (e.Target is PozObject)
                         {
-                            PozObject parent = e.Target.Parent.Tag as PozObject;
-                            PozObject o = e.Target.Tag as PozObject;
-                            if (parent != null)
+                            int num_kod = Convert.ToInt32(e.Data);
+                            PozObject o = e.Target as PozObject;
+                            if (num_kod > 0)
                             {
-                                string table = Utils.GetChildTable(parent.num_kod);
+                                string table = Utils.GetChildTable(num_kod);
                                 if (string.IsNullOrEmpty(table))
                                     return;
                                 if (Utils.Warning("Удалить позицию " + o.obozn + "?"))
                                 {
-                                    if (m_da.DeletePoz(table, o))
+                                    if (m_da.DeletePoz(table, o.id))
                                     {
-                                        m_view.RemoveNode(e.Target);
+                                        m_view.RemoveCurrentNode();
                                     }
                                 }
                             }
@@ -401,20 +401,20 @@ namespace libspec.View
                                 {
                                     if (m_da.DeletePozRoot(o))
                                     {
-                                        m_view.RemoveNode(e.Target);
+                                        m_view.RemoveCurrentNode();
                                     }
                                 }
 
                             }
                         }
-                        if (e.Target.Tag is MidObject)
+                        if (e.Target is MidObject)
                         {
-                            MidObject o = e.Target.Tag as MidObject;
+                            MidObject o = e.Target as MidObject;
                             if (Utils.Warning("Удалить позицию " + o.obozn + "?"))
                             {
                                 if (m_da.DeleteMidRoot(o))
                                 {
-                                    m_view.RemoveNode(e.Target);
+                                    m_view.RemoveCurrentNode();
                                 }
                             }
                         }
@@ -422,7 +422,7 @@ namespace libspec.View
                     break;
                 case ViewEvent.ButtonAction.KeyUpdate:
                     {
-                        UpdateFill(e.Target.Tag);
+                        UpdateFill(e.Target);
                     }
                     break;
             }

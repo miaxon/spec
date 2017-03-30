@@ -347,7 +347,7 @@ namespace libspec.View
         public static void DBError(string text, MySql.Data.MySqlClient.MySqlException ex)
         {
             if (ex.Number == 1062)
-                Utils.Error("Значение уж существует.");
+                Utils.Error("Значение уже существует.");
             else
                 MessageBox.Show(text + ": " + ex.Message, "Ошибка MySql", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
