@@ -276,8 +276,8 @@ namespace transformer
         public void init()
         {
             if (isInit) return;
-            dbg = new DbgForm();
-            dbg.Show();
+            //dbg = new DbgForm();
+            //dbg.Show();
             
             int res = Connect();
             if (res == 0)
