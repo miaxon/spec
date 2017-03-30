@@ -52,7 +52,7 @@ namespace libspec.View.Data
         {
             MySqlDataReader reader = null;
             List<MidObject> list = new List<MidObject>();
-            string query = string.Format(CultureInfo.InvariantCulture, "select id, obozn, naimen, descr from mid0 order by naimen");
+            string query = string.Format(CultureInfo.InvariantCulture, "select id, obozn, naimen, descr from mid0 order by obozn");
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             try
             {
