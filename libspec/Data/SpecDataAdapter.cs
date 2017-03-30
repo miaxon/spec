@@ -11,9 +11,10 @@ namespace libspec.View.Data
 {
     public partial class SpecDataAdapter
     {
-        //private string m_conn_string = "server=debian;User Id=dmsadmin;password=98130777;database=spec;Integrated Security=False;Allow User Variables=True;Allow Zero Datetime=True;Character Set=cp1251;Convert Zero Datetime=True";
-        private string m_conn_string = "server=" + Utils.Server + ";User Id=dms;password=21061972;database=spec;Allow User Variables=True;Allow Zero Datetime=True;Character Set=utf8;Convert Zero Datetime=True";
+        private string template = "server={0};User Id={1};password={2};database=spec;Allow User Variables=True;Allow Zero Datetime=True;Character Set=utf8;Convert Zero Datetime=True";
+        private string m_conn_string;
         private MySqlConnection m_conn;
+        
         public SpecDataAdapter()
         {
             Connect();
@@ -21,6 +22,7 @@ namespace libspec.View.Data
 
         public void Connect()
         {
+            m_conn_string = string.Format(template, Utils.Server, Utils.User, Utils.Password);
             try
             {
                 m_conn = new MySqlConnection(m_conn_string);
