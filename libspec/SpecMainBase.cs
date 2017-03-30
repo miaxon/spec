@@ -23,7 +23,7 @@ namespace libspec.View
                 m_view = new SpecViewTable();
                 m_view.Dock = DockStyle.Fill;
                 site.Controls.Add(m_view);
-                m_model = new SpecModelBase(m_view, m_da);
+                m_model = new SpecModelBase(m_view, m_da);                
             }
             else
             {

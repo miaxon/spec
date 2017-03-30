@@ -189,6 +189,9 @@ namespace libspec.View
                 return;
             switch (e.KeyCode)
             {
+                case Keys.F1:
+                    Utils.Version();
+                    break;
                 case Keys.Z:
                     if (e.Modifiers == Keys.Control)
                         Clear();

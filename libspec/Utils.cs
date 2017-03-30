@@ -10,6 +10,7 @@ using Microsoft.Win32;
 using System.IO;
 using System.Security.Principal;
 using System.Xml;
+using System.Diagnostics;
 
 namespace libspec.View
 {
@@ -358,6 +359,14 @@ namespace libspec.View
         public static void Info(string text)
         {
             MessageBox.Show(text, "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        public static void Version()
+        {
+            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
+            string version = fvi.ProductVersion;
+            Info(version);
+            Clipboard.SetText(version);
         }
     }
 }
