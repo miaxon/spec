@@ -51,7 +51,7 @@ namespace libspec.View
                     TreeGridNode node = treeView.Nodes.Add(o.obozn);
                     UpdateMidNode(o, node);
                 }
-                stlblAction.Text = "Найдено элементов: " + list.Count;
+                stlblEdit.Text = "Найдено элементов: " + list.Count;
             }
             else
             {
@@ -61,7 +61,7 @@ namespace libspec.View
                     TreeGridNode node = m_nodeCurrent.Nodes.Add(o.obozn);
                     //UpdateNode(o, node);
                 }
-                stlblAction.Text = "Найдено элементов: " + list.Count;
+                stlblEdit.Text = "Найдено элементов: " + list.Count;
             }
         }
         public void UpdateMidNode(object obj, TreeGridNode node = null)
@@ -347,6 +347,7 @@ namespace libspec.View
 
         private void tbtnBadShow_Click(object sender, EventArgs e)
         {
+            Clear();
             if (FillBadEvent != null)
                 FillBadEvent(this, new FillBadEventArgs(m_num_kod));
         }

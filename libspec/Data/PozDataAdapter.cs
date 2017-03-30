@@ -242,12 +242,12 @@ namespace libspec.View.Data
             return ret > 0;
         }
 
-        public bool PozExists(PozObject o)
+        public bool PozExists(string obozn, int num_kod)
         {
-            string table = Utils.GetTable(o.num_kod);
+            string table = Utils.GetTable(num_kod);
             if (string.IsNullOrEmpty(table))
                 return false;
-            string query = string.Format(CultureInfo.InvariantCulture, "select count(id) from {0} where obozn='{1}'", table, o.obozn);
+            string query = string.Format(CultureInfo.InvariantCulture, "select count(id) from {0} where obozn='{1}'", table, obozn);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             MySqlDataReader reader = null;
             int ret = 0;

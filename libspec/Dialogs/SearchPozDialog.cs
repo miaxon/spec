@@ -36,14 +36,18 @@ namespace libspec.View.Dialogs
             m_targetNode = target;
             ttxtGost.Enabled = tbtnSearchGost.Enabled = false;
             stlblEdit.Text = "Редактируется документ: " + m_targetNode.Cells[0].Value.ToString();
-            stlblNum.Alignment = ToolStripItemAlignment.Right;
-            stlblNum.Text = "";
+            stlblAction.Alignment = ToolStripItemAlignment.Right;
+            stlblAction.Text = "";
         }
-
+        public void EditResult(string text)
+        {
+            stlblEdit.Text = text;
+        }
         public void RollBack()
         {
             if (m_cellCurrent != null)
                 m_cellCurrent.Value = m_oldValue;
+            stlblEdit.Text = "";
         }
         public void FillPoz(List<Objects.PozObject> list)
         {
@@ -65,7 +69,7 @@ namespace libspec.View.Dialogs
                     TreeGridNode node = treeView.Nodes.Add(o.obozn);
                     UpdateNode(o, node);
                 }
-                stlblNum.Text = "Найдено элементов: " + list.Count;
+                stlblAction.Text = "Найдено элементов: " + list.Count;
             }
         }
 
@@ -106,7 +110,7 @@ namespace libspec.View.Dialogs
                 SearchEvent(this, new SearchEventArgs("obozn", str, m_num_kod));
             }
             else
-                stlblNum.Text = "Найдено элементов: <недостаточное количество символов>";
+                stlblAction.Text = "Найдено элементов: <недостаточное количество символов>";
             
         }
         private void SearchGost()
@@ -118,7 +122,7 @@ namespace libspec.View.Dialogs
                 SearchEvent(this, new SearchEventArgs("gost", str, m_num_kod));
             }
             else
-                stlblNum.Text = "Найдено элементов: <недостаточное количество символов>";
+                stlblAction.Text = "Найдено элементов: <недостаточное количество символов>";
         }
         private void tbtn_num_kod_Click(object sender, EventArgs e)
         {
@@ -151,7 +155,7 @@ namespace libspec.View.Dialogs
             treeView.Nodes.Clear();
             ttxtGost.Text = "";
             ttxtObozn.Text = "";
-            stlblNum.Text = "";
+            stlblAction.Text = "";
         }
         private void AddPoz()
         {
@@ -199,6 +203,7 @@ namespace libspec.View.Dialogs
         {
             m_cellCurrent = treeView.CurrentCell;
             m_oldValue = treeView.CurrentCell.Value;
+            stlblEdit.Text = "";
         }
 
         private void treeView_CellEndEdit(object sender, DataGridViewCellEventArgs e)

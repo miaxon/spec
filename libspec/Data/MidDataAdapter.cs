@@ -176,12 +176,12 @@ namespace libspec.View.Data
             }
             return id;
         }
-        public bool MidExists(MidObject o)
+        public bool MidExists(string obozn, int num_kod)
         {
-            string table = Utils.GetTable(o.num_kod);
+            string table = Utils.GetTable(num_kod);
             if (string.IsNullOrEmpty(table))
                 return false;
-            string query = string.Format(CultureInfo.InvariantCulture, "select count(id) from {0} where obozn='{1}'", table, o.obozn);
+            string query = string.Format(CultureInfo.InvariantCulture, "select count(id) from {0} where obozn='{1}'", table, obozn);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             MySqlDataReader reader = null;
             int ret = 0;
@@ -203,14 +203,14 @@ namespace libspec.View.Data
             {
                 if (reader != null) reader.Close();
             }
-            if (ret != 0)
+            /*if (ret != 0)
                 return true;
             if (o.parent == 0 && !string.IsNullOrEmpty(Utils.GetParentTable(o.num_kod)))
             {
                 o.parent = GetMidParent(o.obozn, o.num_kod);
                 if (o.parent == 0)
                     return true;
-            }
+            }*/
             return ret > 0;
         }
         public MidObject AddRootMid(MidObject o)

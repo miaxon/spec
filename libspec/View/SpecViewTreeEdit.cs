@@ -97,11 +97,17 @@ namespace libspec.View
         {
             m_cellCurrent = treeView.CurrentCell;
             m_oldValue = treeView.CurrentCell.Value;
+            stlblAction.Text = "";
+        }
+        public void EditResult(string text)
+        {
+            stlblAction.Text = text;
         }
         public void RollBack()
         {
             if (m_cellCurrent != null)
                 m_cellCurrent.Value = m_oldValue;
+            stlblAction.Text = "";
         }
         private void treeView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {

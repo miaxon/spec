@@ -57,9 +57,6 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.tbtnIsert = new System.Windows.Forms.ToolStripButton();
             this.treeView = new AdvancedDataGridView.TreeGridView();
-            this.statusStrip = new System.Windows.Forms.StatusStrip();
-            this.stlblEdit = new System.Windows.Forms.ToolStripStatusLabel();
-            this.stlblNum = new System.Windows.Forms.ToolStripStatusLabel();
             this.obozn = new AdvancedDataGridView.TreeGridColumn();
             this.naimen = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.num_kol = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -70,6 +67,9 @@
             this.num_knr = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.num_kod = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.descr = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.stlblEdit = new System.Windows.Forms.ToolStripStatusLabel();
+            this.stlblAction = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.treeView)).BeginInit();
             this.statusStrip.SuspendLayout();
@@ -315,32 +315,6 @@
             this.treeView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.treeView_CellEndEdit);
             this.treeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView_KeyDown);
             // 
-            // statusStrip
-            // 
-            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.stlblEdit,
-            this.stlblNum});
-            this.statusStrip.Location = new System.Drawing.Point(0, 489);
-            this.statusStrip.Name = "statusStrip";
-            this.statusStrip.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.statusStrip.Size = new System.Drawing.Size(1131, 22);
-            this.statusStrip.TabIndex = 3;
-            this.statusStrip.Text = "statusStrip";
-            // 
-            // stlblEdit
-            // 
-            this.stlblEdit.Name = "stlblEdit";
-            this.stlblEdit.Size = new System.Drawing.Size(1060, 17);
-            this.stlblEdit.Spring = true;
-            this.stlblEdit.Text = "stlblEdit";
-            this.stlblEdit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // stlblNum
-            // 
-            this.stlblNum.Name = "stlblNum";
-            this.stlblNum.Size = new System.Drawing.Size(56, 17);
-            this.stlblNum.Text = "stlblNum";
-            // 
             // obozn
             // 
             this.obozn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
@@ -425,6 +399,32 @@
             this.descr.Name = "descr";
             this.descr.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
+            // statusStrip
+            // 
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.stlblEdit,
+            this.stlblAction});
+            this.statusStrip.Location = new System.Drawing.Point(0, 489);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.statusStrip.Size = new System.Drawing.Size(1131, 22);
+            this.statusStrip.TabIndex = 3;
+            this.statusStrip.Text = "statusStrip";
+            // 
+            // stlblEdit
+            // 
+            this.stlblEdit.Name = "stlblEdit";
+            this.stlblEdit.Size = new System.Drawing.Size(1029, 17);
+            this.stlblEdit.Spring = true;
+            this.stlblEdit.Text = "stlblEdit";
+            this.stlblEdit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // stlblAction
+            // 
+            this.stlblAction.Name = "stlblAction";
+            this.stlblAction.Size = new System.Drawing.Size(56, 17);
+            this.stlblAction.Text = "stlblNum";
+            // 
             // SearchPozDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -473,7 +473,7 @@
         private System.Windows.Forms.ToolStripButton tbtn_mid;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripStatusLabel stlblEdit;
-        private System.Windows.Forms.ToolStripStatusLabel stlblNum;
+        private System.Windows.Forms.ToolStripStatusLabel stlblAction;
         private AdvancedDataGridView.TreeGridColumn obozn;
         private System.Windows.Forms.DataGridViewTextBoxColumn naimen;
         private System.Windows.Forms.DataGridViewTextBoxColumn num_kol;

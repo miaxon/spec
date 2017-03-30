@@ -61,12 +61,12 @@ namespace libspec.View
             if (e.num_kod < 9)
             {
                 string name = "";
-            dlg: PozObject o = NewObject(ViewEvent.ButtonAction.AddRootPoz, name) as PozObject;
+                dlg: PozObject o = NewObject(ViewEvent.ButtonAction.AddRootPoz, name) as PozObject;
                 if (o == null)
                     return;
                 o.num_kod = e.num_kod;
                 name = o.obozn;
-                if (!m_da.PozExists(o))
+                if (!m_da.PozExists(o.obozn, o.num_kod))
                 {
                     PozObject poz = m_da.AddRootPoz(o);
                     if (poz != null)
@@ -79,7 +79,7 @@ namespace libspec.View
             else
             {
                 string name = "";
-            dlg: PozObject o = NewObject(ViewEvent.ButtonAction.AddRootPoz, name) as PozObject;
+                dlg: PozObject o = NewObject(ViewEvent.ButtonAction.AddRootPoz, name) as PozObject;
                 if (o == null)
                     return;
                 MidObject p = new MidObject(e.num_kod);
@@ -87,7 +87,7 @@ namespace libspec.View
                 p.naimen = o.naimen;
                 p.descr = o.descr;
 
-                if (!m_da.MidExists(p))
+                if (!m_da.MidExists(p.obozn, p.num_kod))
                 {
                     MidObject poz = m_da.AddRootMid(p);
                     if (poz != null)
@@ -120,7 +120,12 @@ namespace libspec.View
             {
                 return;
             }
-            string table = Utils.GetTable(o.num_kod);            
+            string table = Utils.GetTable(o.num_kod);
+            if (string.IsNullOrEmpty(table))
+            {
+                view.RollBack();
+                return;
+            }
             switch (e.Field)
             {
                 case "obozn":
@@ -177,12 +182,7 @@ namespace libspec.View
             {
                 view.RollBack();
                 return;
-            }
-            if (Utils.Warning("Сохранить внесенные изменения?"))
-            {
-                view.RollBack();
-                return;
-            }
+            }            
             query = string.Format("update {0} set {1}={2} where id={3}", table, e.Field, query_val, o.id);
             if (!m_da.ExecQuery(query))
             {
@@ -190,11 +190,13 @@ namespace libspec.View
                 return;
             }
             view.UpdateNode(o);
+            string msg = string.Format("Сохранено: {0}", value);
+            view.EditResult(msg);
         }
         private void EditView(SpecViewTable view, NodeEditEventArgs e)
         {
             string value = e.Value.ToString();
-
+            bool noError = true;
             string query = "";
             string query_val = "'" + value + "'";
             if (e.Object is PozObject)
@@ -202,12 +204,15 @@ namespace libspec.View
                 PozObject o = e.Object as PozObject;
                 string table = Utils.GetTable(o.num_kod);
                 if (string.IsNullOrEmpty(table))
+                {
+                    view.RollBack();
                     return;
-                bool noError = true;
+                }
                 switch (e.Field)
                 {
                     case "obozn":
-                        o.obozn = value;
+                        if (noError = m_da.PozExists(value, o.num_kod))
+                            o.obozn = value;
                         break;
                     case "naimen":
                         o.naimen = value;
@@ -261,11 +266,6 @@ namespace libspec.View
                     view.RollBack();
                     return;
                 }
-                if (Utils.Warning("Сохранить внесенные изменения?"))
-                {
-                    view.RollBack();
-                    return;
-                }
                 query = string.Format("update {0} set {1}={2} where id={3}", table, e.Field, query_val, o.id);
                 if (!m_da.ExecQuery(query))
                 {
@@ -273,6 +273,8 @@ namespace libspec.View
                     return;
                 }
                 view.UpdateMidNode(o);
+                string msg = string.Format("Сохранено: {0}", value);
+                m_view.EditResult(msg);
             }
             if (e.Object is MidObject)
             {
@@ -283,7 +285,8 @@ namespace libspec.View
                 switch (e.Field)
                 {
                     case "obozn":
-                        o.obozn = value;
+                        if (noError = !m_da.MidExists(value, o.num_kod))
+                            o.obozn = value;
                         break;
                     case "naimen":
                         o.naimen = value;
@@ -292,7 +295,7 @@ namespace libspec.View
                         o.descr = value;
                         break;
                 }
-                if (Utils.Warning("Сохранить внесенные изменения?"))
+                if(!noError)
                 {
                     view.RollBack();
                     return;
@@ -304,6 +307,8 @@ namespace libspec.View
                     return;
                 }
                 view.UpdateMidNode(o);
+                string msg = string.Format("Сохранено: {0}", value);
+                m_view.EditResult(msg);
             }
         }
         private void m_view_MovePozEvent(object sender, ViewEvent.MovePozEventArgs e)
@@ -326,14 +331,14 @@ namespace libspec.View
                 }
                 if (e.dst == null)
                 {
-                dlg: PozObject o = NewObject(ViewEvent.ButtonAction.AddPoz, src.obozn) as PozObject;
+                    dlg: PozObject o = NewObject(ViewEvent.ButtonAction.AddPoz, src.obozn) as PozObject;
                     if (o == null)
                         return;
                     PozObject p = src.Clone();
                     p.obozn = o.obozn;
                     p.naimen = string.IsNullOrEmpty(o.naimen) ? src.naimen : o.naimen;
                     p.descr = o.descr;
-                    if (!m_da.PozExists(p))
+                    if (!m_da.PozExists(p.obozn, p.num_kod))
                     {
                         PozObject poz = m_da.AddRootPoz(p);
                         if (poz != null)
@@ -350,7 +355,7 @@ namespace libspec.View
                 MidObject src = e.src as MidObject;
                 if (e.dst == null)
                 {
-                dlg: PozObject o = NewObject(ViewEvent.ButtonAction.AddRootPoz, src.obozn) as PozObject;
+                    dlg: PozObject o = NewObject(ViewEvent.ButtonAction.AddRootPoz, src.obozn) as PozObject;
                     if (o == null)
                         return;
                     MidObject p = new MidObject(src.num_kod);
@@ -358,7 +363,7 @@ namespace libspec.View
                     p.naimen = string.IsNullOrEmpty(o.naimen) ? src.naimen : o.naimen;
                     p.descr = o.descr;
 
-                    if (!m_da.MidExists(p))
+                    if (!m_da.MidExists(p.obozn, p.num_kod))
                     {
                         MidObject poz = m_da.AddRootMid(p);
                         if (poz != null)
@@ -404,7 +409,6 @@ namespace libspec.View
                                         m_view.RemoveCurrentNode();
                                     }
                                 }
-
                             }
                         }
                         if (e.Target is MidObject)

@@ -61,7 +61,8 @@ namespace libspec.View
                 switch (e.Field)
                 {
                     case "obozn":
-                        o.obozn = value;
+                        if (noError = m_da.ProjectExists(value))
+                            o.obozn = value;
                         break;
                     case "naimen":
                         o.naimen = value;
@@ -77,8 +78,8 @@ namespace libspec.View
                 GroupObject o = e.Object as GroupObject;
                 switch (e.Field)
                 {
-                    case "obozn":
-                        o.obozn = value;
+                    case "obozn":                        
+                            o.obozn = value;
                         break;
                     case "naimen":
                         o.naimen = value;
@@ -95,7 +96,8 @@ namespace libspec.View
                 switch (e.Field)
                 {
                     case "obozn":
-                        o.obozn = value;
+                        if (noError = m_da.DocExists(value))
+                            o.obozn = value;
                         break;
                     case "naimen":
                         o.naimen = value;
@@ -120,7 +122,8 @@ namespace libspec.View
                 switch (e.Field)
                 {
                     case "descr":
-                        o.descr = value;
+                        if (noError = m_da.PozExists(value, o.num_kod))
+                            o.obozn = value;
                         break;
                     case "num_kol":
                         {
@@ -153,6 +156,8 @@ namespace libspec.View
                 return;
             }
             m_view.UpdateNode(e.Object);
+            string msg = string.Format("Сохранено: {0}", value);
+            m_view.EditResult(msg);
             if (e.Object is ProjectObject)
             {
                 ProjectObject pEdit = e.Object as ProjectObject;
@@ -170,16 +175,22 @@ namespace libspec.View
             bool noError = true;
             string query = "";
             string query_val = "'" + value + "'";
-            PozObject o = e.Object as PozObject;
-            string table = Utils.GetTable(o.num_kod);
+            PozObject o = e.Object as PozObject;            
             if (o == null)
             {
+                return;
+            }
+            string table = Utils.GetTable(o.num_kod);
+            if(string.IsNullOrEmpty(table))
+            {
+                view.RollBack();
                 return;
             }
             switch (e.Field)
             {
                 case "obozn":
-                    o.obozn = value;
+                    if (noError = m_da.PozExists(value, o.num_kod))
+                        o.obozn = value;
                     break;
                 case "naimen":
                     o.naimen = value;
@@ -232,12 +243,7 @@ namespace libspec.View
             {
                 view.RollBack();
                 return;
-            }
-            if (Utils.Warning("Сохранить внесенные изменения?"))
-            {
-                view.RollBack();
-                return;
-            }
+            }            
             query = string.Format("update {0} set {1}={2} where id={3}", table, e.Field, query_val, o.id);
             if (!m_da.ExecQuery(query))
             {
@@ -245,6 +251,8 @@ namespace libspec.View
                 return;
             }
             view.UpdateNode(o);
+            string msg = string.Format("Сохранено: {0}", value);
+            view.EditResult(msg);
         }
         private void m_view_MoveDocEvent(object sender, ViewEvent.MoveDocEventArgs e)
         {
