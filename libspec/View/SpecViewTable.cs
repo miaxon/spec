@@ -184,14 +184,15 @@ namespace libspec.View
         }
         private void treeView_KeyDown(object sender, KeyEventArgs e)
         {
+            if (e.KeyCode == Keys.F1)
+            {
+                Utils.Version();
+            }
             m_nodeCurrent = treeView.CurrentNode;
             if (m_nodeCurrent == null || ButtonActionEvent == null)
                 return;
             switch (e.KeyCode)
             {
-                case Keys.F1:
-                    Utils.Version();
-                    break;
                 case Keys.Z:
                     if (e.Modifiers == Keys.Control)
                         Clear();
