@@ -61,7 +61,7 @@ namespace libspec.View.Data
             }
             return ret > 0;
         }
-        public PozObject AddRootPoz(PozObject target)
+        public PozObject AddRootPoz(PozObject target, UInt32 parent = 0)
         {
             string table = Utils.GetTable(target.num_kod);
             if (string.IsNullOrEmpty(table))
@@ -120,7 +120,7 @@ namespace libspec.View.Data
             }
             target.SetRootId(id);
             if (target.num_kod == 9 || target.num_kod == 92)
-                SetMidPozParent(target);
+                SetMidPozParent(target, parent);
             return target;
         }
 

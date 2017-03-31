@@ -89,6 +89,12 @@
     <Compile Include="Dialogs\SearchPozDialog.Designer.cs">
       <DependentUpon>SearchPozDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\SelectMidParentDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\SelectMidParentDialog.Designer.cs">
+      <DependentUpon>SelectMidParentDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\SelectProjectDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -165,6 +171,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\SearchPozDialog.resx">
       <DependentUpon>SearchPozDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\SelectMidParentDialog.resx">
+      <DependentUpon>SelectMidParentDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\SelectProjectDialog.resx">
       <DependentUpon>SelectProjectDialog.cs</DependentUpon>

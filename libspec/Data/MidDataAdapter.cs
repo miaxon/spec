@@ -124,6 +124,8 @@ namespace libspec.View.Data
             if (string.IsNullOrEmpty(parent_table))
                 return 0;
             int len = Utils.OboznLength(parent_table);
+            if (obozn.Length < len)
+                return 0;
             string srch = obozn.Substring(0, len);
             string query = string.Format(CultureInfo.InvariantCulture, 
                 "select id from {0} where obozn = '{1}'", 
@@ -149,8 +151,8 @@ namespace libspec.View.Data
             {
                 if (reader != null) reader.Close();
             }
-            
-            if (id == 0 && parent_table == "mid0")
+
+            /*if (id == 0 && parent_table == "mid0")
             {
                 query = string.Format(CultureInfo.InvariantCulture, 
                     "select id from {0} where locate('{1};', descr) > 0", 
@@ -175,7 +177,7 @@ namespace libspec.View.Data
                 {
                     if (reader != null) reader.Close();
                 }
-            }
+            }*/
             if (id == 0)
             {
                 Utils.Error("Не удалось найти родительский объект для " + obozn);
@@ -282,10 +284,10 @@ namespace libspec.View.Data
             o.SetRootId(id);
             return o;
         }
-        public void SetMidPozParent(PozObject o)
-        {            
-            UInt32 parent_id = GetMidParent(o.obozn, o.num_kod);
-            if (parent_id == 0)
+        public void SetMidPozParent(PozObject o, UInt32 parent = 0)
+        {
+            UInt32 parent_id = parent;
+            if (parent_id == 0 && (parent_id = GetMidParent(o.obozn, o.num_kod)) == 0)
                 return;
             string table = Utils.GetTable(o.num_kod);
             if (string.IsNullOrEmpty(table))

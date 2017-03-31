@@ -174,6 +174,43 @@ namespace libspec.View
             }
             return ret;
         }
+        public static int SearchOboznLength(int kod)
+        {
+            int ret = 0;
+            switch (kod)
+            {
+                case 9:
+                    ret = 5;
+                    break;
+                case 92:
+                    ret = 4;
+                    break;
+                case 93:
+                    ret = 3;
+                    break;
+                case 94:
+                    ret = 2;
+                    break;
+            }
+            return ret;
+        }
+        public static int GetParentNumKod(int kod)
+        {
+            int ret = 0;
+            switch (kod)
+            {
+                case 9:
+                    ret = 92;
+                    break;
+                case 92:
+                    ret = 93;
+                    break;
+                case 93:
+                    ret = 94;
+                    break;
+            }
+            return ret;
+        }
         public static string GetParentTable(int num_kod)
         {
             string str = string.Empty;
