@@ -61,7 +61,7 @@ namespace libspec.View
                 switch (e.Field)
                 {
                     case "obozn":
-                        if (noError = m_da.ProjectExists(value))
+                        if (noError = !m_da.ProjectExists(value))
                             o.obozn = value;
                         break;
                     case "naimen":
@@ -96,7 +96,7 @@ namespace libspec.View
                 switch (e.Field)
                 {
                     case "obozn":
-                        if (noError = m_da.DocExists(value))
+                        if (noError = !m_da.DocExists(value))
                             o.obozn = value;
                         break;
                     case "naimen":
@@ -122,7 +122,7 @@ namespace libspec.View
                 switch (e.Field)
                 {
                     case "descr":
-                        if (noError = m_da.PozExists(value, o.num_kod))
+                        if (noError = !m_da.PozExists(value, o.num_kod))
                             o.obozn = value;
                         break;
                     case "num_kol":
@@ -366,6 +366,10 @@ namespace libspec.View
                         if (!m_da.ProjectExists(o.obozn))
                         {
                             o = m_da.AddProject(o);
+                            if (!m_projects.Contains(o))
+                                m_projects.Add(o);
+                            m_projects = m_projects.OrderBy(p => p.obozn).ToList();
+                            Utils.SaveProjectList(m_projects);
                             if (o != null && o.id > 0)
                                 m_view.AddNode(o);
                         }
@@ -493,7 +497,12 @@ namespace libspec.View
             UInt32 refid = e.Object.refid == 0 ? e.Object.id : e.Object.refid;
             string table = Utils.GetChildTable(e.Object.num_kod);
             if (string.IsNullOrEmpty(table))
-                return;
+            {
+                if (e.Object.num_kod == 92)
+                    table = "mid3";
+                else
+                    return;
+            }
             List<PozObject> list = m_da.GetPozList(table, refid);
             if (sender is SpecViewTree)
                 m_view.FillPoz(list);

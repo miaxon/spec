@@ -39,7 +39,6 @@ namespace libspec.View.Data
             }
             return list;
         }
-
         public List<GroupObject> GetGroupList(UInt32 parent)
         {
             MySqlDataReader reader = null;
@@ -66,7 +65,6 @@ namespace libspec.View.Data
             }
             return list;
         }
-
         public List<DocObject> GetDocList(UInt32 parent)
         {
             MySqlDataReader reader = null;
@@ -94,7 +92,6 @@ namespace libspec.View.Data
             }
             return list;
         }
-
         public List<PozObject> GetPozList(string table, UInt32 refid)
         {
             MySqlDataReader reader = null;
@@ -162,7 +159,6 @@ namespace libspec.View.Data
             }
 
         }
-
         private void FillGostForCode9(PozObject o)
         {
             MySqlDataReader reader = null;

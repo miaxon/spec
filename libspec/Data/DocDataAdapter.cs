@@ -15,7 +15,11 @@ namespace libspec.View.Data
         
         public DocObject AddDoc(DocObject o, UInt32 parent)
         {
-            string query = string.Format(CultureInfo.InvariantCulture, "insert into lid (obozn, descr) values('{0}', '{1}')", o.obozn, o.descr);
+            string query = string.Format(CultureInfo.InvariantCulture, 
+                           "insert into lid (obozn, naimen, descr) values('{0}', '{1}', '{2}')", 
+                           o.obozn, 
+                           o.naimen, 
+                           o.descr);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             try
             {
@@ -29,7 +33,11 @@ namespace libspec.View.Data
             UInt32 uid = DocIdByObozn(o.obozn);
             if (uid == 0)
                 return null;
-            query = string.Format(CultureInfo.InvariantCulture, "insert into _did (parent, uid) values({0}, {1})", parent, uid);
+            query = string.Format(CultureInfo.InvariantCulture, 
+                    "insert into _did (parent, uid, num_kol) values({0}, {1})", 
+                    parent, 
+                    uid,
+                    o.num_kol);
             cmd = new MySqlCommand(query, m_conn);
             try
             {
@@ -54,7 +62,10 @@ namespace libspec.View.Data
             string query = null;
             MySqlCommand cmd = null;
             int r = 0;
-            query = string.Format("update _did set closed='{0}' where id = {1}", status, o.id);
+            query = string.Format(CultureInfo.InvariantCulture, 
+                    "update _did set closed='{0}' where id = {1}", 
+                    status, 
+                    o.id);
             cmd = new MySqlCommand(query, m_conn);
             try
             {
@@ -75,7 +86,9 @@ namespace libspec.View.Data
             string query = null;
             MySqlCommand cmd = null;
 
-            query = string.Format(CultureInfo.InvariantCulture, "delete from lid_old where parent = {0}", o.refid);
+            query = string.Format(CultureInfo.InvariantCulture, 
+                    "delete from lid_old where parent = {0}", 
+                    o.refid);
             cmd = new MySqlCommand(query, m_conn);
             try
             {

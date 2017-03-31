@@ -15,12 +15,13 @@ namespace libspec.View.Data
         public bool AddPoz(PozObject src, DocObject dst)
         {
             UInt32 refid = src.refid == 0 ? src.id : src.refid;
-            string query = string.Format(CultureInfo.InvariantCulture, "insert into lid_old (parent, num_kod, num_kol, num_kfr, refid) values({0}, {1}, {2}, {3}, {4})",
-                                           dst.refid,
-                                           src.num_kod,
-                                           src.num_kol,
-                                           src.num_kfr,
-                                           refid);
+            string query = string.Format(CultureInfo.InvariantCulture, 
+                           "insert into lid_old (parent, num_kod, num_kol, num_kfr, refid) values({0}, {1}, {2}, {3}, {4})",
+                            dst.refid,
+                            src.num_kod,
+                            src.num_kol > 0 ? src.num_kol : 1,
+                            src.num_kfr,
+                            refid);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             int ret = 0;
             try
@@ -109,7 +110,7 @@ namespace libspec.View.Data
                 }
             }
             target.SetRootId(id);
-            if(target.num_kod == 9 || target.num_kod == 92)
+            if (target.num_kod == 9 || target.num_kod == 92)
                 SetMidPozParent(target);
             return target;
         }
@@ -203,7 +204,7 @@ namespace libspec.View.Data
                     Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
                 }
             }
-        }      
+        }
         public bool MovePoz(PozObject src, DocObject dst)
         {
             string query = string.Format(CultureInfo.InvariantCulture, "update lid_old set parent={0} where id={1}", dst.refid, src.id);

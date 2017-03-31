@@ -62,7 +62,7 @@ namespace libspec.View
                 return;
             if (m_nodeCurrent.Level == 2 || m_nodeCurrent.Level == 3)
             {
-                ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyClose, treeView.CurrentNode));
+                ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyClose, m_nodeCurrent.Tag));
             }
         }
         private void tbtnOpen_Click(object sender, EventArgs e)
@@ -72,7 +72,7 @@ namespace libspec.View
                 return;
             if (m_nodeCurrent.Level == 2 || m_nodeCurrent.Level == 3)
             {
-                ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyOpen, treeView.CurrentNode));
+                ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyOpen, m_nodeCurrent.Tag));
             }
 
         }

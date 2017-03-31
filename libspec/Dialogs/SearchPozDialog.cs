@@ -72,7 +72,6 @@ namespace libspec.View.Dialogs
                 stlblAction.Text = "Найдено элементов: " + list.Count;
             }
         }
-
         public void UpdateNode(PozObject o, TreeGridNode node = null)
         {
             if (node == null)
@@ -91,16 +90,11 @@ namespace libspec.View.Dialogs
             node.Cells[8].Value = o.num_kod;
             node.Cells[9].Value = o.descr;
             node.Tag = o;
-        }
-
-
-       
-
+        } 
         private void tbtnSearchObozn_Click(object sender, EventArgs e)
         {
             SearchObozn();
         }
-
         private void SearchObozn()
         {
             string str = ttxtObozn.Text;
@@ -138,7 +132,6 @@ namespace libspec.View.Dialogs
             ttxtGost.Enabled = tbtnSearchGost.Enabled = btn.Equals(tbtn_mid);
 
         }
-
         private void treeView_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Modifiers == Keys.Control && e.KeyCode == Keys.Space)
@@ -172,29 +165,24 @@ namespace libspec.View.Dialogs
                     AddPozEvent(this, new AddPozEventArgs(o, m_targetNode.Tag));
             }
         }
-
         private void tbtnIsert_Click(object sender, EventArgs e)
         {
             AddPoz();
         }
-
         private void tbtnClear_Click(object sender, EventArgs e)
         {
             Clear();
         }
-
         private void ttxtObozn_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
                 SearchObozn();
         }
-
         private void ttxtGost_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
                 SearchGost();
         }
-
         private void tbtnSearchGost_Click(object sender, EventArgs e)
         {
             SearchGost();
@@ -205,7 +193,6 @@ namespace libspec.View.Dialogs
             m_oldValue = treeView.CurrentCell.Value;
             stlblEdit.Text = "";
         }
-
         private void treeView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             m_nodeCurrent = treeView.CurrentNode;
@@ -218,7 +205,6 @@ namespace libspec.View.Dialogs
             if (NodeEditEvent != null)
                 NodeEditEvent(this, new NodeEditEventArgs(m_nodeCurrent.Tag, field, value, m_oldValue));
         }
-
         private void treeView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             m_nodeCurrent = treeView.CurrentNode;
