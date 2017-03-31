@@ -14,7 +14,12 @@ namespace libspec.View.Data
     {
         public GroupObject AddGroup(GroupObject o, UInt32 parent)
         {
-            string query = string.Format(CultureInfo.InvariantCulture, "insert into _gid (obozn, naimen, descr, parent) values('{0}', '{1}', '{2}', {3})", o.obozn, o.naimen, o.descr, parent);
+            string query = string.Format(CultureInfo.InvariantCulture, 
+                "insert into _gid (obozn, naimen, descr, parent) values('{0}', '{1}', '{2}', {3})", 
+                o.obozn, 
+                o.naimen, 
+                o.descr, 
+                parent);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             try
             {
@@ -31,7 +36,10 @@ namespace libspec.View.Data
             string query = null;
             MySqlCommand cmd = null;
             int r = 0;
-            query = string.Format(CultureInfo.InvariantCulture, "update _gid set closed='{0}' where id = {1}", status, o.id);
+            query = string.Format(CultureInfo.InvariantCulture, 
+                "update _gid set closed='{0}' where id = {1}", 
+                status, 
+                o.id);
             cmd = new MySqlCommand(query, m_conn);
             try
             {
@@ -48,40 +56,56 @@ namespace libspec.View.Data
         }
         public bool DeleteGroup(GroupObject o)
         {
-            int r = 0;
-            string query = string.Format(CultureInfo.InvariantCulture, "select count(*) from _did where parent = {0}", o.id);
+            int ret = 0;
+            string query = string.Format(CultureInfo.InvariantCulture, 
+                "select count(*) from _did where parent = {0}", 
+                o.id);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
+            MySqlDataReader reader = null;
             try
             {
-                r = cmd.ExecuteNonQuery();
-                if (r > 0)
-                    return false;
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    ret = reader.GetInt32(0);
+                }
+
             }
             catch (MySqlException ex)
             {
                 Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
                 return false;
             }
-
-            query = string.Format(CultureInfo.InvariantCulture, "delete from _gid where id = {0}", o.id);
+            finally
+            {
+                if (reader != null) reader.Close();
+            }
+            if (ret > 0)
+                return false;
+            query = string.Format(CultureInfo.InvariantCulture, 
+                "delete from _gid where id = {0}", 
+                o.id);
             cmd = new MySqlCommand(query, m_conn);
             try
             {
-                r = cmd.ExecuteNonQuery();
+                ret = cmd.ExecuteNonQuery();
             }
             catch (MySqlException ex)
             {
                 Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
                 return false;
             }
-            return r > 0;
+            return ret > 0;
         }
         
         public GroupObject GroupByObozn(string obozn, UInt32 parent)
         {
             MySqlDataReader reader = null;
             GroupObject ret = null;
-            string query = string.Format(CultureInfo.InvariantCulture, "select id, obozn, naimen, descr, closed from _gid where obozn='{0}' and parent={1}", obozn, parent);
+            string query = string.Format(CultureInfo.InvariantCulture, 
+                "select id, obozn, naimen, descr, closed from _gid where obozn='{0}' and parent={1}", 
+                obozn, 
+                parent);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             try
             {
@@ -106,7 +130,10 @@ namespace libspec.View.Data
         }
         public bool GroupExists(string obozn, UInt32 parent)
         {
-            string query = string.Format(CultureInfo.InvariantCulture, "select count(id) from _gid where obozn='{0}' and parent={1}", obozn, parent);
+            string query = string.Format(CultureInfo.InvariantCulture, 
+                "select count(id) from _gid where obozn='{0}' and parent={1}", 
+                obozn, 
+                parent);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             MySqlDataReader reader = null;
             int ret = 0;

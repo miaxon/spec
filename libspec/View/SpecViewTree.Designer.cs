@@ -35,6 +35,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.tbtnSelectProject = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
@@ -318,15 +319,17 @@
             // 
             this.treeView.AllowUserToAddRows = false;
             this.treeView.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Honeydew;
+            this.treeView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.treeView.BackgroundColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.treeView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.treeView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.treeView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.obozn,
             this.naimen,
@@ -373,8 +376,8 @@
             // 
             // num_kol
             // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.num_kol.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.num_kol.DefaultCellStyle = dataGridViewCellStyle3;
             this.num_kol.HeaderText = "КОЛ";
             this.num_kol.Name = "num_kol";
             this.num_kol.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
@@ -396,8 +399,8 @@
             // 
             // kei
             // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.kei.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.kei.DefaultCellStyle = dataGridViewCellStyle4;
             this.kei.HeaderText = "КЕИ";
             this.kei.Name = "kei";
             this.kei.ReadOnly = true;
@@ -406,8 +409,8 @@
             // 
             // num_kfr
             // 
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.num_kfr.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.num_kfr.DefaultCellStyle = dataGridViewCellStyle5;
             this.num_kfr.HeaderText = "КФ";
             this.num_kfr.Name = "num_kfr";
             this.num_kfr.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
@@ -415,8 +418,8 @@
             // 
             // num_knr
             // 
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.num_knr.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.num_knr.DefaultCellStyle = dataGridViewCellStyle6;
             this.num_knr.HeaderText = "НР";
             this.num_knr.Name = "num_knr";
             this.num_knr.ReadOnly = true;
@@ -425,8 +428,8 @@
             // 
             // num_kod
             // 
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.num_kod.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.num_kod.DefaultCellStyle = dataGridViewCellStyle7;
             this.num_kod.HeaderText = "КП";
             this.num_kod.Name = "num_kod";
             this.num_kod.ReadOnly = true;
@@ -436,8 +439,8 @@
             // descr
             // 
             this.descr.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.Gray;
-            this.descr.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle8.ForeColor = System.Drawing.Color.Gray;
+            this.descr.DefaultCellStyle = dataGridViewCellStyle8;
             this.descr.HeaderText = "ИНФОРМАЦИЯ";
             this.descr.Name = "descr";
             this.descr.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;

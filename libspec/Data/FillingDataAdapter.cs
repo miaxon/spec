@@ -16,7 +16,9 @@ namespace libspec.View.Data
         {
             MySqlDataReader reader = null;
             List<ProjectObject> list = new List<ProjectObject>();
-            MySqlCommand cmd = new MySqlCommand("select id, obozn, naimen, descr, closed from _pid order by obozn", m_conn);
+            string query = string.Format(CultureInfo.InvariantCulture, 
+                "select id, obozn, naimen, descr, closed from _pid order by obozn");
+            MySqlCommand cmd = new MySqlCommand(query, m_conn);
             try
             {
                 reader = cmd.ExecuteReader();
@@ -43,7 +45,9 @@ namespace libspec.View.Data
         {
             MySqlDataReader reader = null;
             List<GroupObject> list = new List<GroupObject>();
-            string query = string.Format(CultureInfo.InvariantCulture, "select id, obozn, naimen, descr, closed from _gid where deleted='N' and parent = {0} order by obozn", parent);
+            string query = string.Format(CultureInfo.InvariantCulture, 
+                "select id, obozn, naimen, descr, closed from _gid where deleted='N' and parent = {0} order by obozn", 
+                parent);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             try
             {
@@ -69,7 +73,9 @@ namespace libspec.View.Data
         {
             MySqlDataReader reader = null;
             List<DocObject> list = new List<DocObject>();
-            string query = string.Format(CultureInfo.InvariantCulture, "select _did.id, lid.obozn, lid.naimen, lid.descr, _did.closed, _did.num_kol, _did.uid from _did inner join lid on _did.uid=lid.id where _did.parent = {0} order by lid.obozn", parent);
+            string query = string.Format(CultureInfo.InvariantCulture, 
+                "select _did.id, lid.obozn, lid.naimen, lid.descr, _did.closed, _did.num_kol, _did.uid from _did inner join lid on _did.uid=lid.id where _did.parent = {0} order by lid.obozn",
+                parent);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             try
             {
@@ -96,7 +102,10 @@ namespace libspec.View.Data
         {
             MySqlDataReader reader = null;
             List<PozObject> list = new List<PozObject>();
-            string query = string.Format(CultureInfo.InvariantCulture, "select refid, num_kol, num_kod, id, num_kfr from {0} where parent = {1} order by num_kod", table, refid);
+            string query = string.Format(CultureInfo.InvariantCulture, 
+                "select refid, num_kol, num_kod, id, num_kfr from {0} where parent = {1} order by num_kod", 
+                table, 
+                refid);
             /*
              * refid   - num_refid
              * num_kol - num_kol
@@ -136,7 +145,10 @@ namespace libspec.View.Data
             MySqlDataReader reader = null;
             string table = Utils.GetTable(o.num_kod);
             UInt32 refid = o.refid == 0 ? o.id : o.refid;
-            string query = string.Format(CultureInfo.InvariantCulture, "select obozn, naimen, descr, kei, marka, gost from {0} where id = {1}", table, refid);
+            string query = string.Format(CultureInfo.InvariantCulture, 
+                "select obozn, naimen, descr, kei, marka, gost from {0} where id = {1}", 
+                table, 
+                refid);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             try
             {
@@ -162,7 +174,9 @@ namespace libspec.View.Data
         private void FillGostForCode9(PozObject o)
         {
             MySqlDataReader reader = null;
-            string query = string.Format(CultureInfo.InvariantCulture, "select mid2.gost from mid2, mid3 where mid2.id=mid3.parent and mid3.id = {0}", o.refid);
+            string query = string.Format(CultureInfo.InvariantCulture, 
+                "select mid2.gost from mid2, mid3 where mid2.id=mid3.parent and mid3.id = {0}", 
+                o.refid);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             try
             {

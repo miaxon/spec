@@ -8,11 +8,13 @@ using System.Text;
 using System.Windows.Forms;
 using AdvancedDataGridView;
 using libspec.View.Objects;
+using libspec.View.ViewEvent;
 
 namespace libspec.View.Dialogs
 {
     public partial class SelectProjectDialog : Form
     {
+        public event EventHandler<ButtonActionEventArgs> DelProjectEvent;
         private List<ProjectObject> m_list;
         public SelectProjectDialog(List<ProjectObject> list)
         {
@@ -46,7 +48,6 @@ namespace libspec.View.Dialogs
                 node.Tag = o;
             }
         }
-
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
             string str = txtSearch.Text;
@@ -57,6 +58,30 @@ namespace libspec.View.Dialogs
             }
             List<ProjectObject> list = m_list.FindAll(o => o.obozn.StartsWith(str) || o.naimen.Contains(str));
             FillTree(list);
+        }
+
+        private void treeView_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Delete:
+                    {
+                        if (treeView.CurrentNode !=null && DelProjectEvent != null)
+                            DelProjectEvent(this, new ButtonActionEventArgs(ButtonAction.KeyDelete, treeView.CurrentNode.Tag));
+                    }
+                    break;
+                case Keys.Enter:
+                    {
+                        this.DialogResult = System.Windows.Forms.DialogResult.OK;
+
+                    }
+                    break;            
+            }
+        }
+        public void DeleteCurrentNode()
+        {
+            if (treeView.CurrentNode != null)
+                treeView.Nodes.Remove(treeView.CurrentNode);
         }
     }
 }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SelectProjectDialog));
             this.treeView = new AdvancedDataGridView.TreeGridView();
             this.obozn = new AdvancedDataGridView.TreeGridColumn();
@@ -44,6 +45,8 @@
             // 
             this.treeView.AllowUserToAddRows = false;
             this.treeView.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Honeydew;
+            this.treeView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.treeView.BackgroundColor = System.Drawing.SystemColors.Window;
             this.treeView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.obozn,
@@ -58,6 +61,7 @@
             this.treeView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.treeView.Size = new System.Drawing.Size(1268, 541);
             this.treeView.TabIndex = 0;
+            this.treeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView_KeyDown);
             // 
             // obozn
             // 

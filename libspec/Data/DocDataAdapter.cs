@@ -100,7 +100,9 @@ namespace libspec.View.Data
                 return false;
             }
 
-            query = string.Format(CultureInfo.InvariantCulture, "delete from lid where id = {0}", o.refid);
+            query = string.Format(CultureInfo.InvariantCulture, 
+                    "delete from lid where id = {0}", 
+                    o.refid);
             cmd = new MySqlCommand(query, m_conn);
             try
             {
@@ -112,7 +114,9 @@ namespace libspec.View.Data
                 return false;
             }
 
-            query = string.Format(CultureInfo.InvariantCulture, "delete from _did where id = {0}", o.id);
+            query = string.Format(CultureInfo.InvariantCulture, 
+                    "delete from _did where id = {0}", 
+                    o.id);
             cmd = new MySqlCommand(query, m_conn);
             try
             {
@@ -129,7 +133,9 @@ namespace libspec.View.Data
         {
             MySqlDataReader reader = null;
             UInt32 ret = 0;
-            string query = string.Format(CultureInfo.InvariantCulture, "select id from lid where obozn='{0}'", obozn);
+            string query = string.Format(CultureInfo.InvariantCulture, 
+                            "select id from lid where obozn='{0}'", 
+                            obozn);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             try
             {
@@ -151,7 +157,9 @@ namespace libspec.View.Data
         }
         private DocObject DocByObozn(string obozn)
         {
-            string query = string.Format(CultureInfo.InvariantCulture, "select _did.id, lid.obozn, lid.naimen, lid.descr, _did.closed, _did.num_kol, _did.uid from _did inner join lid on _did.uid=lid.id where lid.obozn = '{0}'", obozn);
+            string query = string.Format(CultureInfo.InvariantCulture, 
+                "select _did.id, lid.obozn, lid.naimen, lid.descr, _did.closed, _did.num_kol, _did.uid from _did inner join lid on _did.uid=lid.id where lid.obozn = '{0}'", 
+                obozn);
             MySqlDataReader reader = null;
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             DocObject ret = null;
@@ -179,7 +187,10 @@ namespace libspec.View.Data
 
         public bool MoveDoc(DocObject doc, UInt32 parent)
         {
-            string query = string.Format(CultureInfo.InvariantCulture, "update _did set parent={0} where id={1}", parent, doc.id);
+            string query = string.Format(CultureInfo.InvariantCulture, 
+                "update _did set parent={0} where id={1}", 
+                parent, 
+                doc.id);
 
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             int ret = 0;
@@ -196,7 +207,9 @@ namespace libspec.View.Data
         }
         public bool DocExists(string obozn)
         {
-            string query = string.Format(CultureInfo.InvariantCulture, "select count(id) from lid where obozn='{0}'", obozn);
+            string query = string.Format(CultureInfo.InvariantCulture, 
+                "select count(id) from lid where obozn='{0}'", 
+                obozn);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             MySqlDataReader reader = null;
             int ret = 0;

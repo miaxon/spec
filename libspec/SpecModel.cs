@@ -301,6 +301,7 @@ namespace libspec.View
                 case ViewEvent.ButtonAction.SelectProject:
                     {
                         SelectProjectDialog dlg = new SelectProjectDialog(m_da.GetProjectList());
+                        dlg.DelProjectEvent += new EventHandler<ButtonActionEventArgs>(dlg_DelProjectEvent);
                         if (dlg.ShowDialog() == DialogResult.OK)
                         {
                             foreach (ProjectObject o in dlg.SelectedObjects)
@@ -474,6 +475,20 @@ namespace libspec.View
                         UpdateChilds(e.Target);
                     }
                     break;
+            }
+        }
+
+        void dlg_DelProjectEvent(object sender, ButtonActionEventArgs e)
+        {
+            ProjectObject o = e.Target as ProjectObject;
+            if (o == null)
+                return;
+            if(!Utils.Warning("Удалить проект " + o.obozn + "?"))
+                return;
+            if (m_da.DeleteProject(o))
+            {
+                SelectProjectDialog view = sender as SelectProjectDialog;
+                view.DeleteCurrentNode();
             }
         }        
         private void m_view_SearchEvent(object sender, ViewEvent.SearchEventArgs e)

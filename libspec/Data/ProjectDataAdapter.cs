@@ -14,7 +14,11 @@ namespace libspec.View.Data
     {
         public ProjectObject AddProject(ProjectObject o)
         {
-            string query = string.Format(CultureInfo.InvariantCulture, "insert into _pid (obozn, naimen, descr) values('{0}', '{1}', '{2}')", o.obozn, o.naimen, o.descr);
+            string query = string.Format(CultureInfo.InvariantCulture, 
+                "insert into _pid (obozn, naimen, descr) values('{0}', '{1}', '{2}')", 
+                o.obozn, 
+                o.naimen, 
+                o.descr);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             try
             {
@@ -26,18 +30,48 @@ namespace libspec.View.Data
             }
             return ProjectByObozn(o.obozn);
         }
-        public void DeleteProject(ProjectObject o)
+        public bool DeleteProject(ProjectObject o)
         {
-            string query = string.Format(CultureInfo.InvariantCulture, "delete from _pid where id = {0}", o.id);
+            string query = string.Format(CultureInfo.InvariantCulture,
+                "select count(id) from _gid where parent = {0}",
+                o.id);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
+            MySqlDataReader reader = null;
+            int ret = 0;
             try
             {
-                int r = cmd.ExecuteNonQuery();
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    ret = reader.GetInt32(0);
+                }
             }
             catch (MySqlException ex)
             {
                 Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
-            }            
+                return false;
+            }
+            finally
+            {
+                if (reader != null) reader.Close();
+            }
+            if (ret > 0)
+                return false;
+            query = string.Format(CultureInfo.InvariantCulture, 
+                "delete from _pid where id = {0}", 
+                o.id);
+            cmd = new MySqlCommand(query, m_conn);
+            ret = 0;
+            try
+            {
+                ret = cmd.ExecuteNonQuery();
+            }
+            catch (MySqlException ex)
+            {
+                Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
+                return false;
+            }
+            return ret > 0;
         }        
         public ProjectObject ProjectByObozn(string obozn)
         {

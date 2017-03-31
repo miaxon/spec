@@ -40,13 +40,14 @@ namespace libspec.View.Data
             string table = Utils.GetChildTable(dst.num_kod);
             if (string.IsNullOrEmpty(table))
                 return false;
-            string query = string.Format(CultureInfo.InvariantCulture, "insert into {0} (parent, num_kod, num_kol, num_kfr, refid) values({1}, {2}, {3}, {4}, {5})",
-                                           table,
-                                           dst.id,
-                                           src.num_kod,
-                                           src.num_kol,
-                                           src.num_kfr,
-                                           src.refid);
+            string query = string.Format(CultureInfo.InvariantCulture, 
+                           "insert into {0} (parent, num_kod, num_kol, num_kfr, refid) values({1}, {2}, {3}, {4}, {5})",
+                           table,
+                           dst.id,
+                           src.num_kod,
+                           src.num_kol,
+                           src.num_kfr,
+                           src.refid);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             int ret = 0;
             try
@@ -65,7 +66,12 @@ namespace libspec.View.Data
             string table = Utils.GetTable(target.num_kod);
             if (string.IsNullOrEmpty(table))
                 return null;
-            string query = string.Format(CultureInfo.InvariantCulture, "insert into {0} (obozn, naimen, descr) values('{1}', '{2}', '{3}')", table, target.obozn, target.naimen, target.descr);
+            string query = string.Format(CultureInfo.InvariantCulture, 
+                            "insert into {0} (obozn, naimen, descr) values('{1}', '{2}', '{3}')", 
+                            table, 
+                            target.obozn, 
+                            target.naimen, 
+                            target.descr);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             try
             {
@@ -76,7 +82,10 @@ namespace libspec.View.Data
                 Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
                 return null;
             }
-            query = string.Format(CultureInfo.InvariantCulture, "select id from {0} where obozn='{1}'", table, target.obozn);
+            query = string.Format(CultureInfo.InvariantCulture, 
+                    "select id from {0} where obozn='{1}'", 
+                    table, 
+                    target.obozn);
             MySqlDataReader reader = null;
             cmd = new MySqlCommand(query, m_conn);
             UInt32 id = 0;
@@ -117,7 +126,10 @@ namespace libspec.View.Data
 
         public bool DeletePoz(string table, UInt32 id)
         {
-            string query = string.Format(CultureInfo.InvariantCulture, "delete from {0} where id={1}", table, id);
+            string query = string.Format(CultureInfo.InvariantCulture, 
+                            "delete from {0} where id={1}", 
+                            table, 
+                            id);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             int ret = 0;
             try
@@ -142,7 +154,10 @@ namespace libspec.View.Data
             string child_table = Utils.GetChildTable(o.num_kod);
             if (!string.IsNullOrEmpty(child_table))
             {
-                query = string.Format(CultureInfo.InvariantCulture, "delete from {0} where parent = {1}", child_table, o.id);
+                query = string.Format(CultureInfo.InvariantCulture, 
+                        "delete from {0} where parent = {1}", 
+                        child_table, 
+                        o.id);
                 cmd = new MySqlCommand(query, m_conn);
                 try
                 {
@@ -156,7 +171,10 @@ namespace libspec.View.Data
             }
             if (GetMidChilds(o.id, o.num_kod) > 0)
                 return false;
-            query = string.Format(CultureInfo.InvariantCulture, "delete from {0} where id = {1}", table, o.id);
+            query = string.Format(CultureInfo.InvariantCulture, 
+                    "delete from {0} where id = {1}", 
+                    table, 
+                    o.id);
             cmd = new MySqlCommand(query, m_conn);
             try
             {
@@ -170,7 +188,9 @@ namespace libspec.View.Data
             int ret_lid = 0;
             if (table == "lid") // remove lid refernce from _did if exists
             {
-                query = string.Format(CultureInfo.InvariantCulture, "delete from _did where uid = {0}", o.id);
+                query = string.Format(CultureInfo.InvariantCulture, 
+                        "delete from _did where uid = {0}", 
+                        o.id);
                 cmd = new MySqlCommand(query, m_conn);
                 try
                 {
@@ -193,7 +213,11 @@ namespace libspec.View.Data
             string[] tables = Utils.GetChildTables();
             foreach (string table in tables)
             {
-                query = string.Format(CultureInfo.InvariantCulture, "delete from {0} where refid = {1} and num_kod={2}", table, o.id, o.num_kod);
+                query = string.Format(CultureInfo.InvariantCulture, 
+                        "delete from {0} where refid = {1} and num_kod={2}", 
+                        table, 
+                        o.id, 
+                        o.num_kod);
                 cmd = new MySqlCommand(query, m_conn);
                 try
                 {
@@ -207,7 +231,10 @@ namespace libspec.View.Data
         }
         public bool MovePoz(PozObject src, DocObject dst)
         {
-            string query = string.Format(CultureInfo.InvariantCulture, "update lid_old set parent={0} where id={1}", dst.refid, src.id);
+            string query = string.Format(CultureInfo.InvariantCulture, 
+                            "update lid_old set parent={0} where id={1}", 
+                            dst.refid, 
+                            src.id);
 
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             int ret = 0;
@@ -227,7 +254,11 @@ namespace libspec.View.Data
             string child_table = Utils.GetChildTable(dst.num_kod);
             if (string.IsNullOrEmpty(child_table))
                 return false;
-            string query = string.Format(CultureInfo.InvariantCulture, "update {0} set parent={1} where id={2}", child_table, dst.id, src.id);
+            string query = string.Format(CultureInfo.InvariantCulture, 
+                            "update {0} set parent={1} where id={2}", 
+                            child_table, 
+                            dst.id, 
+                            src.id);
 
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             int ret = 0;
@@ -248,7 +279,10 @@ namespace libspec.View.Data
             string table = Utils.GetTable(num_kod);
             if (string.IsNullOrEmpty(table))
                 return false;
-            string query = string.Format(CultureInfo.InvariantCulture, "select count(id) from {0} where obozn='{1}'", table, obozn);
+            string query = string.Format(CultureInfo.InvariantCulture, 
+                            "select count(id) from {0} where obozn='{1}'", 
+                            table, 
+                            obozn);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             MySqlDataReader reader = null;
             int ret = 0;
