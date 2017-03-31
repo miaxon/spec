@@ -30,7 +30,6 @@ namespace libspec.View
             m_view.AddRootPozEvent += new EventHandler<AddRootPozEventArgs>(m_view_AddRootPozEvent);
             m_view.FillBadEvent += new EventHandler<FillBadEventArgs>(m_view_FillBadEvent);
         }
-
         void m_view_FillBadEvent(object sender, FillBadEventArgs e)
         {
             switch (e.num_kod)
@@ -55,63 +54,45 @@ namespace libspec.View
                     break;
             }
         }
-
         void m_view_AddRootPozEvent(object sender, AddRootPozEventArgs e)
         {
-            if (e.num_kod < 9)
+            string name = "";
+            dlg: PozObject o = NewObject(ViewEvent.ButtonAction.AddRootPoz, e.num_kod, name);
+            if (o == null)
+                return;
+            name = o.obozn;
+            o.num_kod = e.num_kod;
+            if (!m_da.PozExists(o.obozn, o.num_kod))
             {
-                string name = "";
-            dlg: PozObject o = NewObject(ViewEvent.ButtonAction.AddRootPoz, name) as PozObject;
-                if (o == null)
-                    return;
-                o.num_kod = e.num_kod;
-                name = o.obozn;
-                if (o.obozn.Length < Utils.OboznLength(e.num_kod))
-                    goto dlg;
-                if (!m_da.PozExists(o.obozn, o.num_kod))
+                if (e.num_kod < 9 || e.num_kod == 100)
                 {
-                    UInt32 parent = 0;
-                    if (o.num_kod == 9 || o.num_kod == 92)
-                    {
-                        parent = SelectParent(o.num_kod, o.obozn); 
-                    }
-                    PozObject poz = m_da.AddRootPoz(o, parent);
+                    PozObject poz = m_da.AddRootPoz(o);
                     if (poz != null)
-                    {
                         m_view.AddRootNode(poz);
-                    }
                     return;
                 }
                 else
-                    goto dlg;
-            }
-            else
-            {
-                string name = "";
-            dlg: PozObject o = NewObject(ViewEvent.ButtonAction.AddRootPoz, name) as PozObject;
-                if (o == null)
-                    return;
-                name = o.obozn;
-                if (o.obozn.Length < Utils.OboznLength(e.num_kod))
-                    goto dlg;
-                MidObject p = new MidObject(e.num_kod);
-                p.obozn = o.obozn;
-                p.naimen = o.naimen;
-                p.descr = o.descr;
-                if (!m_da.MidExists(p.obozn, p.num_kod))
                 {
+                    MidObject p = new MidObject(o);
                     if (p.num_kod != 94) // mid0
-                        p.parent = SelectParent(p.num_kod, p.obozn);
+                    {
+                        p.parent = m_da.GetMidParent(o.obozn, o.num_kod);
+                        if (p.parent == 0)
+                            p.parent = SelectParent(o.obozn, o.num_kod);
+                        if (p.parent == 0)
+                            return;
+                    }
                     MidObject poz = m_da.AddRootMid(p);
                     if (poz != null)
                         m_view.AddMidNode(poz);
                     return;
                 }
-                else
-                    goto dlg;
             }
+            else
+                goto dlg;
+
         }
-        private UInt32 SelectParent(int num_kod, string obozn)
+        private UInt32 SelectParent(string obozn, int num_kod)
         {
             SelectMidParentDialog dlg = new SelectMidParentDialog(num_kod, obozn);
             dlg.SearchEvent += new EventHandler<SearchEventArgs>(m_view_SearchEvent);
@@ -307,7 +288,7 @@ namespace libspec.View
                 switch (e.Field)
                 {
                     case "obozn":
-                        if (noError = !m_da.MidExists(value, o.num_kod))
+                        if (noError = !m_da.PozExists(value, o.num_kod))
                             o.obozn = value;
                         break;
                     case "naimen":
@@ -349,11 +330,13 @@ namespace libspec.View
                 if (e.dst is PozObject)
                 {
                     PozObject dst = e.dst as PozObject;
-                    m_da.AddPoz(src, dst);
+                    if (m_da.AddPoz(src, dst))
+                        m_view.AddPozNode(src);
+                    return;
                 }
                 if (e.dst == null)
                 {
-                dlg: PozObject o = NewObject(ViewEvent.ButtonAction.AddPoz, src.obozn) as PozObject;
+                    dlg: PozObject o = NewObject(ViewEvent.ButtonAction.AddPoz, src.obozn) as PozObject;
                     if (o == null)
                         return;
                     PozObject p = src.Clone();
@@ -372,30 +355,24 @@ namespace libspec.View
 
                 }
             }
-            if (e.src is MidObject)
+            if (e.src is MidObject && e.dst == null)
             {
-                MidObject src = e.src as MidObject;
-                if (e.dst == null)
+                MidObject p = (e.src as MidObject).Clone();
+                dlg: PozObject o = NewObject(ViewEvent.ButtonAction.AddRootPoz, p.obozn) as PozObject;
+                if (o == null)
+                    return;
+                p.obozn = o.obozn;
+                p.naimen = string.IsNullOrEmpty(o.naimen) ? p.naimen : o.naimen;
+                p.descr = o.descr;
+                if (!m_da.PozExists(p.obozn, p.num_kod))
                 {
-                dlg: PozObject o = NewObject(ViewEvent.ButtonAction.AddRootPoz, src.obozn) as PozObject;
-                    if (o == null)
-                        return;
-                    MidObject p = new MidObject(src.num_kod);
-                    p.obozn = o.obozn;
-                    p.naimen = string.IsNullOrEmpty(o.naimen) ? src.naimen : o.naimen;
-                    p.descr = o.descr;
-
-                    if (!m_da.MidExists(p.obozn, p.num_kod))
-                    {
-                        MidObject poz = m_da.AddRootMid(p);
-                        if (poz != null)
-                            m_view.AddMidNode(poz);
-                        return;
-                    }
-                    else
-                        goto dlg;
-
+                    MidObject poz = m_da.AddRootMid(p);
+                    if (poz != null)
+                        m_view.AddMidNode(poz);
+                    return;
                 }
+                else
+                    goto dlg;
             }
         }
         private void m_view_ButtonActionEvent(object sender, ViewEvent.ButtonActionEventArgs e)
@@ -541,6 +518,15 @@ namespace libspec.View
         private PozObject NewObject(ViewEvent.ButtonAction action, string name = "")
         {
             AddObjectDialog dlg = new AddObjectDialog(action, name);
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                return dlg.PozObject;
+            }
+            return null;
+        }
+        private PozObject NewObject(ViewEvent.ButtonAction action, int num_kod, string name = "")
+        {
+            AddObjectDialog dlg = new AddObjectDialog(action, num_kod, name);
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 return dlg.PozObject;

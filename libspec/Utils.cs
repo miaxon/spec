@@ -194,6 +194,26 @@ namespace libspec.View
             }
             return ret;
         }
+        public static bool CheckOboznLength(string obozn, int num_kod)
+        {
+            bool ret = true;
+            switch (num_kod)
+            {
+                case 9:
+                    ret = obozn.Length == 11;
+                    break;
+                case 92:
+                    ret = obozn.Length == 6;
+                    break;
+                case 93:
+                    ret = obozn.Length == 4;
+                    break;
+                case 94:
+                    ret = obozn.Length == 4;
+                    break;
+            }
+            return ret;
+        }
         public static int SearchOboznLength(int kod)
         {
             int ret = 0;

@@ -32,6 +32,22 @@ namespace libspec.View.Objects
         {
             m_id = id;
         }
-        public MidObject(int kod) { m_num_kod = kod; }
+        public MidObject(PozObject o)
+        {
+            m_num_kod = o.num_kod;
+            obozn = o.obozn;
+            naimen = o.naimen;
+            descr = o.descr;
+        }
+        public MidObject(int num_kod) { m_num_kod = num_kod; }
+        public MidObject Clone()
+        {
+            MidObject o = new MidObject(m_num_kod);
+            o.obozn = obozn;
+            o.naimen = naimen;
+            o.descr = descr;
+            o.parent = parent;
+            return o;
+        }
     }
 }

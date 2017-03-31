@@ -61,7 +61,7 @@ namespace libspec.View.Data
             }
             return ret > 0;
         }
-        public PozObject AddRootPoz(PozObject target, UInt32 parent = 0)
+        public PozObject AddRootPoz(PozObject target)
         {
             string table = Utils.GetTable(target.num_kod);
             if (string.IsNullOrEmpty(table))
@@ -119,8 +119,8 @@ namespace libspec.View.Data
                 }
             }
             target.SetRootId(id);
-            if (target.num_kod == 9 || target.num_kod == 92)
-                SetMidPozParent(target, parent);
+            //if (target.num_kod == 9 || target.num_kod == 92)
+            //    SetMidPozParent(target, parent);
             return target;
         }
 
@@ -280,9 +280,9 @@ namespace libspec.View.Data
             if (string.IsNullOrEmpty(table))
                 return false;
             string query = string.Format(CultureInfo.InvariantCulture, 
-                            "select count(id) from {0} where obozn='{1}'", 
-                            table, 
-                            obozn);
+                "select count(id) from {0} where obozn='{1}'", 
+                table, 
+                obozn);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             MySqlDataReader reader = null;
             int ret = 0;

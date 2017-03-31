@@ -13,6 +13,7 @@ namespace libspec.View.Dialogs
     public partial class AddObjectDialog : Form
     {
         private ViewEvent.ButtonAction m_action;
+        private int m_num_kod;
         public AddObjectDialog()
         {
             InitializeComponent();
@@ -24,6 +25,26 @@ namespace libspec.View.Dialogs
             m_action = action;
             txt_obozn.Text = name;
         }
+        public AddObjectDialog(ViewEvent.ButtonAction action, int num_kod, string name = "")
+        {
+            InitializeComponent();
+            Text = Utils.ActionString(action);
+            m_action = action;
+            m_num_kod = num_kod;
+            txt_obozn.Text = name;
+            if (m_num_kod >= 9 && m_num_kod < 100)
+                txt_obozn.KeyPress += new KeyPressEventHandler(txt_obozn_KeyPress);
+        }
+
+        private void txt_obozn_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!Char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back)
+            {
+                e.Handled = true;
+            }
+            
+        }
+
         public PozObject PozObject
         {
             get
@@ -69,14 +90,16 @@ namespace libspec.View.Dialogs
                 return null;
             }
         }
-
+       
         private void txt_obozn_TextChanged(object sender, EventArgs e)
         {
             string s = txt_obozn.Text;
             if (string.IsNullOrWhiteSpace(s) || string.IsNullOrEmpty(s))
+            {
                 btnOk.Enabled = false;
+            }
             else
-                btnOk.Enabled = true;
+                btnOk.Enabled = Utils.CheckOboznLength(s, m_num_kod);
         }
     }
 }

@@ -123,6 +123,14 @@ namespace libspec.View
             UpdateMidNode(o, node);
             node.Selected = true;
         }
+        internal void AddPozNode(PozObject o)
+        {
+            if (m_nodeCurrent == null)
+                return;
+            TreeGridNode node = m_nodeCurrent.Nodes.Add(o.obozn);
+            UpdatePozNode(o, node);
+            node.Selected = true;
+        }
         private void tbtnSearchGost_Click(object sender, EventArgs e)
         {
             SearchGost();
