@@ -477,7 +477,6 @@ namespace libspec.View
                     break;
             }
         }
-
         void dlg_DelProjectEvent(object sender, ButtonActionEventArgs e)
         {
             ProjectObject o = e.Target as ProjectObject;

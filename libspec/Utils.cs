@@ -12,6 +12,8 @@ using System.Security.Principal;
 using System.Xml;
 using System.Diagnostics;
 using System.Security.Cryptography;
+using System.Globalization;
+using libspec.View.Dialogs;
 
 namespace libspec.View
 {
@@ -454,11 +456,8 @@ namespace libspec.View
         }
         public static void Version()
         {
-            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
-            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
-            string version = fvi.ProductVersion;
-            Info(version);
-            Clipboard.SetText(version);
+            AboutDialog dlg = new AboutDialog();
+            dlg.ShowDialog();
         }
         private static string GenerateAPassKey(string passphrase)
         {

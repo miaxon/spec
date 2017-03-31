@@ -77,6 +77,12 @@
     <Compile Include="Data\GroupDataAdapter.cs" />
     <Compile Include="Data\ProjectDataAdapter.cs" />
     <Compile Include="Data\SearchDataAdapter.cs" />
+    <Compile Include="Dialogs\AboutDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\AboutDialog.Designer.cs">
+      <DependentUpon>AboutDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\AddObjectDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -166,6 +172,9 @@
     <Compile Include="ViewEvent\NodeClickEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Dialogs\AboutDialog.resx">
+      <DependentUpon>AboutDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\AddObjectDialog.resx">
       <DependentUpon>AddObjectDialog.cs</DependentUpon>
     </EmbeddedResource>
