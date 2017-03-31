@@ -61,6 +61,7 @@
             this.treeView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.treeView.Size = new System.Drawing.Size(1268, 541);
             this.treeView.TabIndex = 0;
+            this.treeView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.treeView_CellContentClick);
             this.treeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView_KeyDown);
             // 
             // obozn

@@ -73,7 +73,6 @@ namespace libspec.View.Dialogs
                 case Keys.Enter:
                     {
                         this.DialogResult = System.Windows.Forms.DialogResult.OK;
-
                     }
                     break;            
             }
@@ -82,6 +81,11 @@ namespace libspec.View.Dialogs
         {
             if (treeView.CurrentNode != null)
                 treeView.Nodes.Remove(treeView.CurrentNode);
+        }
+
+        private void treeView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            this.DialogResult = System.Windows.Forms.DialogResult.OK;
         }
     }
 }
