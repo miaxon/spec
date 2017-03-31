@@ -174,6 +174,26 @@ namespace libspec.View
             }
             return ret;
         }
+        public static int OboznLength(int num_kod)
+        {
+            int ret = 0;
+            switch (num_kod)
+            {
+                case 9:
+                    ret = 11;
+                    break;
+                case 92:
+                    ret = 6;
+                    break;
+                case 93:
+                    ret = 4;
+                    break;
+                case 94:
+                    ret = 4;
+                    break;
+            }
+            return ret;
+        }
         public static int SearchOboznLength(int kod)
         {
             int ret = 0;

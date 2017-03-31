@@ -66,6 +66,8 @@ namespace libspec.View
                     return;
                 o.num_kod = e.num_kod;
                 name = o.obozn;
+                if (o.obozn.Length < Utils.OboznLength(o.num_kod))
+                    goto dlg;
                 if (!m_da.PozExists(o.obozn, o.num_kod))
                 {
                     UInt32 parent = 0;
@@ -89,6 +91,8 @@ namespace libspec.View
             dlg: PozObject o = NewObject(ViewEvent.ButtonAction.AddRootPoz, name) as PozObject;
                 if (o == null)
                     return;
+                if (o.obozn.Length < Utils.OboznLength(o.num_kod))
+                    goto dlg;
                 MidObject p = new MidObject(e.num_kod);
                 p.obozn = o.obozn;
                 p.naimen = o.naimen;
