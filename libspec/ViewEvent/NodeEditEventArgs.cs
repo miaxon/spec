@@ -12,12 +12,14 @@ namespace libspec.View.ViewEvent
         public readonly string Field;
         public readonly object Value;
         public readonly object OldValue;
-        public NodeEditEventArgs(object o, string field, object value, object old_value)
+        public readonly object Parent;
+        public NodeEditEventArgs(object o, string field, object value, object old_value, object parent = null)
         {
             Object = o;
             Field = field;
             Value = value;
             OldValue = old_value;
+            Parent = parent;
         }
     }
 }

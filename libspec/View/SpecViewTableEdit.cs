@@ -67,8 +67,11 @@ namespace libspec.View
             if (value.Equals(m_oldValue))
                 return;
             string field = treeView.CurrentCell.OwningColumn.Name;
+            object parent = null;
+            if (m_nodeCurrent.Parent != null && m_nodeCurrent.Parent.Tag != null)
+                parent = m_nodeCurrent.Parent.Tag;
             if (NodeEditEvent != null)
-                NodeEditEvent(this, new NodeEditEventArgs(m_nodeCurrent.Tag, field, value, m_oldValue));
+                NodeEditEvent(this, new NodeEditEventArgs(m_nodeCurrent.Tag, field, value, m_oldValue, parent));
         }
         private void treeView_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {

@@ -205,79 +205,125 @@ namespace libspec.View
             if (e.Object is PozObject)
             {
                 PozObject o = e.Object as PozObject;
-                string table = Utils.GetTable(o.num_kod);
-                if (string.IsNullOrEmpty(table))
-                {
-                    view.RollBack();
-                    return;
-                }
-                switch (e.Field)
-                {
-                    case "obozn":
-                        if (noError = m_da.PozExists(value, o.num_kod))
-                            o.obozn = value;
-                        break;
-                    case "naimen":
-                        o.naimen = value;
-                        break;
-                    case "num_kol":
-                        {
-                            query_val = value;
-                            UInt16 c = 0;
-                            if (noError = UInt16.TryParse(value, NumberStyles.Number, CultureInfo.InvariantCulture, out c))
-                                o.num_kol = c;
-                        }
-                        break;
-                    case "gost":
-                        o.gost = value;
-                        break;
-                    case "marka":
-                        o.marka = value;
-                        break;
-                    case "kei":
-                        {
-                            // if value is kei obozn number string
-                            string kei_naimen = Utils.GetKeiNaimen(value);
-                            if (noError = !(kei_naimen == value))
+                if (e.Parent == null) // root node
+                {                    
+                    string table = Utils.GetTable(o.num_kod);
+                    if (string.IsNullOrEmpty(table))
+                    {
+                        view.RollBack();
+                        return;
+                    }
+                    switch (e.Field)
+                    {
+                        case "obozn":
+                            if (noError = m_da.PozExists(value, o.num_kod))
+                                o.obozn = value;
+                            break;
+                        case "naimen":
+                            o.naimen = value;
+                            break;                        
+                        case "gost":
+                            o.gost = value;
+                            break;
+                        case "marka":
+                            o.marka = value;
+                            break;
+                        case "kei":
                             {
-                                o.kei = value;
-                                break;
+                                // if value is kei obozn number string
+                                string kei_naimen = Utils.GetKeiNaimen(value);
+                                if (noError = !(kei_naimen == value))
+                                {
+                                    o.kei = value;
+                                    break;
+                                }
+                                // if value is kei naimen string
+                                string kei_obozn = Utils.GetKeiObozn(value);
+                                if (noError = !(kei_obozn == value))
+                                {
+                                    o.kei = value = kei_obozn;
+                                    query_val = "'" + value + "'";
+                                }
                             }
-                            // if value is kei naimen string
-                            string kei_obozn = Utils.GetKeiObozn(value);
-                            if (noError = !(kei_obozn == value))
+                            break;                       
+                        case "descr":
+                            o.descr = value;
+                            break;
+                        default:
+                            noError = false;
+                            break;
+                    }
+                    if (!noError)
+                    {
+                        view.RollBack();
+                        return;
+                    }
+                    query = string.Format("update {0} set {1}={2} where id={3}", table, e.Field, query_val, o.id);
+                    if (!m_da.ExecQuery(query))
+                    {
+                        view.RollBack();
+                        return;
+                    }
+                    view.UpdatePozNode(o);
+                    string msg = string.Format("Сохранено: {0}", value);
+                    m_view.EditResult(msg);
+                }
+                else
+                {
+                    PozObject parent = e.Parent as PozObject;
+                    if(parent == null)
+                    {
+                        view.RollBack();
+                        return;
+                    }
+                    string table = Utils.GetChildTable(parent.num_kod);
+                    if (string.IsNullOrEmpty(table))
+                    {
+                        view.RollBack();
+                        return;
+                    }
+                    switch (e.Field)
+                    {                        
+                        case "num_kol":
                             {
-                                o.kei = value = kei_obozn;
-                                query_val = "'" + value + "'";
+                                query_val = value;
+                                UInt16 c = 0;
+                                if (noError = UInt16.TryParse(value, NumberStyles.Number, CultureInfo.InvariantCulture, out c))
+                                    o.num_kol = c;
                             }
-                        }
-                        break;
-                    case "num_kfr":
-                        {
-                            query_val = value;
-                            double c = 0;
-                            if (noError = double.TryParse(value, NumberStyles.Number, CultureInfo.InvariantCulture, out c))
-                                o.num_kfr = c;
-                        }
-                        break;
-                    case "descr":
-                        o.descr = value;
-                        break;
+                            break;                        
+                        case "num_kfr":
+                            {
+                                query_val = value;
+                                double c = 0;
+                                if (noError = double.TryParse(value, NumberStyles.Number, CultureInfo.InvariantCulture, out c))
+                                    o.num_kfr = c;
+                            }
+                            break;
+                        case "descr":
+                            {
+                                o.descr = value;
+                            }
+                            break;
+                        default:
+                            noError = false;
+                            break;
+                    }
+                    if (!noError)
+                    {
+                        view.RollBack();
+                        return;
+                    }
+                    query = string.Format("update {0} set {1}={2} where id={3}", table, e.Field, query_val, o.id);
+                    if (!m_da.ExecQuery(query))
+                    {
+                        view.RollBack();
+                        return;
+                    }
+                    view.UpdatePozNode(o);
+                    string msg = string.Format("Сохранено: {0}", value);
+                    m_view.EditResult(msg);
                 }
-                if (!noError)
-                {
-                    view.RollBack();
-                    return;
-                }
-                query = string.Format("update {0} set {1}={2} where id={3}", table, e.Field, query_val, o.id);
-                if (!m_da.ExecQuery(query))
-                {
-                    view.RollBack();
-                    return;
-                }
-                view.UpdateMidNode(o);
-                string msg = string.Format("Сохранено: {0}", value);
-                m_view.EditResult(msg);
             }
             if (e.Object is MidObject)
             {

@@ -30,14 +30,15 @@
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.tbtn_lid = new System.Windows.Forms.ToolStripButton();
             this.tbtn_bid1 = new System.Windows.Forms.ToolStripButton();
@@ -72,6 +73,9 @@
             this.tbtnUpdate = new System.Windows.Forms.ToolStripButton();
             this.tbtnBadShow = new System.Windows.Forms.ToolStripButton();
             this.treeView = new AdvancedDataGridView.TreeGridView();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.stlblEdit = new System.Windows.Forms.ToolStripStatusLabel();
+            this.stlblAction = new System.Windows.Forms.ToolStripStatusLabel();
             this.obozn = new AdvancedDataGridView.TreeGridColumn();
             this.naimen = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.num_kol = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -82,9 +86,6 @@
             this.num_knr = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.num_kod = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.descr = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.statusStrip = new System.Windows.Forms.StatusStrip();
-            this.stlblEdit = new System.Windows.Forms.ToolStripStatusLabel();
-            this.stlblAction = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.treeView)).BeginInit();
             this.statusStrip.SuspendLayout();
@@ -466,28 +467,28 @@
             this.num_knr,
             this.num_kod,
             this.descr});
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Info;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.treeView.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Info;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.treeView.DefaultCellStyle = dataGridViewCellStyle10;
             this.treeView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.treeView.ImageList = null;
             this.treeView.Location = new System.Drawing.Point(0, 25);
             this.treeView.MultiSelect = false;
             this.treeView.Name = "treeView";
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.treeView.RowHeadersDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.treeView.RowHeadersDefaultCellStyle = dataGridViewCellStyle11;
             this.treeView.RowHeadersVisible = false;
             this.treeView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.treeView.Size = new System.Drawing.Size(1131, 464);
@@ -498,6 +499,32 @@
             this.treeView.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.treeView_EditingControlShowing);
             this.treeView.SelectionChanged += new System.EventHandler(this.treeView_SelectionChanged);
             this.treeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView_KeyDown);
+            // 
+            // statusStrip
+            // 
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.stlblEdit,
+            this.stlblAction});
+            this.statusStrip.Location = new System.Drawing.Point(0, 489);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.statusStrip.Size = new System.Drawing.Size(1131, 22);
+            this.statusStrip.TabIndex = 3;
+            this.statusStrip.Text = "statusStrip";
+            // 
+            // stlblEdit
+            // 
+            this.stlblEdit.Name = "stlblEdit";
+            this.stlblEdit.Size = new System.Drawing.Size(1060, 17);
+            this.stlblEdit.Spring = true;
+            this.stlblEdit.Text = "stlblEdit";
+            this.stlblEdit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // stlblAction
+            // 
+            this.stlblAction.Name = "stlblAction";
+            this.stlblAction.Size = new System.Drawing.Size(56, 17);
+            this.stlblAction.Text = "stlblNum";
             // 
             // obozn
             // 
@@ -568,6 +595,8 @@
             // 
             // num_kod
             // 
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.num_kod.DefaultCellStyle = dataGridViewCellStyle8;
             this.num_kod.HeaderText = "КП";
             this.num_kod.Name = "num_kod";
             this.num_kod.ReadOnly = true;
@@ -577,37 +606,11 @@
             // descr
             // 
             this.descr.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle8.ForeColor = System.Drawing.Color.Gray;
-            this.descr.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle9.ForeColor = System.Drawing.Color.Gray;
+            this.descr.DefaultCellStyle = dataGridViewCellStyle9;
             this.descr.HeaderText = "ИНФОРМАЦИЯ";
             this.descr.Name = "descr";
             this.descr.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // statusStrip
-            // 
-            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.stlblEdit,
-            this.stlblAction});
-            this.statusStrip.Location = new System.Drawing.Point(0, 489);
-            this.statusStrip.Name = "statusStrip";
-            this.statusStrip.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.statusStrip.Size = new System.Drawing.Size(1131, 22);
-            this.statusStrip.TabIndex = 3;
-            this.statusStrip.Text = "statusStrip";
-            // 
-            // stlblEdit
-            // 
-            this.stlblEdit.Name = "stlblEdit";
-            this.stlblEdit.Size = new System.Drawing.Size(1060, 17);
-            this.stlblEdit.Spring = true;
-            this.stlblEdit.Text = "stlblEdit";
-            this.stlblEdit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // stlblAction
-            // 
-            this.stlblAction.Name = "stlblAction";
-            this.stlblAction.Size = new System.Drawing.Size(56, 17);
-            this.stlblAction.Text = "stlblNum";
             // 
             // SpecViewTable
             // 
@@ -661,6 +664,13 @@
         private System.Windows.Forms.ToolStripButton tbtnDelete;
         private System.Windows.Forms.ToolStripButton tbtnEdit;
         private System.Windows.Forms.ToolStripButton tbtnAdd;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripButton tbtnUpdate;
+        private System.Windows.Forms.ToolStripButton tbtnPaste;
+        private System.Windows.Forms.ToolStripButton tbtnCut;
+        private System.Windows.Forms.ToolStripButton tbtnCopy;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripButton tbtnBadShow;
         private AdvancedDataGridView.TreeGridColumn obozn;
         private System.Windows.Forms.DataGridViewTextBoxColumn naimen;
         private System.Windows.Forms.DataGridViewTextBoxColumn num_kol;
@@ -671,12 +681,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn num_knr;
         private System.Windows.Forms.DataGridViewTextBoxColumn num_kod;
         private System.Windows.Forms.DataGridViewTextBoxColumn descr;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
-        private System.Windows.Forms.ToolStripButton tbtnUpdate;
-        private System.Windows.Forms.ToolStripButton tbtnPaste;
-        private System.Windows.Forms.ToolStripButton tbtnCut;
-        private System.Windows.Forms.ToolStripButton tbtnCopy;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
-        private System.Windows.Forms.ToolStripButton tbtnBadShow;
     }
 }
