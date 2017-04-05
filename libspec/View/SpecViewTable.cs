@@ -217,8 +217,7 @@ namespace libspec.View
                         Paste();
                     break;
                 case Keys.Delete:
-                    if (m_nodeCurrent.Level < 3)
-                        ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyDelete, m_nodeCurrent.Tag));
+                    Delete();
                     break;
             }
         }
@@ -230,6 +229,17 @@ namespace libspec.View
             stlblAction.Text = "";
             stlblEdit.Text = "";
             EndAction();
+        }
+        private void Delete()
+        {
+            m_nodeCurrent = treeView.CurrentNode;
+            if (m_nodeCurrent != null && m_nodeCurrent.Level < 3 && ButtonActionEvent != null)
+            {
+                if (m_nodeCurrent.Level == 2)
+                    ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyDelete, m_nodeCurrent.Tag, m_num_kod));
+                if (m_nodeCurrent.Level == 1) // root
+                    ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyDelete, m_nodeCurrent.Tag, -1));
+            }
         }
 
         private void tbtnClear_Click(object sender, EventArgs e)
@@ -258,14 +268,7 @@ namespace libspec.View
         }
         private void tbtnDelete_Click(object sender, EventArgs e)
         {
-            m_nodeCurrent = treeView.CurrentNode;
-            if (m_nodeCurrent != null && m_nodeCurrent.Level < 3 && ButtonActionEvent != null)
-            {
-                if (m_nodeCurrent.Level == 2)
-                    ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyDelete, m_nodeCurrent.Tag, m_num_kod));
-                if (m_nodeCurrent.Level == 1) // root
-                    ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyDelete, m_nodeCurrent.Tag, -1));
-            }
+            Delete();
         }
         private void tbtnAddPoz_Click(object sender, EventArgs e)
         {

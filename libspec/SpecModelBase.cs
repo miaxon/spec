@@ -140,8 +140,8 @@ namespace libspec.View
                 case "num_kol":
                     {
                         query_val = value;
-                        UInt16 c = 0;
-                        if (noError = UInt16.TryParse(value, NumberStyles.Number, CultureInfo.InvariantCulture, out c))
+                        double c = 0;
+                        if (noError = double.TryParse(value, NumberStyles.Number, CultureInfo.InvariantCulture, out c))
                             o.num_kol = c;
                     }
                     break;
@@ -287,8 +287,8 @@ namespace libspec.View
                         case "num_kol":
                             {
                                 query_val = value;
-                                UInt16 c = 0;
-                                if (noError = UInt16.TryParse(value, NumberStyles.Number, CultureInfo.InvariantCulture, out c))
+                                double c = 0;
+                                if (noError = double.TryParse(value, NumberStyles.Number, CultureInfo.InvariantCulture, out c))
                                     o.num_kol = c;
                             }
                             break;                        
@@ -432,7 +432,7 @@ namespace libspec.View
                         {
                             int num_kod = Convert.ToInt32(e.Data);
                             PozObject o = e.Target as PozObject;
-                            if (num_kod > 0)
+                            if (num_kod >= 0)
                             {
                                 string table = Utils.GetChildTable(num_kod);
                                 if (string.IsNullOrEmpty(table))

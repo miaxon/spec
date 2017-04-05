@@ -128,8 +128,8 @@ namespace libspec.View
                     case "num_kol":
                         {
                             query_val = value;
-                            UInt16 c = 0;
-                            if (noError = UInt16.TryParse(value, NumberStyles.Number, CultureInfo.InvariantCulture, out c))
+                            double c = 0;
+                            if (noError = double.TryParse(value, NumberStyles.Number, CultureInfo.InvariantCulture, out c))
                                 o.num_kol = c;
                         }
                         break;

@@ -40,6 +40,7 @@ namespace libspec.View.Data
             string table = Utils.GetChildTable(dst.num_kod);
             if (string.IsNullOrEmpty(table))
                 return false;
+            uint refid = src.refid == 0 ? src.id : src.refid;
             string query = string.Format(CultureInfo.InvariantCulture, 
                            "insert into {0} (parent, num_kod, num_kol, num_kfr, refid) values({1}, {2}, {3}, {4}, {5})",
                            table,
@@ -47,7 +48,7 @@ namespace libspec.View.Data
                            src.num_kod,
                            src.num_kol,
                            src.num_kfr,
-                           src.refid);
+                           refid);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             int ret = 0;
             try
