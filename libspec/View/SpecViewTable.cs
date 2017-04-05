@@ -27,7 +27,7 @@ namespace libspec.View
         public event EventHandler<AddRootPozEventArgs> AddRootPozEvent;
         public event EventHandler<FillBadEventArgs> FillBadEvent;
         #endregion
-        private SearchPozDialog dlg = new SearchPozDialog(null);
+        private SearchPozDialog dlg;
         private int m_num_kod;
         private TreeGridNode m_nodeCurrent;
         private ToolStripButton m_btnChecked;
@@ -279,7 +279,7 @@ namespace libspec.View
             m_nodeCurrent = treeView.CurrentNode;
             if (m_nodeCurrent == null)
                 return;
-            if (m_nodeCurrent.Level > 2)
+            if (m_nodeCurrent.Level != 1)
                 return;
             if (dlg == null || dlg.IsDisposed)
             {

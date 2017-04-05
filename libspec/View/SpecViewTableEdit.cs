@@ -23,18 +23,21 @@ namespace libspec.View
             {
                 stlblEdit.Text = "элементов: " + treeView.CurrentNode.Nodes.Count;
                 m_nodeCurrent = treeView.CurrentNode;
-                if (m_num_kod < 9) // no mid object
+                if (dlg != null)
                 {
-                    dlg.SetEditObject(treeView.CurrentNode);
-                }
-                else
-                {
-                    dlg.SetEditObject(null);
-                    //dlg.Close();
+                    if (m_nodeCurrent.Level == 1 && m_num_kod < 9) // no mid object
+                    {
+                        dlg.SetEditObject(treeView.CurrentNode);
+                    }
+                    else
+                    {
+                        dlg.SetEditObject(null);
+                        //dlg.Close();
+                    }
                 }
             }
-            
-        }      
+
+        }
         private void treeView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             m_nodeCurrent = treeView.CurrentNode;
@@ -45,7 +48,7 @@ namespace libspec.View
                 {
                     ExpandEvent(this, new ExpandEventArgs(o as PozObject));
                     stlblEdit.Text = "элементов: " + treeView.CurrentNode.Nodes.Count;
-                }                
+                }
             }
 
         }
@@ -116,7 +119,7 @@ namespace libspec.View
                 e.Handled = true;
             }
 
-        }        
+        }
         internal void RemoveCurrentNode()
         {
             if (m_nodeCurrent == null)
@@ -145,7 +148,7 @@ namespace libspec.View
                 return;
             TreeGridNode node = m_nodeCurrent.Nodes.Add(o.obozn);
             UpdatePozNode(o, node);
-            node.Selected = true;
+            //node.Selected = true;
         }
         private void tbtnSearchGost_Click(object sender, EventArgs e)
         {

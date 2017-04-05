@@ -29,7 +29,7 @@ namespace libspec.View
         public event EventHandler<MoveDocEventArgs> MoveDocEvent;
         public event EventHandler<NodeEditEventArgs> NodeEditEvent;
         #endregion
-        private SearchPozDialog dlg = new SearchPozDialog(null);
+        private SearchPozDialog dlg;
         private TreeGridNode m_nodeCurrent;
         public SpecViewTree()
         {

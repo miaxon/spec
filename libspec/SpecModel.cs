@@ -509,14 +509,15 @@ namespace libspec.View
         private void m_view_ExpandEvent(object sender, ViewEvent.ExpandEventArgs e)
         {
             UInt32 refid = e.Object.refid == 0 ? e.Object.id : e.Object.refid;
-            string table = Utils.GetChildTable(e.Object.num_kod);
+            string table = "";
+            if (sender is SearchPozDialog && e.Object.num_kod == 92)
+                table = Utils.GetChildMidTable(e.Object.num_kod);
+            else
+                table = Utils.GetChildTable(e.Object.num_kod);
+
             if (string.IsNullOrEmpty(table))
-            {
-                if (e.Object.num_kod == 92)
-                    table = "mid3";
-                else
-                    return;
-            }
+                return;
+
             List<PozObject> list = m_da.GetPozList(table, refid);
             if (sender is SpecViewTree)
                 m_view.FillPoz(list);

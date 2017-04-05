@@ -100,7 +100,7 @@
             this.tbtnIsert});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
-            this.toolStrip.Size = new System.Drawing.Size(1131, 25);
+            this.toolStrip.Size = new System.Drawing.Size(890, 25);
             this.toolStrip.TabIndex = 1;
             this.toolStrip.Text = "toolStrip1";
             // 
@@ -311,7 +311,7 @@
             this.treeView.Name = "treeView";
             this.treeView.RowHeadersVisible = false;
             this.treeView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.treeView.Size = new System.Drawing.Size(1131, 464);
+            this.treeView.Size = new System.Drawing.Size(890, 293);
             this.treeView.TabIndex = 2;
             this.treeView.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.treeView_CellBeginEdit);
             this.treeView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.treeView_CellDoubleClick);
@@ -407,17 +407,17 @@
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.stlblEdit,
             this.stlblAction});
-            this.statusStrip.Location = new System.Drawing.Point(0, 489);
+            this.statusStrip.Location = new System.Drawing.Point(0, 318);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.statusStrip.Size = new System.Drawing.Size(1131, 22);
+            this.statusStrip.Size = new System.Drawing.Size(890, 22);
             this.statusStrip.TabIndex = 3;
             this.statusStrip.Text = "statusStrip";
             // 
             // stlblEdit
             // 
             this.stlblEdit.Name = "stlblEdit";
-            this.stlblEdit.Size = new System.Drawing.Size(1060, 17);
+            this.stlblEdit.Size = new System.Drawing.Size(819, 17);
             this.stlblEdit.Spring = true;
             this.stlblEdit.Text = "stlblEdit";
             this.stlblEdit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -432,13 +432,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1131, 511);
+            this.ClientSize = new System.Drawing.Size(890, 340);
             this.Controls.Add(this.treeView);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.toolStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SearchPozDialog";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "SearchPozDialog";
             this.toolStrip.ResumeLayout(false);
             this.toolStrip.PerformLayout();

@@ -206,7 +206,7 @@ namespace libspec.View
             {
                 PozObject o = e.Object as PozObject;
                 if (e.Parent == null) // root node
-                {                    
+                {
                     string table = Utils.GetTable(o.num_kod);
                     if (string.IsNullOrEmpty(table))
                     {
@@ -221,7 +221,7 @@ namespace libspec.View
                             break;
                         case "naimen":
                             o.naimen = value;
-                            break;                        
+                            break;
                         case "gost":
                             o.gost = value;
                             break;
@@ -245,7 +245,7 @@ namespace libspec.View
                                     query_val = "'" + value + "'";
                                 }
                             }
-                            break;                       
+                            break;
                         case "descr":
                             o.descr = value;
                             break;
@@ -271,7 +271,7 @@ namespace libspec.View
                 else
                 {
                     PozObject parent = e.Parent as PozObject;
-                    if(parent == null)
+                    if (parent == null)
                     {
                         view.RollBack();
                         return;
@@ -283,7 +283,7 @@ namespace libspec.View
                         return;
                     }
                     switch (e.Field)
-                    {                        
+                    {
                         case "num_kol":
                             {
                                 query_val = value;
@@ -291,7 +291,7 @@ namespace libspec.View
                                 if (noError = double.TryParse(value, NumberStyles.Number, CultureInfo.InvariantCulture, out c))
                                     o.num_kol = c;
                             }
-                            break;                        
+                            break;
                         case "num_kfr":
                             {
                                 query_val = value;
@@ -531,9 +531,15 @@ namespace libspec.View
         private void m_view_ExpandEvent(object sender, ViewEvent.ExpandEventArgs e)
         {
             UInt32 refid = e.Object.refid == 0 ? e.Object.id : e.Object.refid;
-            string table = Utils.GetChildTable(e.Object.num_kod);
+            string table = "";
+            if (sender is SearchPozDialog && e.Object.num_kod == 92)
+                table = Utils.GetChildMidTable(e.Object.num_kod);
+            else
+                table = Utils.GetChildTable(e.Object.num_kod);
+
             if (string.IsNullOrEmpty(table))
                 return;
+
             List<PozObject> list = m_da.GetPozList(table, refid);
             if (sender is SpecViewTable)
             {

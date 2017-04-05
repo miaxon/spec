@@ -25,14 +25,17 @@ namespace libspec.View
             {
                 stlblNumChilds.Text = "элементов: " + treeView.CurrentNode.Nodes.Count;
                 m_nodeCurrent = treeView.CurrentNode;
-                if (treeView.CurrentNode.Level == 3) // no mid object
+                if (dlg != null)
                 {
-                    dlg.SetEditObject(treeView.CurrentNode);
-                }
-                else
-                {
-                    dlg.SetEditObject(null);
-                    //dlg.Close();
+                    if (treeView.CurrentNode.Level == 3) // no mid object
+                    {
+                        dlg.SetEditObject(treeView.CurrentNode);
+                    }
+                    else
+                    {
+                        dlg.SetEditObject(null);
+                        //dlg.Close();
+                    }
                 }
             }
         }
