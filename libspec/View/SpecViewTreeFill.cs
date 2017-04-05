@@ -62,6 +62,8 @@ namespace libspec.View
         }
         public void FillPoz(List<PozObject> list)
         {
+            if (m_nodeCurrent == null)
+                return;
             m_nodeCurrent.Nodes.Clear();
             foreach (PozObject o in list)
             {

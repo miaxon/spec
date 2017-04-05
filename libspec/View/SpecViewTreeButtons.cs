@@ -85,21 +85,37 @@ namespace libspec.View
             {
                 ButtonActionEvent(this, new ButtonActionEventArgs(ButtonAction.KeyUpdate, m_nodeCurrent.Tag));
             }
-        }        
-        private void tbtnAddPoz_Click(object sender, EventArgs e)
+        }
+        private void ShowAddPozDialog()
         {
             m_nodeCurrent = treeView.CurrentNode;
             if (m_nodeCurrent == null)
                 return;
-            if (m_nodeCurrent.Level == 3)
+            if (dlg == null || dlg.IsDisposed)
             {
-                SearchPozDialog dlg = new SearchPozDialog(m_nodeCurrent);
+                dlg = new SearchPozDialog(null);
                 dlg.SearchEvent += new EventHandler<SearchEventArgs>(dlg_SearchEvent);
                 dlg.ExpandEvent += new EventHandler<ExpandEventArgs>(dlg_ExpandEvent);
                 dlg.AddPozEvent += new EventHandler<AddPozEventArgs>(dlg_AddPozEvent);
                 dlg.NodeEditEvent += new EventHandler<NodeEditEventArgs>(dlg_NodeEditEvent);
-                dlg.ShowDialog();
             }
+            if (m_nodeCurrent.Level == 3) // doc object
+            {
+                dlg.SetEditObject(m_nodeCurrent);
+                if (dlg.WindowState == FormWindowState.Minimized)
+                    dlg.WindowState = FormWindowState.Normal;
+                dlg.Show();
+            }
+            else
+            {
+                dlg.SetEditObject(null);
+                //dlg.Close();
+            }
+
+        }
+        private void tbtnAddPoz_Click(object sender, EventArgs e)
+        {
+            ShowAddPozDialog();
         }
         private void tbtnEditTab_Click(object sender, EventArgs e)
         {
@@ -110,7 +126,7 @@ namespace libspec.View
                 return;
             }
             Process.Start(p);
-        }                       
+        }
         private void tbtnCalc_Click(object sender, EventArgs e)
         {
             string p = Directory.GetCurrentDirectory() + @"\transformer.exe";

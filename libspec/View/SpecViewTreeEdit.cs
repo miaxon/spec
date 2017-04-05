@@ -22,7 +22,19 @@ namespace libspec.View
         private void treeView_SelectionChanged(object sender, EventArgs e)
         {
             if (treeView.CurrentNode != null)
+            {
                 stlblNumChilds.Text = "элементов: " + treeView.CurrentNode.Nodes.Count;
+                m_nodeCurrent = treeView.CurrentNode;
+                if (treeView.CurrentNode.Level == 3) // no mid object
+                {
+                    dlg.SetEditObject(treeView.CurrentNode);
+                }
+                else
+                {
+                    dlg.SetEditObject(null);
+                    //dlg.Close();
+                }
+            }
         }
         private void treeView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -89,6 +101,9 @@ namespace libspec.View
                 case Keys.V:
                     if (e.Modifiers == Keys.Control)
                         Paste();
+                    break;
+                case Keys.Insert:
+                    ShowAddPozDialog();
                     break;
             }
 

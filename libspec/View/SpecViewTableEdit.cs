@@ -20,7 +20,20 @@ namespace libspec.View
         private void treeView_SelectionChanged(object sender, EventArgs e)
         {
             if (treeView.CurrentNode != null)
+            {
                 stlblEdit.Text = "элементов: " + treeView.CurrentNode.Nodes.Count;
+                m_nodeCurrent = treeView.CurrentNode;
+                if (m_num_kod < 9) // no mid object
+                {
+                    dlg.SetEditObject(treeView.CurrentNode);
+                }
+                else
+                {
+                    dlg.SetEditObject(null);
+                    //dlg.Close();
+                }
+            }
+            
         }      
         private void treeView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {

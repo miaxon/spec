@@ -27,6 +27,7 @@ namespace libspec.View
         public event EventHandler<AddRootPozEventArgs> AddRootPozEvent;
         public event EventHandler<FillBadEventArgs> FillBadEvent;
         #endregion
+        private SearchPozDialog dlg = new SearchPozDialog(null);
         private int m_num_kod;
         private TreeGridNode m_nodeCurrent;
         private ToolStripButton m_btnChecked;
@@ -219,6 +220,9 @@ namespace libspec.View
                 case Keys.Delete:
                     Delete();
                     break;
+                case Keys.Insert:
+                    ShowAddPozDialog();
+                    break;
             }
         }
         private void Clear()
@@ -270,27 +274,40 @@ namespace libspec.View
         {
             Delete();
         }
-        private void tbtnAddPoz_Click(object sender, EventArgs e)
-        {
+        private void ShowAddPozDialog()
+        {            
             m_nodeCurrent = treeView.CurrentNode;
             if (m_nodeCurrent == null)
                 return;
             if (m_nodeCurrent.Level > 2)
                 return;
+            if (dlg == null || dlg.IsDisposed)
+            {
+                dlg = new SearchPozDialog(null);
+                dlg.SearchEvent += new EventHandler<SearchEventArgs>(dlg_SearchEvent);
+                dlg.ExpandEvent += new EventHandler<ExpandEventArgs>(dlg_ExpandEvent);
+                dlg.AddPozEvent += new EventHandler<AddPozEventArgs>(dlg_AddPozEvent);
+                dlg.NodeEditEvent += new EventHandler<NodeEditEventArgs>(dlg_NodeEditEvent);
+            }
             if (m_nodeCurrent.Tag is PozObject)
             {
-                PozObject o = m_nodeCurrent.Tag as PozObject;
                 if (m_num_kod < 9) // no mid object
                 {
-                    SearchPozDialog dlg = new SearchPozDialog(m_nodeCurrent);
-                    dlg.SearchEvent += new EventHandler<SearchEventArgs>(dlg_SearchEvent);
-                    dlg.ExpandEvent += new EventHandler<ExpandEventArgs>(dlg_ExpandEvent);
-                    dlg.AddPozEvent += new EventHandler<AddPozEventArgs>(dlg_AddPozEvent);
-                    dlg.NodeEditEvent += new EventHandler<NodeEditEventArgs>(dlg_NodeEditEvent);
-                    dlg.ShowDialog();
+                    dlg.SetEditObject(m_nodeCurrent);
+                    if (dlg.WindowState == FormWindowState.Minimized)
+                        dlg.WindowState = FormWindowState.Normal;
+                    dlg.Show();
+                }
+                else
+                {
+                    dlg.SetEditObject(null);
+                    //dlg.Close();
                 }
             }
-
+        }
+        private void tbtnAddPoz_Click(object sender, EventArgs e)
+        {
+            ShowAddPozDialog();
         }
         void dlg_SearchEvent(object sender, SearchEventArgs e)
         {
@@ -326,7 +343,7 @@ namespace libspec.View
         }
         private void SpecViewTable_Load(object sender, EventArgs e)
         {
-            (this.Parent as Form).Text = "Редактирование таблицы: " + Utils.NumKodString(m_num_kod);
+            (this.Parent as Form).Text = "Редактирование таблицы: " + Utils.NumKodString(m_num_kod);            
         }
         private void tbtnUpdate_Click(object sender, EventArgs e)
         {

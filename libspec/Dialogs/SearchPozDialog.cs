@@ -32,12 +32,19 @@ namespace libspec.View.Dialogs
             tbtn_lid.Checked = true;
             m_btnChecked = tbtn_lid;
             m_num_kod = Convert.ToInt32(tbtn_lid.Tag);
-            Text = "Поиск позиций: " + Utils.NumKodString(m_num_kod);
-            m_targetNode = target;
-            ttxtGost.Enabled = tbtnSearchGost.Enabled = false;
-            stlblEdit.Text = "Редактируется документ: " + m_targetNode.Cells[0].Value.ToString();
+            Text = "Поиск позиций: " + Utils.NumKodString(m_num_kod);            
+            ttxtGost.Enabled = tbtnSearchGost.Enabled = false;            
             stlblAction.Alignment = ToolStripItemAlignment.Right;
             stlblAction.Text = "";
+            SetEditObject(target);
+        }
+        public void SetEditObject(TreeGridNode target)
+        {
+            if (target != null)
+            {
+                m_targetNode = target;
+                stlblEdit.Text = "Редактируется документ: " + m_targetNode.Cells[0].Value.ToString();
+            }
         }
         public void EditResult(string text)
         {

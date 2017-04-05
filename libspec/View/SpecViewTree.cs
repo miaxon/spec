@@ -29,6 +29,7 @@ namespace libspec.View
         public event EventHandler<MoveDocEventArgs> MoveDocEvent;
         public event EventHandler<NodeEditEventArgs> NodeEditEvent;
         #endregion
+        private SearchPozDialog dlg = new SearchPozDialog(null);
         private TreeGridNode m_nodeCurrent;
         public SpecViewTree()
         {
@@ -38,7 +39,6 @@ namespace libspec.View
             stlblAction.Text = "";
             //treeView.EditMode = DataGridViewEditMode.EditOnKeystrokeOrF2;
             treeView.SelectionMode = DataGridViewSelectionMode.CellSelect;
-
         }
 
        
