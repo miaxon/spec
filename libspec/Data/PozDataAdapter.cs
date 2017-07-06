@@ -49,6 +49,7 @@ namespace libspec.View.Data
                            src.num_kol,
                            src.num_kfr,
                            refid);
+            
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             int ret = 0;
             try
@@ -67,12 +68,25 @@ namespace libspec.View.Data
             string table = Utils.GetTable(target.num_kod);
             if (string.IsNullOrEmpty(table))
                 return null;
-            string query = string.Format(CultureInfo.InvariantCulture, 
+            string query = string.Format(CultureInfo.InvariantCulture,
+                            "insert into {0} (obozn, naimen, descr, marka, gost, kei) values('{1}', '{2}', '{3}', '{4}', '{5}', '{6}')",
+                            table,
+                            target.obozn,
+                            target.naimen,
+                            target.descr,
+                            target.marka,
+                            target.gost,
+                            target.kei);
+                            
+            if (target.num_kod == 93 || target.num_kod == 94) // mid0, mid1 poz
+            {
+                query = string.Format(CultureInfo.InvariantCulture,
                             "insert into {0} (obozn, naimen, descr) values('{1}', '{2}', '{3}')", 
                             table, 
                             target.obozn, 
                             target.naimen, 
-                            target.descr);
+                            target.descr);                            
+            }
             MySqlCommand cmd = new MySqlCommand(query, m_conn);
             try
             {

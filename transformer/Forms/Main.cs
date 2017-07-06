@@ -60,7 +60,7 @@ namespace transformer
         }
         public string GetConnectionString()
         {
-            return "server=" + Utils.Server + ";User Id=dms;password=21061972;database=spec;Allow User Variables=True;Allow Zero Datetime=True;Character Set=utf8;Convert Zero Datetime=True";
+            return "server=" + Utils.Server + ";User Id=spec;password=spec;database=spec;Allow User Variables=True;Allow Zero Datetime=True;Character Set=utf8;Convert Zero Datetime=True";
         }
         private void Connect()
         {
@@ -73,8 +73,17 @@ namespace transformer
                 MessageBox.Show("Не найден путь data в текущем каталоге или отсутствуют права. " + ex.Message);
                 Application.Exit();
             }
-            conn = new MySqlConnection(GetConnectionString());
-            conn.Open();
+            try
+            {
+                string constr = GetConnectionString();
+                conn = new MySqlConnection(constr);
+                conn.Open();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("MySqlConnection error: " + ex.Message);
+                Application.Exit();
+            }
             int parent = 0;
             string command = "";
             if (unit == "project")
