@@ -337,7 +337,7 @@ namespace libspec.View
                         if (e.Target is DocObject)
                         {
                             DocObject o = e.Target as DocObject;
-                            if (Utils.Warning("Удалить докуимент " + o.obozn + "?"))
+                            if (Utils.Warning("Удалить документ " + o.obozn + "?"))
                             {
                                 if (m_da.DeleteDoc(o))
                                 {

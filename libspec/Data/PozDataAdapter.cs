@@ -41,6 +41,11 @@ namespace libspec.View.Data
             if (string.IsNullOrEmpty(table))
                 return false;
             uint refid = src.refid == 0 ? src.id : src.refid;
+            if (refid == dst.id)
+            {
+                Utils.Error("Добавляемая позиция ссылается на себя.");
+                return false;
+            }
             string query = string.Format(CultureInfo.InvariantCulture, 
                            "insert into {0} (parent, num_kod, num_kol, num_kfr, refid) values({1}, {2}, {3}, {4}, {5})",
                            table,
