@@ -11,8 +11,8 @@ namespace libspec.View.Objects
         public string obozn { get; set; }
         public string naimen { get; set; }
         public string descr { get; set; }
-        private string m_kei;
-        public string kei { get { return Utils.GetKeiNaimen(m_kei); } set { m_kei = value; } }
+        public string m_kei;
+        public string keiString { get { return Utils.GetKeiNaimen(m_kei); }}
         public string marka { get; set; }
         public string gost { get; set; }
         // поля num_ заполняются первым запросом из lid по значению поля uid записи из _did
@@ -71,7 +71,7 @@ namespace libspec.View.Objects
             o.obozn = obozn;
             o.naimen = naimen;
             o.descr = descr;
-            o.kei = m_kei;
+            o.m_kei = m_kei;
             o.marka = marka;
             o.gost = gost;
             return o;

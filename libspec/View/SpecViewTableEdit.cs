@@ -136,11 +136,12 @@ namespace libspec.View
             UpdatePozNode(o, node);
             node.Selected = true;
         }
-        internal void AddMidNode(MidObject o)
+        internal TreeGridNode AddMidNode(MidObject o)
         {
             TreeGridNode node = treeView.Nodes.Add(o.obozn);
             UpdateMidNode(o, node);
             node.Selected = true;
+            return node;
         }
         internal void AddPozNode(PozObject o)
         {

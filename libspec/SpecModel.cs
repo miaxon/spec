@@ -115,6 +115,8 @@ namespace libspec.View
                         break;
                 }
                 query = string.Format("update lid set {0}={1} where id={2}", e.Field, query_val, o.refid);
+                if(e.Field == "num_kol")
+                    query = string.Format("update _did set {0}={1} where id={2}", e.Field, query_val, o.id);
             }
             if (e.Object is PozObject)
             {
@@ -215,14 +217,14 @@ namespace libspec.View
                         string kei_naimen = Utils.GetKeiNaimen(value);
                         if (noError = !(kei_naimen == value))
                         {
-                            o.kei = value;
+                            o.m_kei = value;
                             break;
                         }
                         // if value is kei naimen string
                         string kei_obozn = Utils.GetKeiObozn(value);
                         if (noError = !(kei_obozn == value))
                         {
-                            o.kei = value = kei_obozn;
+                            o.m_kei = value = kei_obozn;
                             query_val = "'" + value + "'";
                         }
                     }

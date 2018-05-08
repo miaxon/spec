@@ -60,7 +60,8 @@ namespace transformer
         }
         public string GetConnectionString()
         {
-            return "server=" + Utils.Server + ";User Id=dms;password=21061972;database=spec;Allow User Variables=True;Allow Zero Datetime=True;Character Set=utf8;Convert Zero Datetime=True";
+            //return "server=" + Utils.Server + ";User Id=dms;password=21061972;database=spec;Allow User Variables=True;Allow Zero Datetime=True;Character Set=utf8;Convert Zero Datetime=True";
+            return "server=" + Utils.Server + ";User Id=" + Utils.User + ";password=" + Utils.Password + ";database=spec;Allow User Variables=True;Allow Zero Datetime=True;Character Set=utf8;Convert Zero Datetime=True";
         }
         private void Connect()
         {
@@ -74,7 +75,16 @@ namespace transformer
                 Application.Exit();
             }
             conn = new MySqlConnection(GetConnectionString());
-            conn.Open();
+            try
+            {
+                conn.Open();
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Ошибка соединения с базой данных: " + ex.Message);
+                Application.Exit();
+            }
+
             int parent = 0;
             string command = "";
             if (unit == "project")

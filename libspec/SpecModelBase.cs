@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
+using AdvancedDataGridView;
 namespace libspec.View
 {
     public class SpecModelBase
@@ -100,7 +101,6 @@ namespace libspec.View
                 return 0;
             return dlg.Id;
         }
-
         void m_view_NodeEditEvent(object sender, ViewEvent.NodeEditEventArgs e)
         {
             if (sender is SearchPozDialog)
@@ -157,14 +157,14 @@ namespace libspec.View
                         string kei_naimen = Utils.GetKeiNaimen(value);
                         if (noError = !(kei_naimen == value))
                         {
-                            o.kei = value;
+                            o.m_kei = value;
                             break;
                         }
                         // if value is kei naimen string
                         string kei_obozn = Utils.GetKeiObozn(value);
                         if (noError = !(kei_obozn == value))
                         {
-                            o.kei = value = kei_obozn;
+                            o.m_kei = value = kei_obozn;
                             query_val = "'" + value + "'";
                         }
                     }
@@ -230,20 +230,21 @@ namespace libspec.View
                             break;
                         case "kei":
                             {
-                                // if value is kei obozn number string
+                                // if value is kei obozn number string (006 for M etc)
                                 string kei_naimen = Utils.GetKeiNaimen(value);
-                                if (noError = !(kei_naimen == value))
+                                string kei_obozn = Utils.GetKeiObozn(value);
+                                if (kei_naimen != value)
                                 {
-                                    o.kei = value;
+                                    o.m_kei = value; 
                                     break;
                                 }
-                                // if value is kei naimen string
-                                string kei_obozn = Utils.GetKeiObozn(value);
-                                if (noError = !(kei_obozn == value))
+                                if (kei_obozn != value)
                                 {
-                                    o.kei = value = kei_obozn;
+                                    o.m_kei = value = kei_obozn;
                                     query_val = "'" + value + "'";
+                                    break;
                                 }
+                                noError = false;
                             }
                             break;
                         case "descr":
@@ -391,10 +392,49 @@ namespace libspec.View
                     p.descr = o.descr;
                     if (!m_da.PozExists(p.obozn, p.num_kod))
                     {
-                        PozObject poz = m_da.AddRootPoz(p);
-                        if (poz != null)
-                            m_view.AddRootNode(poz);
-                        return;
+                        if (p.num_kod < 9 || p.num_kod == 100)
+                        {
+                            PozObject poz = m_da.AddRootPoz(p);
+                            if (poz != null)
+                                m_view.AddRootNode(poz);
+                            return;
+                        }
+                        else
+                        {
+                            MidObject m = new MidObject(p);
+                            if (m.num_kod < 93) // mid3 or mid2
+                            {
+                                m.parent = m_da.GetMidParent(m.obozn, m.num_kod);
+                                if (m.parent == 0)
+                                    m.parent = SelectParent(m.obozn, m.num_kod);
+                                if (m.parent == 0)
+                                    return;
+                            }
+                            MidObject poz = m_da.AddRootMid(m);
+                            if (poz != null)
+                            {
+                                TreeGridNode n = m_view.AddMidNode(poz);
+                                PozObject mp = m_da.GetMidPoz(poz.id, poz.num_kod);
+                                mp.gost = p.gost;
+                                mp.m_kei = p.m_kei;
+                                mp.marka = p.marka;
+                                mp.num_kfr = p.num_kfr;
+                                string query = string.Format(@"update {0} set gost='{1}', kei = '{2}', marka = '{3}', num_kfr = {4} where id={5}",
+                                     Utils.GetTable(poz.num_kod),
+                                     mp.gost,
+                                     mp.m_kei,
+                                     mp.marka,
+                                     mp.num_kfr,
+                                     poz.id);
+                                if (!m_da.ExecQuery(query))
+                                {                                   
+                                    return;
+                                }
+                                m_view.UpdatePozNode(mp, n);
+                                
+                            }
+                            return;
+                        }
                     }
                     else
                         goto dlg;

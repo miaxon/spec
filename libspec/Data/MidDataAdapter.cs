@@ -118,6 +118,40 @@ namespace libspec.View.Data
             }
             return list;
         }
+
+        public PozObject GetMidPoz(uint id, int num_kod)
+        {
+            PozObject p = null;
+            string table = Utils.GetTable(num_kod);
+            string query = string.Format(@"select refid, num_kol, num_kod, id, num_kfr, obozn, naimen, descr, kei, marka, gost from {0} where 
+                             id={1}", table, id);
+
+            //naimen = 'не задано' or
+            //length(naimen) = 0 or 
+            MySqlCommand cmd = new MySqlCommand(query, m_conn);
+            MySqlDataReader reader = null;
+            try
+            {
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    object[] values = new object[reader.FieldCount];
+                    reader.GetValues(values);
+                    //Type t = values[0].GetType();
+                    p = new PozObject(values);
+                }
+            }
+            catch (MySqlException ex)
+            {
+                Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
+            }
+            finally
+            {
+                if (reader != null) reader.Close();
+            }
+            return p;
+        }
+
         public UInt32 GetMidParent(string obozn, int num_kod)
         {            
             string parent_table = Utils.GetParentTable(num_kod);

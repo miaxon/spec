@@ -91,7 +91,7 @@ namespace libspec.View.Dialogs
             node.Cells[2].Value = o.num_kol;
             node.Cells[3].Value = o.gost;
             node.Cells[4].Value = o.marka;
-            node.Cells[5].Value = o.kei;
+            node.Cells[5].Value = o.keiString;
             node.Cells[6].Value = o.num_kfr;
             node.Cells[7].Value = o.num_knr;
             node.Cells[8].Value = o.num_kod;
