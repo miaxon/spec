@@ -6,6 +6,7 @@ using System.Xml;
 using System.IO;
 using System.Data;
 using MySql.Data.MySqlClient;
+using System.Windows.Forms;
 // класс основного документа
 namespace transformer
 {

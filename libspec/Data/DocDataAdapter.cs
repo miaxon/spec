@@ -34,7 +34,7 @@ namespace libspec.View.Data
             if (uid == 0)
                 return null;
             query = string.Format(CultureInfo.InvariantCulture, 
-                    "insert into _did (parent, uid, num_kol) values({0}, {1})", 
+                    "insert into _did (parent, uid, num_kol) values({0}, {1}, {2})", 
                     parent, 
                     uid,
                     o.num_kol);
