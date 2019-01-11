@@ -56,6 +56,7 @@ namespace transformer
                 int i = r;
                 int nextGroup = 0;
                 int currentGroup = (int)msch.Rows[r]["gr"];
+                
                 group = Convert.ToString(currentGroup) + "00";
                 do
                 {
@@ -73,7 +74,7 @@ namespace transformer
                 } while (currentGroup == nextGroup);
 
                 prepare_kp(ref gr);
-                r += i;
+                r = i;
             } while (r < count);
         }
         private void prepare_kp(ref DataTable tab)
