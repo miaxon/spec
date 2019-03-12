@@ -19,7 +19,7 @@ namespace libspec.View.Data
                            "insert into lid_old (parent, num_kod, num_kol, num_kfr, refid) values({0}, {1}, {2}, {3}, {4})",
                             dst.refid,
                             src.num_kod,
-                            src.num_kol > 0 ? src.num_kol : 1,
+                            0,            //src.num_kol > 0 ? src.num_kol : 1,
                             src.num_kfr,
                             refid);
             MySqlCommand cmd = new MySqlCommand(query, m_conn);

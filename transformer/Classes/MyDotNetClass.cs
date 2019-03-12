@@ -13,6 +13,7 @@ using System.Data;
 using Word = Microsoft.Office.Interop.Word;
 using transformer;
 using System.Collections.Generic;
+using System.Diagnostics;
 namespace transformer
 {
     public class MyDotNetClass
@@ -454,12 +455,14 @@ namespace transformer
             
             if (run)
             {
-                IntPtr res = ShellExecute(IntPtr.Zero, "open", "winword", wml, "", ShowCommands.SW_SHOWNORMAL);
+                /*IntPtr res = ShellExecute(IntPtr.Zero, "open", "winword", wml, "", ShowCommands.SW_SHOWNORMAL);
                 int ires = res.ToInt32();
                 if (ires < 33)
                     res = ShellExecute(IntPtr.Zero, "open", "swriter", wml, "", ShowCommands.SW_SHOWNORMAL);
                 if (ires < 33)
                     MessageBox.Show("Не удалось отркрыть документ.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                 * */
+                Process.Start(wml);
             } }
     }
 }
