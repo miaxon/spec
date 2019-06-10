@@ -266,17 +266,21 @@ namespace libspec.View
         dlg: DocObject o = NewObject(ViewEvent.ButtonAction.AddDoc, name) as DocObject;
             if (o == null)
                 return;
+            
+
             if (!m_da.DocExists(o.obozn))
             {
-
                 e.Doc.obozn = o.obozn;
                 e.Doc.naimen = o.naimen;
                 e.Doc.descr = o.descr;
                 m_da.AddDoc(e.Doc, e.Group.id);
                 return;
             }
-            else
+            if ((o = m_da.AddExistingDoc(o, e.Group.id)) == null)
                 goto dlg;
+            e.Doc.obozn = o.obozn;
+            e.Doc.naimen = o.naimen;
+            e.Doc.descr = o.descr;
 
         }
         private void m_view_MovePozEvent(object sender, ViewEvent.MovePozEventArgs e)
@@ -339,7 +343,7 @@ namespace libspec.View
                         if (e.Target is DocObject)
                         {
                             DocObject o = e.Target as DocObject;
-                            if (Utils.Warning("Удалить докуимент " + o.obozn + "?"))
+                            if (Utils.Warning("Удалить документ " + o.obozn + "?"))
                             {
                                 if (m_da.DeleteDoc(o))
                                 {
@@ -411,11 +415,19 @@ namespace libspec.View
                             o = m_da.AddDoc(o, (e.Target as GroupObject).id);
                             if (o != null && o.id > 0)
                                 m_view.AddNode(o);
+                            return;
+                        }
+
+                        if ((o = m_da.AddExistingDoc(o, (e.Target as GroupObject).id)) != null)
+                        {
+                            m_view.AddNode(o);
+                            return;
                         }
                         else
                             goto ddlg;
+                        
                     }
-                    break;
+                   //break;
                 case ViewEvent.ButtonAction.KeyClose:
                     {
                         if (e.Target is GroupObject)

@@ -57,6 +57,35 @@ namespace libspec.View.Data
             return doc;
         }
 
+        public DocObject AddExistingDoc(DocObject o, UInt32 parent)
+        {            
+            UInt32 uid = DocIdByObozn(o.obozn);
+            if (uid == 0)
+                return null;
+            string query = string.Format(CultureInfo.InvariantCulture,
+                    "insert into _did (parent, uid, num_kol) values({0}, {1}, {2})",
+                    parent,
+                    uid,
+                    o.num_kol);
+            MySqlCommand cmd = new MySqlCommand(query, m_conn);
+            try
+            {
+                int r = cmd.ExecuteNonQuery();
+            }
+            catch (MySqlException ex)
+            {
+                Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
+                return null;
+            }
+            DocObject doc = DocByObozn(o.obozn);
+            List<PozObject> list = GetPozList("lid_old", o.refid);
+            foreach (PozObject poz in list)
+            {
+                AddPoz(poz, doc);
+            }
+            return doc;
+        }
+
         public bool SetStatusDoc(ref DocObject o, Closed status)
         {
             string query = null;
@@ -86,7 +115,7 @@ namespace libspec.View.Data
             string query = null;
             MySqlCommand cmd = null;
 
-            query = string.Format(CultureInfo.InvariantCulture, 
+            /*query = string.Format(CultureInfo.InvariantCulture, 
                     "delete from lid_old where parent = {0}", 
                     o.refid);
             cmd = new MySqlCommand(query, m_conn);
@@ -112,7 +141,7 @@ namespace libspec.View.Data
             {
                 Utils.DBError(System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
                 return false;
-            }
+            }*/
 
             query = string.Format(CultureInfo.InvariantCulture, 
                     "delete from _did where id = {0}", 
