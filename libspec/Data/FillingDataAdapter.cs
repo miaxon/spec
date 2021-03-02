@@ -138,7 +138,7 @@ namespace libspec.View.Data
                 GetPozReference(o);
             foreach (PozObject o in list.FindAll(o => o.num_kod == 9))
                 FillGostForCode9(o);
-            return list;
+            return list.OrderBy(o => o.obozn).ToList().OrderBy(o => o.num_kod).ToList();
         }
         private void GetPozReference(PozObject o)
         {
